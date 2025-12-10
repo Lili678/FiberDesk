@@ -45,4 +45,11 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    dependencies {
+        // ... aquí habrá otras líneas que ya existen (core-ktx, appcompat, etc.) ...
+
+        // LIBRERÍAS DE GOOGLE MAPS Y UBICACIÓN (¡AGREGA ESTAS!)
+        implementation("com.google.android.gms:play-services-maps:18.2.0")
+        implementation("com.google.android.gms:play-services-location:21.0.1")
+    }
 }

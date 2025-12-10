@@ -1,0 +1,136 @@
+<!-- Reemplaza TODO el contenido de dashboard_pago.xml con esto -->
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F3F8"
+    tools:context=".ui.pagos.PagosActivity">
+
+    <!-- Contenedor principal con el fondo degradado en la parte superior -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Fondo degradado que solo ocupa la parte de arriba -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/gradient_background_pagos" />
+    </LinearLayout>
+
+    <!-- Contenido de la UI (se superpone al fondo) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- 1. Barra de herramientas personalizada (Toolbar) -->
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:elevation="0dp">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarPagos"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+                <ImageView
+                    android:id="@+id/btnBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_back"
+                    app:tint="@android:color/white"
+                    android:contentDescription="Atrás" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="PAGOS"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/btnAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_add"
+                    app:tint="@android:color/white"
+                    android:contentDescription="Añadir" />
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!-- 2. Barra de Búsqueda -->
+        <EditText
+            android:id="@+id/searchBar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/search_bar_background"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="12dp"
+            android:elevation="4dp"
+            android:hint="Buscar..."
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColorHint="#999999" />
+
+        <!-- 3. Tarjeta de Saldo Pendiente -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="#E0F2F1"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp">
+            <!-- Contenido de la tarjeta... (como en la respuesta anterior) -->
+        </androidx.cardview.widget.CardView>
+
+        <!-- 4. Título de la lista -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="Actividad Reciente"
+            android:textColor="#333333"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- 5. Lista para la actividad reciente -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerActividadReciente"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            tools:listitem="@layout/item_pago" />
+    </LinearLayout>
+
+    <!-- 6. Botón Flotante de Acción -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_pago"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="#007BFF"
+        app:tint="@android:color/white"
+        android:contentDescription="Agregar Pago" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

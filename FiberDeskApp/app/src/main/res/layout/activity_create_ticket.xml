@@ -23,7 +23,7 @@
             android:id="@+id/tv_folio_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Folio: GENERADO AUTOMÁTICAMENTE"
+            android:text="Folio: "
             android:textStyle="italic"
             android:layout_marginBottom="16dp"/>
 

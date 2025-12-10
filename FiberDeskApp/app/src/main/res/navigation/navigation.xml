@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navigation">
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmentInventario">
 
+    <!-- Pantalla principal del inventario -->
+    <fragment
+        android:id="@+id/fragmentInventario"
+        android:name="com.example.fiberdesk_app.ui.inventario.FragmentInventario"
+        android:label="Inventario">
+        <action
+            android:id="@+id/action_inventario_to_menu"
+            app:destination="@id/inventoryMenuFragment" />
+    </fragment>
+
+    <!-- Menú de Gestión del Inventario -->
+    <fragment
+        android:id="@+id/inventoryMenuFragment"
+        android:name="com.example.fiberdesk_app.ui.inventario.InventoryMenuFragment"
+        android:label="Menú Inventario">
+        <action
+            android:id="@+id/action_menu_to_list"
+            app:destination="@id/materialsListFragment" />
+        <action
+            android:id="@+id/action_menu_to_add"
+            app:destination="@id/addItemFragment" />
+    </fragment>
+
+    <!-- Lista de materiales -->
+    <fragment
+        android:id="@+id/materialsListFragment"
+        android:name="com.example.fiberdesk_app.ui.inventario.MaterialsListFragment"
+        android:label="Lista de Materiales" />
+
+    <!-- Agregar Material -->
+    <fragment
+        android:id="@+id/addItemFragment"
+        android:name="com.example.fiberdesk_app.ui.inventario.AddItemFragment"
+        android:label="Agregar Material" />
 </navigation>

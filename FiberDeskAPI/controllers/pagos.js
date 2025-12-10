@@ -64,11 +64,11 @@ exports.actualizarPago = async(req, res) => {
         // Luego actualizar con los nuevos valores
         const pago = await Pago.findByIdAndUpdate(
             req.params.id, {
-                monto: monto ? ? pagoActual.monto,
-                abono: abono ? ? pagoActual.abono,
-                metodoPago: metodoPago ? ? pagoActual.metodoPago,
-                estado: estado ? ? pagoActual.estado,
-                descripcion: descripcion ? ? pagoActual.descripcion,
+                monto: monto ?? pagoActual.monto,
+                abono: abono ?? pagoActual.abono,
+                metodoPago: metodoPago ?? pagoActual.metodoPago,
+                estado: estado ?? pagoActual.estado,
+                descripcion: descripcion ?? pagoActual.descripcion,
                 updatedAt: Date.now()
             }, { new: true }
         );

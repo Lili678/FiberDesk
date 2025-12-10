@@ -2,4 +2,16 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="blue_gradient_start">#4A90E2</color>
+    <color name="purple_gradient_end">#9B59B6</color>
+    <color name="input_background">#F5F5F5</color>
+    <color name="text_hint">#999999</color>
+    <color name="text_secondary">#666666</color>
+    <color name="button_blue">#5B9FED</color>
+    <color name="hint_color">#AAAAAA</color>
+    <color name="gray_text">#999999</color>
+    <color name="clients_blue">#4A90E2</color>
+    <color name="tickets_purple">#9B59B6</color>
+    <color name="payments_teal">#1ABC9C</color>
+    <color name="inventory_orange">#F39C12</color>
 </resources>

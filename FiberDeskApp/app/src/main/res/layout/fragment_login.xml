@@ -1,6 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <!-- Correo -->
+    <EditText
+        android:id="@+id/txtCorreo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Correo"
+        android:inputType="textEmailAddress"
+        android:padding="12dp"
+        android:backgroundTint="@android:color/darker_gray"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Contraseña -->
+    <EditText
+        android:id="@+id/txtContrasena"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:backgroundTint="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/txtCorreo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Botón Login -->
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Iniciar sesión"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/txtContrasena"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <!-- Texto para ir a registro -->
+    <TextView
+        android:id="@+id/txtIrRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿No tienes cuenta? Regístrate aquí"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/holo_blue_dark"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="18dp" />
+
+    <!-- Barra de carga -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/txtIrRegistro"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

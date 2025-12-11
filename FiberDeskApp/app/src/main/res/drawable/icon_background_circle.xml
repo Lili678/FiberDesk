@@ -1,0 +1,6 @@
+<!-- Define un círculo de color para poner detrás de los íconos de la lista -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="#26A69A" />
+</shape>
+    

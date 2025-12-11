@@ -1,7 +1,6 @@
 package com.example.fiberdesk_app.data.remote
 
 import com.example.fiberdesk_app.data.model.*
-import com.example.fiberdesk_app.utils.constants.Constants
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -12,13 +11,14 @@ import java.net.URL
 
 // Cliente HTTP simple sin dependencias externas
 object PagosApiClient {
+    private const val BASE_URL = "http://10.0.2.2:3000/"
     
     private fun makeRequest(
         endpoint: String,
         method: String,
         body: String? = null
     ): String {
-        val url = URL(Constants.BASE_URL + endpoint)
+        val url = URL(BASE_URL + endpoint)
         val connection = url.openConnection() as HttpURLConnection
         
         connection.requestMethod = method

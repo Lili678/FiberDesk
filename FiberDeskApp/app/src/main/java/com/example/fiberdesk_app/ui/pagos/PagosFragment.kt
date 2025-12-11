@@ -81,7 +81,7 @@ class PagosFragment : Fragment() {
         }
         
         // Observar loading
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+        viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
         
@@ -94,7 +94,7 @@ class PagosFragment : Fragment() {
         }
         
         // Observar mensajes de éxito
-        viewModel.successMessage.observe(viewLifecycleOwner) { message ->
+        viewModel.success.observe(viewLifecycleOwner) { message ->
             message?.let {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 viewModel.clearMessages()
@@ -110,10 +110,10 @@ class PagosFragment : Fragment() {
     
     private fun actualizarEstadisticas() {
         val stats = viewModel.calcularEstadisticas()
-        binding.tvTotalPagos.text = stats.totalPagos.toString()
-        binding.tvPendientes.text = stats.pendientes.toString()
-        binding.tvParciales.text = stats.parciales.toString()
-        binding.tvPagados.text = stats.pagados.toString()
+        binding.tvTotalPagos.text = String.format("%.2f", stats["total"] ?: 0.0)
+        binding.tvPendientes.text = String.format("%.2f", stats["pendientes"] ?: 0.0)
+        binding.tvParciales.text = String.format("%.2f", stats["parciales"] ?: 0.0)
+        binding.tvPagados.text = String.format("%.2f", stats["pagados"] ?: 0.0)
     }
     
     private fun mostrarDialogPago(pago: Pago?) {

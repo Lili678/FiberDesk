@@ -20,6 +20,8 @@ object RetrofitClient {
         .addInterceptor(logging)
         .build()
 
+    // Comentado temporalmente - enfocado en módulo de pagos
+    /*
     val inventarioApi: InventarioApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -37,5 +39,6 @@ object RetrofitClient {
             .build()
             .create(InstalacionApiService::class.java)
     }
+    */
 }
 

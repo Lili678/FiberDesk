@@ -1,7 +1,7 @@
 package com.example.fiberdesk_app.data.repository
 
 import com.example.fiberdesk_app.data.model.*
-import com.example.fiberdesk_app.data.remote.RetrofitClient
+import com.example.fiberdesk_app.data.remote.PagosApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -17,85 +17,60 @@ class PagosRepository {
     // Obtener todos los pagos
     suspend fun obtenerPagos(): Result<List<Pago>> = withContext(Dispatchers.IO) {
         try {
-            val response = api.obtenerPagos()
-            if (response.isSuccessful && response.body() != null) {
-                Result.Success(response.body()!!)
-            } else {
-                Result.Error("Error al obtener pagos: ${response.code()}")
-            }
+            val pagos = PagosApiClient.obtenerPagos()
+            Result.Success(pagos)
         } catch (e: Exception) {
-            Result.Error("Error de conexión: ${e.message}")
+            Result.Error("Error: ${e.message}")
         }
     }
     
     // Obtener pago por ID
     suspend fun obtenerPagoPorId(id: String): Result<Pago> = withContext(Dispatchers.IO) {
         try {
-            val response = api.obtenerPagoPorId(id)
-            if (response.isSuccessful && response.body() != null) {
-                Result.Success(response.body()!!)
-            } else {
-                Result.Error("Error al obtener pago: ${response.code()}")
-            }
+            val pago = PagosApiClient.obtenerPagoPorId(id)
+            Result.Success(pago)
         } catch (e: Exception) {
-            Result.Error("Error de conexión: ${e.message}")
+            Result.Error("Error: ${e.message}")
         }
     }
     
     // Obtener pagos por usuario
     suspend fun obtenerPagosPorUsuario(usuarioId: String): Result<List<Pago>> = withContext(Dispatchers.IO) {
         try {
-            val response = api.obtenerPagosPorUsuario(usuarioId)
-            if (response.isSuccessful && response.body() != null) {
-                Result.Success(response.body()!!)
-            } else {
-                Result.Error("Error al obtener pagos del usuario: ${response.code()}")
-            }
+            val pagos = PagosApiClient.obtenerPagosPorUsuario(usuarioId)
+            Result.Success(pagos)
         } catch (e: Exception) {
-            Result.Error("Error de conexión: ${e.message}")
+            Result.Error("Error: ${e.message}")
         }
     }
     
     // Crear nuevo pago
     suspend fun crearPago(pago: CrearPagoRequest): Result<PagoResponse> = withContext(Dispatchers.IO) {
         try {
-            val response = api.crearPago(pago)
-            if (response.isSuccessful && response.body() != null) {
-                Result.Success(response.body()!!)
-            } else {
-                Result.Error("Error al crear pago: ${response.code()}")
-            }
+            val response = PagosApiClient.crearPago(pago)
+            Result.Success(response)
         } catch (e: Exception) {
-            Result.Error("Error de conexión: ${e.message}")
+            Result.Error("Error: ${e.message}")
         }
     }
     
     // Actualizar pago
     suspend fun actualizarPago(id: String, pago: ActualizarPagoRequest): Result<PagoResponse> = withContext(Dispatchers.IO) {
         try {
-            val response = api.actualizarPago(id, pago)
-            if (response.isSuccessful && response.body() != null) {
-                Result.Success(response.body()!!)
-            } else {
-                Result.Error("Error al actualizar pago: ${response.code()}")
-            }
+            val response = PagosApiClient.actualizarPago(id, pago)
+            Result.Success(response)
         } catch (e: Exception) {
-            Result.Error("Error de conexión: ${e.message}")
+            Result.Error("Error: ${e.message}")
         }
     }
     
     // Eliminar pago
     suspend fun eliminarPago(id: String): Result<String> = withContext(Dispatchers.IO) {
         try {
-            val response = api.eliminarPago(id)
-            if (response.isSuccessful) {
-                val mensaje = response.body()?.get("mensaje") ?: "Pago eliminado exitosamente"
-                Result.Success(mensaje)
-            } else {
-                Result.Error("Error al eliminar pago: ${response.code()}")
-            }
+            val mensaje = PagosApiClient.eliminarPago(id)
+            Result.Success(mensaje)
         } catch (e: Exception) {
-            Result.Error("Error de conexión: ${e.message}")
+            Result.Error("Error: ${e.message}")
         }
     }
 }

@@ -276,6 +276,11 @@ class PagosFragment : Fragment() {
         return MetodoPago.values().find { it.displayName == displayName }?.valor ?: "efectivo"
     }
     
+    private fun obtenerFechaActual(): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return sdf.format(Date())
+    }
+    
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

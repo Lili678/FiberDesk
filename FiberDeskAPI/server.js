@@ -7,15 +7,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Conexión Mongo
+// Conexión Mongo Atlas
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Mongo conectado correctamente"))
   .catch(err => console.error("Error al conectar Mongo:", err));
 
-// Rutas
-app.use('/api', require('./routes'));
+// Rutas principales (/api)
+app.use('/api', require('./routes'));    
 
-// Iniciar servidor
-app.listen(3000, () => {
-  console.log("Servidor backend corriendo en puerto 3000");
+// Puerto desde .env
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor backend corriendo en puerto ${PORT}`);
 });

@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_inventario_to_menu"
             app:destination="@id/inventoryMenuFragment" />
+        <action
+            android:id="@+id/action_inventario_to_instalaciones"
+            app:destination="@id/instalacionesListFragment" />
     </fragment>
 
     <!-- Menú de Gestión del Inventario -->
@@ -25,6 +28,9 @@
         <action
             android:id="@+id/action_menu_to_add"
             app:destination="@id/addItemFragment" />
+        <action
+            android:id="@+id/action_menu_to_instalaciones"
+            app:destination="@id/instalacionesListFragment" />
     </fragment>
 
     <!-- Lista de materiales -->
@@ -38,4 +44,29 @@
         android:id="@+id/addItemFragment"
         android:name="com.example.fiberdesk_app.ui.inventario.AddItemFragment"
         android:label="Agregar Material" />
+
+    <!-- Lista de Instalaciones -->
+    <fragment
+        android:id="@+id/instalacionesListFragment"
+        android:name="com.example.fiberdesk_app.ui.inventario.InstalacionesListFragment"
+        android:label="Instalaciones">
+        <action
+            android:id="@+id/action_instalaciones_to_create"
+            app:destination="@id/createInstalacionFragment" />
+        <action
+            android:id="@+id/action_instalaciones_to_useMaterial"
+            app:destination="@id/useMaterialFragment" />
+    </fragment>
+
+    <!-- Crear Instalación -->
+    <fragment
+        android:id="@+id/createInstalacionFragment"
+        android:name="com.example.fiberdesk_app.ui.inventario.CreateInstalacionFragment"
+        android:label="Nueva Instalación" />
+
+    <!-- Usar Material -->
+    <fragment
+        android:id="@+id/useMaterialFragment"
+        android:name="com.example.fiberdesk_app.ui.inventario.UseMaterialFragment"
+        android:label="Usar Material" />
 </navigation>

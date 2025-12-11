@@ -2,7 +2,7 @@
 <network-security-config>
     <!-- Development: allow cleartext for local backend. Restrict for production. -->
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">192.168.1.68</domain>
+        <domain includeSubdomains="true">192.168.1.104</domain>
     </domain-config>
 
     <!-- Fallback: allow any cleartext (only for development). Remove in production. -->

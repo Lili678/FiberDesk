@@ -35,6 +35,11 @@ class InventoryMenuFragment : Fragment() {
         binding.cardViewAdd.setOnClickListener {
             findNavController().navigate(R.id.action_menu_to_add)
         }
+
+        // Botón para ver instalaciones
+        binding.cardViewInstalaciones.setOnClickListener {
+            findNavController().navigate(R.id.action_menu_to_instalaciones)
+        }
     }
 
     override fun onDestroyView() {

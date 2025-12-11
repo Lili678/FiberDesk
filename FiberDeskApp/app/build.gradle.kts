@@ -27,8 +27,8 @@ android {
         }
     }
     buildFeatures {
-        viewBinding = true     // ya lo tienes, está bien
-        dataBinding = true     // asegúrate de que esté activado
+        viewBinding = true
+        dataBinding = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

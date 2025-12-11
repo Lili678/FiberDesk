@@ -29,7 +29,7 @@ class MaterialAdapter(
             listener?.onItemLongClick(material) ?: false
         }
         holder.binding.txtMaterialDescription.text = material.descripcion ?: ""
-        holder.binding.txtMaterialDate.text = material.fechaRegistro ?: ""
+        holder.binding.txtMaterialDate.text = "Registrado: ${material.formatFecha()}"
     }
 
     override fun getItemCount() = items.size

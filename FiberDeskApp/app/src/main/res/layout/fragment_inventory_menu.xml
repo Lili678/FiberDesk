@@ -94,6 +94,51 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- Separador -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Instalaciones"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#0D47A1"
+                android:paddingTop="20dp"
+                android:paddingBottom="12dp" />
+
+            <!-- Card: Ver Instalaciones -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewInstalaciones"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#FFF3E0">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ver Instalaciones"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#E65100" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gestiona órdenes de trabajo e instalaciones"
+                        android:textSize="14sp"
+                        android:textColor="#6E6E6E"
+                        android:paddingTop="6dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
         </LinearLayout>
     </ScrollView>
 

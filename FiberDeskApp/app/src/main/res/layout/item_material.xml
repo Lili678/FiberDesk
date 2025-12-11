@@ -30,6 +30,24 @@
             android:text="Stock: 0"
             android:textSize="14sp"
             android:textColor="#333" />
+
+        <TextView
+            android:id="@+id/txtMaterialDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descripción breve del material"
+            android:textSize="13sp"
+            android:textColor="#616161"
+            android:paddingTop="4dp" />
+
+        <TextView
+            android:id="@+id/txtMaterialDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrado: 2025-12-10"
+            android:textSize="12sp"
+            android:textColor="#9E9E9E"
+            android:paddingTop="4dp" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

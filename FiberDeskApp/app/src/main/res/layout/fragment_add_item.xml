@@ -23,12 +23,30 @@
         android:padding="12dp"
         android:background="@android:drawable/edit_text" />
 
+    <EditText
+        android:id="@+id/etMaterialQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="Cantidad"
+        android:padding="12dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:drawable/edit_text" />
+
+    <EditText
+        android:id="@+id/etMaterialDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descripción (opcional)"
+        android:padding="12dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:drawable/edit_text" />
 
     <Button
         android:id="@+id/btnAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Agregar"
+        android:text="Guardar"
         android:layout_marginTop="16dp"
         android:backgroundTint="#1565C0"
         android:textColor="#FFFFFF" />

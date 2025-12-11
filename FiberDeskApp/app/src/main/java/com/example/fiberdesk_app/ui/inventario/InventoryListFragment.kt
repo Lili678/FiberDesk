@@ -8,12 +8,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.fiberdesk_app.adapters.MaterialAdapter
-import com.example.fiberdesk_app.databinding.FragmentInventoryListBinding
+import com.example.fiberdesk_app.databinding.FragmentMaterialsListBinding
 
 class InventoryListFragment : Fragment() {
 
-    private var _binding: FragmentInventoryListBinding? = null
+    private var _binding: FragmentMaterialsListBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: InventoryViewModel by viewModels()
@@ -23,14 +22,14 @@ class InventoryListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentInventoryListBinding.inflate(inflater, container, false)
+        _binding = FragmentMaterialsListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = MaterialAdapter(mutableListOf())
+        adapter = MaterialAdapter(emptyList())
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
 

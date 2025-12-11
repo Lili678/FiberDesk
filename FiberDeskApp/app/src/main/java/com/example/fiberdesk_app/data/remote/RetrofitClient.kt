@@ -4,7 +4,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://192.168.12.172:3000/api/"
+    // Note: backend mounts inventario routes under /api/inventario
+    private const val BASE_URL = "http://192.168.1.68:3000/api/inventario/"
 
     val inventarioApi: InventarioApi by lazy {
         Retrofit.Builder()

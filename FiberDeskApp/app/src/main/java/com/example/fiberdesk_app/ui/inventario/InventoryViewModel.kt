@@ -39,4 +39,38 @@ class InventoryViewModel : ViewModel() {
             }
         }
     }
+
+    fun agregarMaterial(material: Material) {
+        viewModelScope.launch {
+            try {
+                val creado = repository.addMaterial(material)
+                // refrescar lista
+                obtenerMateriales()
+            } catch (e: Exception) {
+                _error.postValue("Error al agregar: ${e.message}")
+            }
+        }
+    }
+
+    fun actualizarMaterial(id: String, material: Material) {
+        viewModelScope.launch {
+            try {
+                repository.updateMaterial(id, material)
+                obtenerMateriales()
+            } catch (e: Exception) {
+                _error.postValue("Error al actualizar: ${e.message}")
+            }
+        }
+    }
+
+    fun eliminarMaterial(id: String) {
+        viewModelScope.launch {
+            try {
+                repository.deleteMaterial(id)
+                obtenerMateriales()
+            } catch (e: Exception) {
+                _error.postValue("Error al eliminar: ${e.message}")
+            }
+        }
+    }
 }

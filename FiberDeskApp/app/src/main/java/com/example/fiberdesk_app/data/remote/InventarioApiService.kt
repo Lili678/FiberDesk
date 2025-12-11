@@ -8,4 +8,13 @@ interface InventarioApi {
     @GET("materiales")
     suspend fun getMateriales(): List<Material>
 
+    @POST("materiales")
+    suspend fun addMaterial(@Body material: Material): Material
+
+    @PUT("materiales/{id}")
+    suspend fun updateMaterial(@Path("id") id: String, @Body material: Material): Material
+
+    @DELETE("materiales/{id}")
+    suspend fun deleteMaterial(@Path("id") id: String)
+
 }

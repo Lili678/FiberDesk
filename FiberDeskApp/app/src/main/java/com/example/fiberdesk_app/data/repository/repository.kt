@@ -14,8 +14,6 @@ sealed class Result<out T> {
 
 class PagosRepository {
     
-    private val api = RetrofitClient.pagosApi
-    
     // Obtener todos los pagos
     suspend fun obtenerPagos(): Result<List<Pago>> = withContext(Dispatchers.IO) {
         try {

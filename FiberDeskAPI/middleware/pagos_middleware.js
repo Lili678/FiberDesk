@@ -1,37 +1,64 @@
-const { body, validationResult } = require('express-validator');
-
 // Validar crear pago
-const validarCrearPago = [
-    body('usuarioId').notEmpty().withMessage('Usuario ID es requerido'),
-    body('monto').isFloat({ min: 0.01 }).withMessage('Monto debe ser mayor a 0'),
-    body('abono').isFloat({ min: 0 }).withMessage('Abono debe ser 0 o mayor'),
-    body('metodoPago').isIn(['efectivo', 'transferencia', 'tarjeta', 'cheque']).withMessage('Método de pago inválido'),
-    body('fechaPago').isISO8601().withMessage('Fecha inválida'),
+const validarCrearPago = (req, res, next) => {
+    const { usuarioId, monto, abono, metodoPago, fechaPago } = req.body;
 
-    (req, res, next) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errores: errors.array() });
-        }
-        next();
+    const errores = [];
+
+    if (!usuarioId) {
+        errores.push({ campo: 'usuarioId', mensaje: 'Usuario ID es requerido' });
     }
-];
+
+    if (!monto || monto <= 0) {
+        errores.push({ campo: 'monto', mensaje: 'Monto debe ser mayor a 0' });
+    }
+
+    if (abono !== undefined && abono < 0) {
+        errores.push({ campo: 'abono', mensaje: 'Abono debe ser 0 o mayor' });
+    }
+
+    if (!metodoPago || !['efectivo', 'transferencia', 'tarjeta', 'cheque'].includes(metodoPago)) {
+        errores.push({ campo: 'metodoPago', mensaje: 'Método de pago inválido' });
+    }
+
+    if (!fechaPago) {
+        errores.push({ campo: 'fechaPago', mensaje: 'Fecha es requerida' });
+    }
+
+    if (errores.length > 0) {
+        return res.status(400).json({ errores });
+    }
+
+    next();
+};
 
 // Validar actualizar pago
-const validarActualizarPago = [
-    body('monto').optional().isFloat({ min: 0.01 }).withMessage('Monto debe ser mayor a 0'),
-    body('abono').optional().isFloat({ min: 0 }).withMessage('Abono debe ser 0 o mayor'),
-    body('metodoPago').optional().isIn(['efectivo', 'transferencia', 'tarjeta', 'cheque']).withMessage('Método de pago inválido'),
-    body('estado').optional().isIn(['pendiente', 'pagado', 'parcial']).withMessage('Estado inválido'),
+const validarActualizarPago = (req, res, next) => {
+    const { monto, abono, metodoPago, estado } = req.body;
 
-    (req, res, next) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errores: errors.array() });
-        }
-        next();
+    const errores = [];
+
+    if (monto !== undefined && monto <= 0) {
+        errores.push({ campo: 'monto', mensaje: 'Monto debe ser mayor a 0' });
     }
-];
+
+    if (abono !== undefined && abono < 0) {
+        errores.push({ campo: 'abono', mensaje: 'Abono debe ser 0 o mayor' });
+    }
+
+    if (metodoPago && !['efectivo', 'transferencia', 'tarjeta', 'cheque'].includes(metodoPago)) {
+        errores.push({ campo: 'metodoPago', mensaje: 'Método de pago inválido' });
+    }
+
+    if (estado && !['pendiente', 'pagado', 'parcial'].includes(estado)) {
+        errores.push({ campo: 'estado', mensaje: 'Estado inválido' });
+    }
+
+    if (errores.length > 0) {
+        return res.status(400).json({ errores });
+    }
+
+    next();
+};
 
 module.exports = {
     validarCrearPago,

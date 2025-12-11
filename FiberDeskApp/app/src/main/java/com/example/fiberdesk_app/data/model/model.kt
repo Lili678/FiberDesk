@@ -7,9 +7,6 @@ data class Pago(
     @SerializedName("_id")
     val _id: String? = null,
     
-    @SerializedName("id")
-    val id: String? = null,
-    
     @SerializedName("usuarioId")
     val usuarioId: String,
     

@@ -186,7 +186,7 @@ class PagosFragment : Fragment() {
                         metodoPago = metodoPago,
                         descripcion = descripcion
                     )
-                    viewModel.actualizarPago(pago._id ?: pago.id ?: "", actualizarPago)
+                    viewModel.actualizarPago(pago._id ?: "", actualizarPago)
                 }
                 
                 dialog.dismiss()
@@ -201,7 +201,7 @@ class PagosFragment : Fragment() {
             .setTitle("Eliminar Pago")
             .setMessage("¿Estás seguro de que deseas eliminar este pago?\n\nMonto: $${pago.monto}")
             .setPositiveButton("Eliminar") { _, _ ->
-                viewModel.eliminarPago(pago._id ?: pago.id ?: "")
+                viewModel.eliminarPago(pago._id ?: "")
             }
             .setNegativeButton("Cancelar", null)
             .show()

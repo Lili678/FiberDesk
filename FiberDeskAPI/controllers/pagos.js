@@ -1,5 +1,4 @@
 const Pago = require('../models/pagos_schema');
-const { v4: uuidv4 } = require('uuid'); // npm install uuid
 
 // CREATE - Crear nuevo pago
 exports.crearPago = async(req, res) => {
@@ -7,7 +6,6 @@ exports.crearPago = async(req, res) => {
         const { usuarioId, monto, abono, metodoPago, fechaPago, descripcion } = req.body;
 
         const nuevoPago = new Pago({
-            id: uuidv4(),
             usuarioId,
             monto,
             abono,
@@ -30,7 +28,7 @@ exports.crearPago = async(req, res) => {
 // READ - Obtener todos los pagos
 exports.obtenerPagos = async(req, res) => {
     try {
-        const pagos = await Pago.find().populate('usuarioId', 'nombre email');
+        const pagos = await Pago.find();
         res.status(200).json(pagos);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -40,7 +38,7 @@ exports.obtenerPagos = async(req, res) => {
 // READ - Obtener pago por ID
 exports.obtenerPagoPorId = async(req, res) => {
     try {
-        const pago = await Pago.findById(req.params.id).populate('usuarioId', 'nombre email');
+        const pago = await Pago.findById(req.params.id);
         if (!pago) {
             return res.status(404).json({ mensaje: 'Pago no encontrado' });
         }
@@ -64,11 +62,11 @@ exports.actualizarPago = async(req, res) => {
         // Luego actualizar con los nuevos valores
         const pago = await Pago.findByIdAndUpdate(
             req.params.id, {
-                monto: monto ?? pagoActual.monto,
-                abono: abono ?? pagoActual.abono,
-                metodoPago: metodoPago ?? pagoActual.metodoPago,
-                estado: estado ?? pagoActual.estado,
-                descripcion: descripcion ?? pagoActual.descripcion,
+                monto: monto !== undefined ? monto : pagoActual.monto,
+                abono: abono !== undefined ? abono : pagoActual.abono,
+                metodoPago: metodoPago || pagoActual.metodoPago,
+                estado: estado || pagoActual.estado,
+                descripcion: descripcion !== undefined ? descripcion : pagoActual.descripcion,
                 updatedAt: Date.now()
             }, { new: true }
         );

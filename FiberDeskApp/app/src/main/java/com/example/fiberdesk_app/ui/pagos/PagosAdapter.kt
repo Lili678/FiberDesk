@@ -105,7 +105,7 @@ class PagosAdapter(
     
     class PagoDiffCallback : DiffUtil.ItemCallback<Pago>() {
         override fun areItemsTheSame(oldItem: Pago, newItem: Pago): Boolean {
-            return oldItem._id == newItem._id || oldItem.id == newItem.id
+            return oldItem._id == newItem._id
         }
         
         override fun areContentsTheSame(oldItem: Pago, newItem: Pago): Boolean {

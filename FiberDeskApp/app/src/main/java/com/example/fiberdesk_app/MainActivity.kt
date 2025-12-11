@@ -3,8 +3,12 @@ package com.example.fiberdesk_app
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fiberdesk_app.ui.pagos.PagosFragment
+import com.example.fiberdesk_app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -15,5 +19,8 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragment_container, PagosFragment())
                 .commit()
         }
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 }

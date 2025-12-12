@@ -3,23 +3,31 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+const inventarioRoutes = require('./routes/inventario.routes');
+const instalacionRoutes = require('./routes/instalacion.routes');
+const authRoutes = require('./middleware/auth');
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Conexión Mongo
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("Mongo conectado correctamente"))
-  .catch(err => console.error("Error al conectar Mongo:", err));
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/fiberdesk';
 
-// Rutas
-app.use('/api', require('./routes'));
+mongoose.connect(MONGO_URI)
+  .then(() => console.log("Mongo conectado correctamente ->", MONGO_URI))
+  .catch(err => {
+    console.error("Error al conectar Mongo:", err);
+    console.error("Asegúrese de tener MongoDB en ejecución y/o definir MONGO_URI en un archivo .env");
+    process.exit(1);
+  });
 
-// Iniciar servidor
+app.use('/api/auth', authRoutes);
+app.use('/api/inventario', inventarioRoutes);
+app.use('/api/instalaciones', instalacionRoutes);
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
   console.log(`Servidor backend corriendo en puerto ${PORT}`);
-  console.log(`Accesible desde: http://192.168.1.99:${PORT}/api/`);
 });
 //192.168.1.99 - Wifimex
 //10.54.133.141 - Emulador Virtual

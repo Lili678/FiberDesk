@@ -1,6 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph.xml">
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmentInventario">
 
+    <!-- Pantalla principal del inventario -->
+    <fragment
+        android:id="@+id/fragmentInventario"
+        android:name="com.example.fiberdesk_app.ui.inventario.FragmentInventario"
+        android:label="Inventario">
+        <action
+            android:id="@+id/action_inventario_to_menu"
+            app:destination="@id/inventoryMenuFragment" />
+        <action
+            android:id="@+id/action_inventario_to_instalaciones"
+            app:destination="@id/instalacionesListFragment" />
+    </fragment>
+
+    <!-- Menú de Gestión del Inventario -->
+    <fragment
+        android:id="@+id/inventoryMenuFragment"
+        android:name="com.example.fiberdesk_app.ui.inventario.InventoryMenuFragment"
+        android:label="Menú Inventario">
+        <action
+            android:id="@+id/action_menu_to_list"
+            app:destination="@id/materialsListFragment" />
+        <action
+            android:id="@+id/action_menu_to_add"
+            app:destination="@id/addItemFragment" />
+        <action
+            android:id="@+id/action_menu_to_instalaciones"
+            app:destination="@id/instalacionesListFragment" />
+    </fragment>
+
+    <!-- Lista de materiales -->
+    <fragment
+        android:id="@+id/materialsListFragment"
+        android:name="com.example.fiberdesk_app.ui.inventario.MaterialsListFragment"
+        android:label="Lista de Materiales" />
+
+    <!-- Agregar Material -->
+    <fragment
+        android:id="@+id/addItemFragment"
+        android:name="com.example.fiberdesk_app.ui.inventario.AddItemFragment"
+        android:label="Agregar Material" />
+
+    <!-- Lista de Instalaciones -->
+    <fragment
+        android:id="@+id/instalacionesListFragment"
+        android:name="com.example.fiberdesk_app.ui.inventario.InstalacionesListFragment"
+        android:label="Instalaciones">
+        <action
+            android:id="@+id/action_instalaciones_to_create"
+            app:destination="@id/createInstalacionFragment" />
+        <action
+            android:id="@+id/action_instalaciones_to_useMaterial"
+            app:destination="@id/useMaterialFragment" />
+    </fragment>
+
+    <!-- Crear Instalación -->
+    <fragment
+        android:id="@+id/createInstalacionFragment"
+        android:name="com.example.fiberdesk_app.ui.inventario.CreateInstalacionFragment"
+        android:label="Nueva Instalación" />
+
+    <!-- Usar Material -->
+    <fragment
+        android:id="@+id/useMaterialFragment"
+        android:name="com.example.fiberdesk_app.ui.inventario.UseMaterialFragment"
+        android:label="Usar Material" />
 </navigation>

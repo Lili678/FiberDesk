@@ -6,8 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ClientesAdapter(private var listaClientes: ArrayList<Cliente>) :
-    RecyclerView.Adapter<ClientesAdapter.ViewHolder>() {
+class ClientesAdapter(
+    private var listaClientes: ArrayList<Cliente>,
+    private val onItemClick: (Cliente) -> Unit // <- NUEVO: Evento de clic
+) : RecyclerView.Adapter<ClientesAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvNombre: TextView = view.findViewById(R.id.tvNombreCliente)
@@ -23,16 +25,19 @@ class ClientesAdapter(private var listaClientes: ArrayList<Cliente>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val cliente = listaClientes[position]
-        holder.tvNombre.text = cliente.nombre
-        holder.tvDireccion.text = cliente.direccion
+
+        holder.tvNombre.text = "${cliente.nombre} ${cliente.apellidos}"
+        holder.tvDireccion.text = "${cliente.calle} ${cliente.numExterior}, ${cliente.colonia}"
         holder.tvTelefono.text = cliente.telefono
+
+        // DETECTAR EL CLIC
+        holder.itemView.setOnClickListener {
+            onItemClick(cliente)
+        }
     }
 
-    override fun getItemCount(): Int {
-        return listaClientes.size
-    }
+    override fun getItemCount(): Int = listaClientes.size
 
-    // Función para el buscador
     fun actualizarLista(nuevaLista: ArrayList<Cliente>) {
         listaClientes = nuevaLista
         notifyDataSetChanged()

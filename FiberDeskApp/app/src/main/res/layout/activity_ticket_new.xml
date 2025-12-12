@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Botón Regresar -->
+        <Button
+            android:id="@+id/btnRegresar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← Regresar"
+            android:backgroundTint="#3F274E"
+            android:textStyle="bold"
+            android:padding="6dp"
+            android:layout_marginBottom="10dp"/>
+
+        <!-- Título -->
+        <TextView
+            android:text="Nuevo Ticket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingBottom="12dp"/>
+
+        <!-- Cliente -->
+        <TextView
+            android:text="Cliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/edtCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre del cliente"
+            android:inputType="textPersonName"/>
+
+        <!-- Asunto -->
+        <TextView
+            android:text="Asunto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"/>
+        <EditText
+            android:id="@+id/edtAsunto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Asunto del ticket"/>
+
+        <!-- Prioridad -->
+        <TextView
+            android:text="Prioridad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"/>
+        <Spinner
+            android:id="@+id/spnPrioridad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!-- Descripción -->
+        <TextView
+            android:text="Descripción"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"/>
+        <EditText
+            android:id="@+id/edtDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="3"
+            android:hint="Describe el problema"/>
+
+        <!-- Técnico -->
+        <TextView
+            android:text="Técnico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"/>
+        <EditText
+            android:id="@+id/edtTecnico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre del técnico asignado"
+            android:inputType="textPersonName"/>
+
+        <!-- Botón Crear -->
+        <Button
+            android:id="@+id/btnCrear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Crear Ticket"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+</ScrollView>

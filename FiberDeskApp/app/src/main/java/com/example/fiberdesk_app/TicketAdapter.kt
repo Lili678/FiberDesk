@@ -1,47 +1,49 @@
 package com.example.fiberdesk_app
-import android.content.Intent
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fiberdesk_app.R
-import com.example.fiberdesk_app.TicketDetailActivity
-import com.example.fiberdesk_app.Ticket
 
-class TicketAdapter(private val tickets: List<Ticket>) :
-    RecyclerView.Adapter<TicketAdapter.TicketViewHolder>() {
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): TicketViewHolder {
-        TODO("Not yet implemented")
+class TicketAdapter(
+    private var tickets: List<Ticket>,
+    private val onArchivarClick: (Ticket) -> Unit     // <-- callback
+) : RecyclerView.Adapter<TicketAdapter.TicketViewHolder>() {
+
+    inner class TicketViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val txtFolio: TextView = itemView.findViewById(R.id.txtFolio)
+        val txtCliente: TextView = itemView.findViewById(R.id.txtCliente)
+        val txtAsunto: TextView = itemView.findViewById(R.id.txtAsunto)
+        val txtArchivar: TextView = itemView.findViewById(R.id.txtArchivar)
     }
 
-    // ... (Métodos onCreateViewHolder y getItemCount omitidos por brevedad) ...
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_ticket, parent, false)
+        return TicketViewHolder(view)
+    }
 
     override fun onBindViewHolder(holder: TicketViewHolder, position: Int) {
-        val ticket = tickets[position]
+        val t = tickets[position]
 
-        // Asignación de datos visibles en la lista
-        // (Ya tienes la lógica de asignación de Folio, Cliente y color de Prioridad aquí)
+        holder.txtFolio.text = t.folio
+        holder.txtCliente.text = t.cliente
+        holder.txtAsunto.text = t.asunto
+        holder.txtArchivar.text = if (t.archivado) "Archivado" else "Archivar"
 
-        holder.itemView.setOnClickListener {
-            // 1. Crear el Intent para ir a la actividad de detalles
-            val intent = Intent(holder.itemView.context, TicketDetailActivity::class.java).apply {
-                // 2. Adjuntar el objeto Ticket completo al Intent
-                // La clave "TICKET_EXTRA" se usa para recuperarlo después
-                putExtra("TICKET_EXTRA", ticket)
+        // --- Evento Archivar ---
+        holder.txtArchivar.setOnClickListener {
+            if (!t.archivado) {
+                onArchivarClick(t)     // <--- Enviar el ticket a la Activity
             }
-            // 3. Iniciar la actividad
-            holder.itemView.context.startActivity(intent)
         }
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun getItemCount(): Int = tickets.size
 
-    class TicketViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // ... (Define aquí tus TextViews del item_ticket.xml: ticketCode, statusCircle, etc.) ...
+    fun actualizarLista(nuevaLista: List<Ticket>) {
+        tickets = nuevaLista
+        notifyDataSetChanged()
     }
 }

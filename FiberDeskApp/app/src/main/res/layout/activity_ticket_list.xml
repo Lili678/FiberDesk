@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#E8EEF8">
+
+    <!-- Título -->
+    <TextView
+        android:id="@+id/txtTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tickets"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:paddingBottom="8dp"/>
+
+    <!-- Botón Crear Ticket -->
+    <Button
+        android:id="@+id/btnCrearTicket"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="Crear Ticket"
+        android:textStyle="bold"
+        android:backgroundTint="#7F19D2"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Buscador -->
+    <EditText
+        android:id="@+id/edtBuscar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="Buscar…"
+        android:padding="10dp"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Lista de tickets -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTickets"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="10dp"/>
+
+</LinearLayout>

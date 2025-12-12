@@ -1,61 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="2dp">
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:background="#FFFFFF">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="16dp">
-
-        <View
-            android:id="@+id/status_circle"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:background="@drawable/circle_status_orange"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="4dp"/>
+        android:layout_weight="1">
 
         <TextView
-            android:id="@+id/ticket_code"
-            android:layout_width="0dp"
+            android:id="@+id/txtFolio"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="NITICKET-0043"
-            android:textSize="16sp"
+            android:text="Folio"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/status_circle"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/arrow_icon"/>
+            android:textSize="16sp"/>
 
         <TextView
-            android:id="@+id/ticket_subject"
-            android:layout_width="0dp"
+            android:id="@+id/txtCliente"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Fallo de conexión en sucursal"
-            android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
-            app:layout_constraintStart_toStartOf="@id/ticket_code"
-            app:layout_constraintTop_toBottomOf="@id/ticket_code"
-            app:layout_constraintEnd_toStartOf="@id/arrow_icon"/>
+            android:text="Cliente"/>
 
-        <ImageView
-            android:id="@+id/arrow_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_arrow_forward"
-            android:contentDescription="Ir a detalles"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+        <TextView
+            android:id="@+id/txtAsunto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Asunto"/>
+    </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/txtArchivar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Archivar"
+        android:textColor="#E74C3C"
+        android:textStyle="bold"
+        android:padding="6dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@android:color/transparent" />
+
+
+</LinearLayout>

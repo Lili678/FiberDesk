@@ -26,7 +26,7 @@ interface TicketService {
         @Query("query") query: String
     ): Call<List<Ticket>>
 
-    // Archivar ticket
+
     @PUT("api/tickets/archive/{folio}")
     fun archivarTicket(
         @Path("folio") folio: String

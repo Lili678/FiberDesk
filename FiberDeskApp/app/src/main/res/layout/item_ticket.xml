@@ -39,6 +39,11 @@
         android:layout_height="wrap_content"
         android:text="Archivar"
         android:textColor="#E74C3C"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:padding="6dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@android:color/transparent" />
+
 
 </LinearLayout>

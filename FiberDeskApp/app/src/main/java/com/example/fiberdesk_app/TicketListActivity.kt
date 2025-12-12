@@ -19,32 +19,30 @@ class TicketListActivity : AppCompatActivity() {
     private lateinit var adapter: TicketAdapter
     private lateinit var rvTickets: RecyclerView
     private lateinit var edtBuscar: EditText
-
     private lateinit var btnCrearTicket: Button
-
 
     private var listaOriginal = listOf<Ticket>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ticket_list)  // Asegúrate que este sea tu XML
+        setContentView(R.layout.activity_ticket_list)
 
         rvTickets = findViewById(R.id.rvTickets)
         edtBuscar = findViewById(R.id.edtBuscar)
+        btnCrearTicket = findViewById(R.id.btnCrearTicket)
 
-
-        adapter = TicketAdapter(listOf())
+        // **Adapter CORRECTO con callback**
+        adapter = TicketAdapter(listOf()) { ticketSeleccionado ->
+            archivarTicket(ticketSeleccionado)
+        }
         rvTickets.adapter = adapter
         rvTickets.layoutManager = LinearLayoutManager(this)
 
         cargarTickets()
-        btnCrearTicket = findViewById(R.id.btnCrearTicket)
 
         btnCrearTicket.setOnClickListener {
-            val intent = Intent(this, TicketNewActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, TicketNewActivity::class.java))
         }
-
 
         edtBuscar.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -56,11 +54,11 @@ class TicketListActivity : AppCompatActivity() {
             }
         })
     }
+
     override fun onResume() {
         super.onResume()
-        cargarTickets()   // <--- recarga cada que vuelves a la pantalla
+        cargarTickets()
     }
-
 
     private fun cargarTickets() {
         ApiClient.service.getTickets().enqueue(object : Callback<List<Ticket>> {
@@ -86,5 +84,23 @@ class TicketListActivity : AppCompatActivity() {
                     it.asunto.contains(texto, ignoreCase = true)
         }
         adapter.actualizarLista(filtrados)
+    }
+
+    private fun archivarTicket(ticket: Ticket) {
+        ApiClient.service.archivarTicket(ticket.folio)
+            .enqueue(object : Callback<Map<String, Any>> {
+                override fun onResponse(call: Call<Map<String, Any>>, response: Response<Map<String, Any>>) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(this@TicketListActivity, "Ticket archivado", Toast.LENGTH_SHORT).show()
+                        cargarTickets()
+                    } else {
+                        Toast.makeText(this@TicketListActivity, "Error al archivar", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<Map<String, Any>>, t: Throwable) {
+                    Toast.makeText(this@TicketListActivity, "Fallo conexión", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 }

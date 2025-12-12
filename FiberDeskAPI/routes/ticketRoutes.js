@@ -33,6 +33,7 @@ router.post("/", async (req, res) => {
     }
 });
 
+
 // PUT - Archivar ticket
 router.put("/archive/:folio", async (req, res) => {
     try {

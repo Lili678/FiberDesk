@@ -59,7 +59,7 @@ class TicketNewActivity : AppCompatActivity() {
         val tecnico = edtTecnico.text.toString().trim()
 
         if (cliente.isEmpty() || asunto.isEmpty() || descripcion.isEmpty()) {
-            Toast.makeText(this, "Completa todos los campos obligatorios", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
             return
         }
 

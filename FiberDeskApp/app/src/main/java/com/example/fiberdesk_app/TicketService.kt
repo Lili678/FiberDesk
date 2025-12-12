@@ -31,4 +31,5 @@ interface TicketService {
     fun archivarTicket(
         @Path("folio") folio: String
     ): Call<Map<String, Any>>
+
 }

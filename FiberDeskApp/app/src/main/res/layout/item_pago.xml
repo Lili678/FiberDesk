@@ -34,6 +34,20 @@
                 android:paddingHorizontal="12dp"
                 android:layout_marginEnd="8dp" />
 
+            <!-- Badge de prioridad -->
+            <TextView
+                android:id="@+id/tvPrioridad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MEDIO"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="#FFB300"
+                android:paddingVertical="4dp"
+                android:paddingHorizontal="12dp"
+                android:layout_marginEnd="8dp" />
+
             <TextView
                 android:id="@+id/tvMetodoPago"
                 android:layout_width="0dp"

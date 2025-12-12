@@ -10,6 +10,7 @@ data class Pago(
     val fechaPago: String, // ISO 8601 format
     val descripcion: String = "",
     val estado: String = "pendiente", // pendiente, pagado, parcial
+    val prioridad: String = "medio", // bajo, medio, alto, urgente
     val createdAt: String? = null,
     val updatedAt: String? = null
 )
@@ -27,7 +28,8 @@ data class CrearPagoRequest(
     val abono: Double,
     val metodoPago: String,
     val fechaPago: String,
-    val descripcion: String
+    val descripcion: String,
+    val prioridad: String = "medio"
 )
 
 // Request para actualizar un pago
@@ -36,7 +38,8 @@ data class ActualizarPagoRequest(
     val abono: Double? = null,
     val metodoPago: String? = null,
     val estado: String? = null,
-    val descripcion: String? = null
+    val descripcion: String? = null,
+    val prioridad: String? = null
 )
 
 // Enum para métodos de pago
@@ -61,6 +64,20 @@ enum class EstadoPago(val valor: String, val displayName: String) {
     
     companion object {
         fun fromValor(valor: String): EstadoPago? {
+            return values().find { it.valor == valor }
+        }
+    }
+}
+
+// Enum para prioridades de pago
+enum class Prioridad(val valor: String, val displayName: String, val color: String) {
+    BAJO("bajo", "Bajo", "#4CAF50"),
+    MEDIO("medio", "Medio", "#FFB300"),
+    ALTO("alto", "Alto", "#FF6F00"),
+    URGENTE("urgente", "Urgente", "#D32F2F");
+    
+    companion object {
+        fun fromValor(valor: String): Prioridad? {
             return values().find { it.valor == valor }
         }
     }

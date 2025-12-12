@@ -3,7 +3,7 @@ const Pago = require('../models/pagos_schema');
 // CREATE - Crear nuevo pago
 exports.crearPago = async(req, res) => {
     try {
-        const { usuarioId, monto, abono, metodoPago, fechaPago, descripcion } = req.body;
+        const { usuarioId, monto, abono, metodoPago, fechaPago, descripcion, prioridad } = req.body;
 
         const nuevoPago = new Pago({
             usuarioId,
@@ -12,6 +12,7 @@ exports.crearPago = async(req, res) => {
             metodoPago,
             fechaPago,
             descripcion,
+            prioridad: prioridad || 'medio',
             estado: abono >= monto ? 'pagado' : abono > 0 ? 'parcial' : 'pendiente'
         });
 
@@ -51,7 +52,7 @@ exports.obtenerPagoPorId = async(req, res) => {
 // UPDATE - Actualizar pago
 exports.actualizarPago = async(req, res) => {
     try {
-        const { monto, abono, metodoPago, estado, descripcion } = req.body;
+        const { monto, abono, metodoPago, estado, descripcion, prioridad } = req.body;
 
         // Primero obtener el pago actual
         const pagoActual = await Pago.findById(req.params.id);
@@ -66,6 +67,7 @@ exports.actualizarPago = async(req, res) => {
                 abono: abono !== undefined ? abono : pagoActual.abono,
                 metodoPago: metodoPago || pagoActual.metodoPago,
                 estado: estado || pagoActual.estado,
+                prioridad: prioridad || pagoActual.prioridad,
                 descripcion: descripcion !== undefined ? descripcion : pagoActual.descripcion,
                 updatedAt: Date.now()
             }, { new: true }

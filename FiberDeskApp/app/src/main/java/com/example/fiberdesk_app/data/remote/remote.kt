@@ -98,6 +98,7 @@ object PagosApiClient {
             put("metodoPago", pago.metodoPago)
             put("fechaPago", pago.fechaPago)
             put("descripcion", pago.descripcion)
+            put("prioridad", pago.prioridad)
         }
         
         val response = makeRequest("api/pagos", "POST", json.toString())
@@ -117,6 +118,7 @@ object PagosApiClient {
             pago.metodoPago?.let { put("metodoPago", it) }
             pago.estado?.let { put("estado", it) }
             pago.descripcion?.let { put("descripcion", it) }
+            pago.prioridad?.let { put("prioridad", it) }
         }
         
         val response = makeRequest("api/pagos/$id", "PUT", json.toString())
@@ -146,6 +148,7 @@ object PagosApiClient {
             fechaPago = json.getString("fechaPago"),
             descripcion = json.optString("descripcion", ""),
             estado = json.optString("estado", "pendiente"),
+            prioridad = json.optString("prioridad", "medio"),
             createdAt = json.optString("createdAt"),
             updatedAt = json.optString("updatedAt")
         )

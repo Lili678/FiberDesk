@@ -92,6 +92,23 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Prioridad -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Prioridad"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_marginBottom="12dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/spinnerPrioridad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="Medio" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <!-- Fecha de Pago -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

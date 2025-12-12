@@ -34,6 +34,11 @@ const pagosSchema = new mongoose.Schema({
         enum: ['pendiente', 'pagado', 'parcial'],
         default: 'pendiente'
     },
+    prioridad: {
+        type: String,
+        enum: ['bajo', 'medio', 'alto', 'urgente'],
+        default: 'medio'
+    },
     createdAt: {
         type: Date,
         default: Date.now

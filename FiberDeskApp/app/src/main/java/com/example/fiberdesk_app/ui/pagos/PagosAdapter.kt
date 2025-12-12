@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fiberdesk_app.data.model.EstadoPago
 import com.example.fiberdesk_app.data.model.MetodoPago
 import com.example.fiberdesk_app.data.model.Pago
+import com.example.fiberdesk_app.data.model.Prioridad
 import com.example.fiberdesk_app.databinding.ItemPagoBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -54,6 +55,11 @@ class PagosAdapter(
                     binding.tvEstado.setBackgroundColor(Color.parseColor("#43A047"))
                 }
             }
+            
+            // Prioridad
+            val prioridad = Prioridad.fromValor(pago.prioridad)
+            binding.tvPrioridad.text = prioridad?.displayName?.uppercase() ?: pago.prioridad.uppercase()
+            binding.tvPrioridad.setBackgroundColor(Color.parseColor(prioridad?.color ?: "#FFB300"))
             
             // Método de pago
             val metodoPago = MetodoPago.fromValor(pago.metodoPago)

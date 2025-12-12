@@ -121,8 +121,13 @@ class PagosFragment : Fragment() {
         
         // Configurar spinner de método de pago
         val metodosPago = MetodoPago.values().map { it.displayName }
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, metodosPago)
-        dialogBinding.spinnerMetodoPago.setAdapter(adapter)
+        val adapterMetodo = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, metodosPago)
+        dialogBinding.spinnerMetodoPago.setAdapter(adapterMetodo)
+        
+        // Configurar spinner de prioridad
+        val prioridades = Prioridad.values().map { it.displayName }
+        val adapterPrioridad = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, prioridades)
+        dialogBinding.spinnerPrioridad.setAdapter(adapterPrioridad)
         
         // Si es edición, llenar campos
         pago?.let {
@@ -134,6 +139,10 @@ class PagosFragment : Fragment() {
                 MetodoPago.fromValor(it.metodoPago)?.displayName ?: "Efectivo",
                 false
             )
+            dialogBinding.spinnerPrioridad.setText(
+                Prioridad.fromValor(it.prioridad)?.displayName ?: "Medio",
+                false
+            )
             dialogBinding.etFechaPago.setText(formatearFecha(it.fechaPago))
             dialogBinding.etDescripcion.setText(it.descripcion)
             dialogBinding.etUsuarioId.isEnabled = false
@@ -141,6 +150,7 @@ class PagosFragment : Fragment() {
             dialogBinding.tvTitulo.text = "Nuevo Pago"
             dialogBinding.etFechaPago.setText(obtenerFechaActual())
             dialogBinding.spinnerMetodoPago.setText("Efectivo", false)
+            dialogBinding.spinnerPrioridad.setText("Medio", false)
         }
         
         // Configurar selector de fecha
@@ -164,6 +174,7 @@ class PagosFragment : Fragment() {
                 val monto = dialogBinding.etMonto.text.toString().toDouble()
                 val abono = dialogBinding.etAbono.text.toString().toDoubleOrNull() ?: 0.0
                 val metodoPago = obtenerMetodoPagoValor(dialogBinding.spinnerMetodoPago.text.toString())
+                val prioridad = obtenerPrioridadValor(dialogBinding.spinnerPrioridad.text.toString())
                 val fechaPago = convertirFechaISO(dialogBinding.etFechaPago.text.toString())
                 val descripcion = dialogBinding.etDescripcion.text.toString()
                 
@@ -175,7 +186,8 @@ class PagosFragment : Fragment() {
                         abono = abono,
                         metodoPago = metodoPago,
                         fechaPago = fechaPago,
-                        descripcion = descripcion
+                        descripcion = descripcion,
+                        prioridad = prioridad
                     )
                     viewModel.crearPago(nuevoPago)
                 } else {
@@ -184,7 +196,8 @@ class PagosFragment : Fragment() {
                         monto = monto,
                         abono = abono,
                         metodoPago = metodoPago,
-                        descripcion = descripcion
+                        descripcion = descripcion,
+                        prioridad = prioridad
                     )
                     viewModel.actualizarPago(pago._id ?: "", actualizarPago)
                 }
@@ -274,6 +287,10 @@ class PagosFragment : Fragment() {
     
     private fun obtenerMetodoPagoValor(displayName: String): String {
         return MetodoPago.values().find { it.displayName == displayName }?.valor ?: "efectivo"
+    }
+    
+    private fun obtenerPrioridadValor(displayName: String): String {
+        return Prioridad.values().find { it.displayName == displayName }?.valor ?: "medio"
     }
     
     override fun onDestroyView() {

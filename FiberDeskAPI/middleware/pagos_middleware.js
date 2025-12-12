@@ -1,6 +1,6 @@
 // Validar crear pago
 const validarCrearPago = (req, res, next) => {
-    const { usuarioId, monto, abono, metodoPago, fechaPago } = req.body;
+    const { usuarioId, monto, abono, metodoPago, fechaPago, prioridad } = req.body;
 
     const errores = [];
 
@@ -24,6 +24,10 @@ const validarCrearPago = (req, res, next) => {
         errores.push({ campo: 'fechaPago', mensaje: 'Fecha es requerida' });
     }
 
+    if (prioridad && !['bajo', 'medio', 'alto', 'urgente'].includes(prioridad)) {
+        errores.push({ campo: 'prioridad', mensaje: 'Prioridad inválida. Debe ser: bajo, medio, alto o urgente' });
+    }
+
     if (errores.length > 0) {
         return res.status(400).json({ errores });
     }
@@ -33,7 +37,7 @@ const validarCrearPago = (req, res, next) => {
 
 // Validar actualizar pago
 const validarActualizarPago = (req, res, next) => {
-    const { monto, abono, metodoPago, estado } = req.body;
+    const { monto, abono, metodoPago, estado, prioridad } = req.body;
 
     const errores = [];
 
@@ -51,6 +55,10 @@ const validarActualizarPago = (req, res, next) => {
 
     if (estado && !['pendiente', 'pagado', 'parcial'].includes(estado)) {
         errores.push({ campo: 'estado', mensaje: 'Estado inválido' });
+    }
+
+    if (prioridad && !['bajo', 'medio', 'alto', 'urgente'].includes(prioridad)) {
+        errores.push({ campo: 'prioridad', mensaje: 'Prioridad inválida. Debe ser: bajo, medio, alto o urgente' });
     }
 
     if (errores.length > 0) {

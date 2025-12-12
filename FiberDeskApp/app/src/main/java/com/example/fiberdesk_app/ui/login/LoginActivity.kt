@@ -11,8 +11,9 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.fiberdesk_app.HomeActivity
 import com.example.fiberdesk_app.R
-import com.example.fiberdesk_app.viewmodels.LoginViewModel
+import com.example.fiberdesk_app.viewmodel.LoginViewModel
 import com.google.android.material.textfield.TextInputEditText
 
 class LoginActivity : AppCompatActivity() {
@@ -28,6 +29,16 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // Verificar si el usuario ya está logueado
+        val sharedPref = getSharedPreferences("AuthPrefs", MODE_PRIVATE)
+        val token = sharedPref.getString("token", null)
+        if (!token.isNullOrEmpty()) {
+            // Ya tiene sesión, ir directamente a Home
+            navegarAHome()
+            return
+        }
+        
         setContentView(R.layout.activity_login)
 
         // Inicializar ViewModel
@@ -49,13 +60,18 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        txtCorreo = findViewById(R.id.txtCorreo)
-        txtContrasena = findViewById(R.id.txtContrasena)
-        btnLogin = findViewById(R.id.btnLogin)
-        txtIrRegistro = findViewById(R.id.txtIrRegistro)
-        txtOlvidaste = findViewById(R.id.txtOlvidaste)
-        checkRecordarme = findViewById(R.id.checkRecordarme)
-        progressBar = findViewById(R.id.progressBar)
+        try {
+            txtCorreo = findViewById(R.id.txtCorreo)
+            txtContrasena = findViewById(R.id.txtContrasena)
+            btnLogin = findViewById(R.id.btnLogin)
+            txtIrRegistro = findViewById(R.id.txtIrRegistro)
+            txtOlvidaste = findViewById(R.id.txtOlvidaste)
+            checkRecordarme = findViewById(R.id.checkRecordarme)
+            progressBar = findViewById(R.id.progressBar)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error al inicializar vistas: ${e.message}", Toast.LENGTH_LONG).show()
+            e.printStackTrace()
+        }
     }
 
     private fun setupObservers() {

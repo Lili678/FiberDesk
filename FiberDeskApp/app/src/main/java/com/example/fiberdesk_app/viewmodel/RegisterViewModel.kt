@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fiberdesk_app.models.UsuarioData
-import com.example.fiberdesk_app.repositories.AuthRepository
+import com.example.fiberdesk_app.repository.AuthRepository
 import kotlinx.coroutines.launch
 
 class RegisterViewModel : ViewModel() {

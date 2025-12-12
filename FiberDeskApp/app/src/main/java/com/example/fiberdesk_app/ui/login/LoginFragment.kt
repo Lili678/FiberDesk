@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.fiberdesk_app.MainActivity
+import com.example.fiberdesk_app.HomeActivity
 import com.example.fiberdesk_app.databinding.FragmentLoginBinding
-import com.example.fiberdesk_app.viewmodels.LoginViewModel
+import com.example.fiberdesk_app.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
 
@@ -71,9 +71,17 @@ class LoginFragment : Fragment() {
 
             if (user != null) {
                 Toast.makeText(requireContext(), "Bienvenido ${user.nombre}", Toast.LENGTH_SHORT).show()
+                
+                // Guardar token
+                val sharedPref = requireContext().getSharedPreferences("AuthPrefs", android.content.Context.MODE_PRIVATE)
+                with(sharedPref.edit()) {
+                    putString("token", user.token)
+                    putString("userName", user.nombre)
+                    apply()
+                }
 
-                // Navegar a MainActivity
-                val intent = Intent(requireContext(), MainActivity::class.java)
+                // Navegar a HomeActivity
+                val intent = Intent(requireContext(), HomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 requireActivity().finish()

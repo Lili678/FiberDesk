@@ -14,4 +14,11 @@
     <color name="tickets_purple">#9B59B6</color>
     <color name="payments_teal">#1ABC9C</color>
     <color name="inventory_orange">#F39C12</color>
+    
+    <!-- Colores adicionales para inventario -->
+    <color name="pastel_purple">#B39DDB</color>
+    <color name="pastel_blue">#90CAF9</color>
+    <color name="accent_text">#5E35B1</color>
+    <color name="muted_text">#9E9E9E</color>
+    <color name="secondary_text">#757575</color>
 </resources>

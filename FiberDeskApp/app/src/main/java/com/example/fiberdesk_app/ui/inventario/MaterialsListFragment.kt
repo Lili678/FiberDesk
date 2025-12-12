@@ -81,7 +81,7 @@ class MaterialsListFragment : Fragment(), MaterialAdapter.OnItemActionListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_materials, menu)
+        inflater.inflate(R.menu.menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

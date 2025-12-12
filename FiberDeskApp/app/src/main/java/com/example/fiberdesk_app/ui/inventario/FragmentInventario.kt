@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.fiberdesk_app.R
 import com.example.fiberdesk_app.databinding.FragmentInventarioBinding
+import com.example.fiberdesk_app.viewmodel.InstalacionViewModel
 
 class FragmentInventario : Fragment() {
 

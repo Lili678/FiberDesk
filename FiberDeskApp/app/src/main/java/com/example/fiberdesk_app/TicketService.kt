@@ -10,7 +10,6 @@ import retrofit2.http.Query
 
 interface TicketService {
 
-
     // Crear ticket
     @POST("api/tickets")
     fun crearTicket(

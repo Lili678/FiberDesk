@@ -9,6 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Botón Regresar -->
+        <Button
+            android:id="@+id/btnRegresar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← Regresar"
+            android:backgroundTint="#3F274E"
+            android:textStyle="bold"
+            android:padding="6dp"
+            android:layout_marginBottom="10dp"/>
+
         <!-- Título -->
         <TextView
             android:text="Nuevo Ticket"
@@ -23,7 +34,6 @@
             android:text="Cliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
         <EditText
             android:id="@+id/edtCliente"
             android:layout_width="match_parent"
@@ -37,20 +47,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"/>
-
         <EditText
             android:id="@+id/edtAsunto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Asunto del ticket"/>
 
-        <!-- Prioridad (Spinner) -->
+        <!-- Prioridad -->
         <TextView
             android:text="Prioridad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"/>
-
         <Spinner
             android:id="@+id/spnPrioridad"
             android:layout_width="match_parent"
@@ -62,7 +70,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"/>
-
         <EditText
             android:id="@+id/edtDescripcion"
             android:layout_width="match_parent"
@@ -76,7 +83,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"/>
-
         <EditText
             android:id="@+id/edtTecnico"
             android:layout_width="match_parent"
@@ -84,13 +90,13 @@
             android:hint="Nombre del técnico asignado"
             android:inputType="textPersonName"/>
 
-        <!-- Botón -->
+        <!-- Botón Crear -->
         <Button
             android:id="@+id/btnCrear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Crear Ticket"
             android:layout_marginTop="20dp"/>
-    </LinearLayout>
 
+    </LinearLayout>
 </ScrollView>

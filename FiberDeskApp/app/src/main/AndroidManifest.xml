@@ -13,7 +13,7 @@
         android:theme="@style/Theme.FiberDeskApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".TicketNewActivity"
+            android:name=".TicketListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".TicketNewActivity" />
+
     </application>
 
 </manifest>

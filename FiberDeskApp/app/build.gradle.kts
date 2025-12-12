@@ -20,16 +20,21 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
         // dataBinding = true  // si luego lo necesitas
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:3000/api/\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"http://10.54.133.141:3000/api/\"")
         }
     }
 

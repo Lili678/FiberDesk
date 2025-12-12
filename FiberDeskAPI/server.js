@@ -16,6 +16,10 @@ mongoose.connect(process.env.MONGO_URI)
 app.use('/api', require('./routes'));
 
 // Iniciar servidor
-app.listen(3000, () => {
-  console.log("Servidor backend corriendo en puerto 3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Servidor backend corriendo en puerto ${PORT}`);
+  console.log(`Accesible desde: http://192.168.1.99:${PORT}/api/`);
 });
+//192.168.1.99 - Wifimex
+//10.54.133.141 - Emulador Virtual

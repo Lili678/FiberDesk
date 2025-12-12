@@ -13,7 +13,7 @@ interface ApiService {
     @POST("api/clientes")
     fun registrarCliente(@Body cliente: Cliente): Call<Void>
 
-    // Ejemplo para obtener inventario (para tu Dashboard)
-    // @GET("api/inventario")
-    // fun obtenerInventario(): Call<List<Material>>
+    // Obtener la lista de clientes guardados
+    @GET("api/clientes")
+    fun obtenerClientes(): Call<List<Cliente>>
 }

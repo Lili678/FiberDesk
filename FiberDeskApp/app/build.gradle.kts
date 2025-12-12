@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.fiberdesk_app"
-        minSdk = 35
+        minSdk = 24
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -45,11 +45,12 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    dependencies {
-        // ... aquí habrá otras líneas que ya existen (core-ktx, appcompat, etc.) ...
 
-        // LIBRERÍAS DE GOOGLE MAPS Y UBICACIÓN (¡AGREGA ESTAS!)
-        implementation("com.google.android.gms:play-services-maps:18.2.0")
-        implementation("com.google.android.gms:play-services-location:21.0.1")
-    }
+    // LIBRERÍAS DE GOOGLE MAPS Y UBICACIÓN
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
+    // RETROFIT (Conexión con API)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 }

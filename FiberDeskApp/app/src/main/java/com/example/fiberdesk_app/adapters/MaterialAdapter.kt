@@ -1,5 +1,9 @@
 package com.example.fiberdesk_app.adapters
 
+// MÓDULO DE INVENTARIO DESHABILITADO TEMPORALMENTE
+// Enfocado en módulo de pagos únicamente
+
+/*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,4 +39,4 @@ class MaterialAdapter(
         notifyDataSetChanged()
     }
 }
-
+*/

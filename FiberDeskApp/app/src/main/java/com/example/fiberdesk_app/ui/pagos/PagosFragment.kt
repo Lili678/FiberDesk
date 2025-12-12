@@ -136,8 +136,8 @@ class PagosFragment : Fragment() {
             )
             dialogBinding.etFechaPago.setText(formatearFecha(it.fechaPago))
             dialogBinding.etDescripcion.setText(it.descripcion)
-            dialogBinding.etUsuarioId.isEnabled = false // No permitir cambiar usuario en edición
-        } else {
+            dialogBinding.etUsuarioId.isEnabled = false
+        } ?: run {
             dialogBinding.tvTitulo.text = "Nuevo Pago"
             dialogBinding.etFechaPago.setText(obtenerFechaActual())
             dialogBinding.spinnerMetodoPago.setText("Efectivo", false)
@@ -274,11 +274,6 @@ class PagosFragment : Fragment() {
     
     private fun obtenerMetodoPagoValor(displayName: String): String {
         return MetodoPago.values().find { it.displayName == displayName }?.valor ?: "efectivo"
-    }
-    
-    private fun obtenerFechaActual(): String {
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        return sdf.format(Date())
     }
     
     override fun onDestroyView() {

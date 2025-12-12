@@ -44,4 +44,4 @@ const pagosSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Pago', pagosSchema);
+module.exports = mongoose.model('Pagos', pagosSchema);

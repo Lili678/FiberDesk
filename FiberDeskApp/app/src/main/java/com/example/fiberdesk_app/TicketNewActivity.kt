@@ -63,6 +63,7 @@ class TicketNewActivity : AppCompatActivity() {
             return
         }
 
+
         val nuevoTicket = Ticket(
             folio = generarFolio(),
             cliente = cliente,

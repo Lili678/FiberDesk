@@ -9,137 +9,145 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F0F7FF"
+        android:background="@color/white"
         android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- HEADER -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:background="@drawable/header_gradient">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="Inventario"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white" />
+            </FrameLayout>
+
+            <!-- CONTENIDO -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Menú de Inventario"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:textColor="#0D47A1"
-                android:paddingBottom="16dp" />
+                android:padding="16dp"
+                android:orientation="vertical">
 
-            <!-- Card: Ver Materiales -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewList"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginBottom="12dp"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="3dp"
-                app:cardBackgroundColor="#E3F2FD">
-
-                <LinearLayout
+                <!-- Card: Ver Materiales -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewList"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_height="120dp"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="3dp"
+                    app:cardBackgroundColor="#E3F2FD">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ver Materiales"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="#0D47A1" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Consulta y edita tus materiales de inventario"
-                        android:textSize="14sp"
-                        android:textColor="#6E6E6E"
-                        android:paddingTop="6dp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ver Materiales"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="#0D47A1" />
 
-            <!-- Card: Agregar Material -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewAdd"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="3dp"
-                app:cardBackgroundColor="#E8F5E9">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Consulta y edita tus materiales de inventario"
+                            android:textSize="14sp"
+                            android:textColor="#6E6E6E"
+                            android:paddingTop="6dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                <LinearLayout
+                <!-- Card: Ver Instalaciones -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewInstalaciones"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_height="120dp"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="3dp"
+                    app:cardBackgroundColor="#FFF3E0">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Agregar Material"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="#1B5E20" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Añade nuevos materiales al inventario"
-                        android:textSize="14sp"
-                        android:textColor="#6E6E6E"
-                        android:paddingTop="6dp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ver Instalaciones"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="#E65100" />
 
-            <!-- Separador -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Instalaciones"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#0D47A1"
-                android:paddingTop="20dp"
-                android:paddingBottom="12dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Gestiona instalaciones y usa materiales desde cada orden"
+                            android:textSize="14sp"
+                            android:textColor="#6E6E6E"
+                            android:paddingTop="6dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-            <!-- Card: Ver Instalaciones -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewInstalaciones"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginBottom="12dp"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="3dp"
-                app:cardBackgroundColor="#FFF3E0">
-
-                <LinearLayout
+                <!-- Card: Agregar Material -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewAdd"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_height="120dp"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="3dp"
+                    app:cardBackgroundColor="#E8F5E9">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ver Instalaciones"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="#E65100" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gestiona órdenes de trabajo e instalaciones"
-                        android:textSize="14sp"
-                        android:textColor="#6E6E6E"
-                        android:paddingTop="6dp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Agregar Material"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="#1B5E20" />
 
-        </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Añade nuevos materiales al inventario"
+                            android:textSize="14sp"
+                            android:textColor="#6E6E6E"
+                            android:paddingTop="6dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+
+            </LinearLayout> <!-- CIERRE del LinearLayout interno -->
+
+        </LinearLayout> <!-- CIERRE del LinearLayout PRINCIPAL -->
+
     </ScrollView>
 
 </layout>

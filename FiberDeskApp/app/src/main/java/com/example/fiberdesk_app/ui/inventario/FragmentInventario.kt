@@ -70,6 +70,14 @@ class FragmentInventario : Fragment() {
         binding.cardMisInstalaciones.setOnClickListener {
             findNavController().navigate(R.id.instalacionesListFragment)
         }
+
+        // Click en instalaciones completadas para filtrar
+        binding.txtInstCompletadas.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("filter_state", "completada")
+            }
+            findNavController().navigate(R.id.instalacionesListFragment, bundle)
+        }
     }
 
     private fun loadDashboardData() {

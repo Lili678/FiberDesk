@@ -15,6 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FiberDeskApp">
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -27,6 +28,8 @@
         <activity android:name=".ListaClientesActivity" />
         <activity android:name=".MapaPickerActivity" />
 
+        <activity android:name=".AgregarClienteActivity" />
+        <activity android:name=".DetalleClienteActivity" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="TU_CLAVE_API_AQUI" />

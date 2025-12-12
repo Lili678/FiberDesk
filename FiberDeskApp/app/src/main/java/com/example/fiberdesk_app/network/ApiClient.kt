@@ -1,6 +1,5 @@
 package com.example.fiberdesk_app.network
 
-import com.example.fiberdesk_app.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,8 +7,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
-    // Usa la URL definida en BuildConfig (debug/release)
-    private var BASE_URL = BuildConfig.BASE_URL
+    // Valor por defecto (emulador Android Studio)
+    private var BASE_URL = "http://10.0.2.2:3000/api/"
     // Token JWT que se inyecta en headers si existe
     private var token: String? = null
 

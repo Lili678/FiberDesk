@@ -25,9 +25,13 @@ app.use('/api/auth', authRoutes);
 app.use('/api/inventario', inventarioRoutes);
 app.use('/api/instalaciones', instalacionRoutes);
 
+<<<<<<< HEAD
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor backend corriendo en puerto ${PORT}`);
+=======
+// Iniciar servidor
+app.listen(3000, () => {
+  console.log("Servidor backend corriendo en puerto 3000");
+>>>>>>> parent of 804a3d9 (Login y Home conectados y funcionando)
 });
-//192.168.1.99 - Wifimex
-//10.54.133.141 - Emulador Virtual

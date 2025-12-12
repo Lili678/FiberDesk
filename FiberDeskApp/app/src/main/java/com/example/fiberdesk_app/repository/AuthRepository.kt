@@ -1,4 +1,4 @@
-package com.example.fiberdesk_app.repository
+package com.example.fiberdesk_app.repositories
 
 import com.example.fiberdesk_app.models.LoginRequest
 import com.example.fiberdesk_app.models.LoginResponse

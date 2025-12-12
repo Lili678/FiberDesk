@@ -56,7 +56,16 @@
         <action
             android:id="@+id/action_instalaciones_to_useMaterial"
             app:destination="@id/useMaterialFragment" />
+        <action
+            android:id="@+id/instalacionDetailFragment"
+            app:destination="@id/instalacionDetailFragment" />
     </fragment>
+
+    <!-- Detalle de Instalación (NUEVO) -->
+    <fragment
+        android:id="@+id/instalacionDetailFragment"
+        android:name="com.example.fiberdesk_app.ui.instalaciones.InstalacionDetailFragment"
+        android:label="Detalle de Instalación" />
 
     <!-- Crear Instalación -->
     <fragment

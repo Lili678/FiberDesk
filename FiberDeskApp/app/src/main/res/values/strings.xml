@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">FiberDesk-App</string>
+    <string-array name="estado_options">
+        <item>Pendiente</item>
+        <item>En Progreso</item>
+        <item>Completada</item>
+    </string-array>
 </resources>

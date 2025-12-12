@@ -8,7 +8,11 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 object RetrofitClient {
     // Note: backend mounts inventario routes under /api/inventario
-    private const val BASE_URL = "http://192.168.1.104:3000/api/"
+    //192.168.1.104 wifimex
+    //192.168.1.68 mia
+    //192.168.12.172 ccai
+
+    private const val BASE_URL = "http://192.168.12.172:3000/api/"
 
     private val logging = HttpLoggingInterceptor { message ->
         Log.d("Retrofit", message)

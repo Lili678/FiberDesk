@@ -6,7 +6,7 @@
     android:layout_marginBottom="8dp"
     app:cardCornerRadius="12dp"
     app:cardElevation="3dp"
-    android:background="#E3F2FD">
+    app:cardBackgroundColor="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Material"
-            android:textColor="#0D47A1"
+            android:textColor="@color/accent_text"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="Stock: 0"
             android:textSize="14sp"
-            android:textColor="#333" />
+            android:textColor="@color/accent_text" />
 
         <TextView
             android:id="@+id/txtMaterialDescription"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="Descripción breve del material"
             android:textSize="13sp"
-            android:textColor="#616161"
+            android:textColor="@color/muted_text"
             android:paddingTop="4dp" />
 
         <TextView
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:text="Registrado: 2025-12-10"
             android:textSize="12sp"
-            android:textColor="#9E9E9E"
+            android:textColor="@color/secondary_text"
             android:paddingTop="4dp" />
     </LinearLayout>
 

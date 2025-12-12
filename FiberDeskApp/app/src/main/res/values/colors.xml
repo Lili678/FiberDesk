@@ -2,4 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- Pastel palette -->
+    <color name="pastel_blue">#E3F2FD</color>
+    <color name="pastel_green">#E8F5E9</color>
+    <color name="pastel_orange">#FFF3E0</color>
+    <color name="pastel_yellow">#FFF9E6</color>
+    <color name="pastel_purple">#B39DDB</color>
+    <color name="accent_text">#0D47A1</color>
+    <color name="muted_text">#616161</color>
+    <color name="secondary_text">#9E9E9E</color>
 </resources>

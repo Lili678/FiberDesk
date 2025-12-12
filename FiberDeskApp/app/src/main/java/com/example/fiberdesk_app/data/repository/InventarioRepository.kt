@@ -1,26 +1,43 @@
-package com.example.fiberdesk_app.repository
+package com.example.fiberdesk_app.data.repository
 
+import android.content.Context
+import com.example.fiberdesk_app.data.local.LocalDataSource
 import com.example.fiberdesk_app.data.remote.RetrofitClient
 import com.example.fiberdesk_app.data.remote.UsarMaterialRequest
 import com.example.fiberdesk_app.data.remote.UpdateEstadoRequest
 import com.example.fiberdesk_app.data.model.Material
 import com.example.fiberdesk_app.data.model.Instalacion
 
-class InventarioRepository {
+class InventarioRepository(context: Context) {
+    private val local = LocalDataSource(context)
+
     suspend fun getMateriales(): List<Material> {
-        return RetrofitClient.inventarioApi.getMateriales()
+        return try {
+            val remote = RetrofitClient.inventarioApi.getMateriales()
+            // cache locally
+            remote.forEach { it._id?.let { _ -> local.saveMaterial(it) } }
+            remote
+        } catch (e: Exception) {
+            // fallback to local cache
+            local.getAllMaterials()
+        }
     }
 
     suspend fun addMaterial(material: Material): Material {
-        return RetrofitClient.inventarioApi.addMaterial(material)
+        val created = RetrofitClient.inventarioApi.addMaterial(material)
+        created._id?.let { local.saveMaterial(created) }
+        return created
     }
 
     suspend fun updateMaterial(id: String, material: Material): Material {
-        return RetrofitClient.inventarioApi.updateMaterial(id, material)
+        val updated = RetrofitClient.inventarioApi.updateMaterial(id, material)
+        updated._id?.let { local.saveMaterial(updated) }
+        return updated
     }
 
     suspend fun deleteMaterial(id: String) {
-        return RetrofitClient.inventarioApi.deleteMaterial(id)
+        RetrofitClient.inventarioApi.deleteMaterial(id)
+        local.deleteMaterial(id)
     }
 
     // Instalación

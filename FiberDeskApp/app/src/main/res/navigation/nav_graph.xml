@@ -2,9 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragmentInventario">
+    app:startDestination="@id/pagosFragment">
 
-    <!-- Pantalla principal del inventario -->
+    <!-- Módulo de Pagos -->
     <fragment
         android:id="@+id/fragmentInventario"
         android:name="com.example.fiberdesk_app.ui.inventario.FragmentInventario"
@@ -56,16 +56,7 @@
         <action
             android:id="@+id/action_instalaciones_to_useMaterial"
             app:destination="@id/useMaterialFragment" />
-        <action
-            android:id="@+id/instalacionDetailFragment"
-            app:destination="@id/instalacionDetailFragment" />
     </fragment>
-
-    <!-- Detalle de Instalación (NUEVO) -->
-    <fragment
-        android:id="@+id/instalacionDetailFragment"
-        android:name="com.example.fiberdesk_app.ui.instalaciones.InstalacionDetailFragment"
-        android:label="Detalle de Instalación" />
 
     <!-- Crear Instalación -->
     <fragment

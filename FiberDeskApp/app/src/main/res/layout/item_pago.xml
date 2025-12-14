@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header con estado -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Badge de estado -->
+            <TextView
+                android:id="@+id/tvEstado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PENDIENTE"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="#D32F2F"
+                android:paddingVertical="4dp"
+                android:paddingHorizontal="12dp"
+                android:layout_marginEnd="8dp" />
+
+            <!-- Badge de prioridad -->
+            <TextView
+                android:id="@+id/tvPrioridad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MEDIO"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="#FFB300"
+                android:paddingVertical="4dp"
+                android:paddingHorizontal="12dp"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tvMetodoPago"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Efectivo"
+                android:textSize="13sp"
+                android:textColor="#6E6E6E"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/tvFecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10/12/2025"
+                android:textSize="12sp"
+                android:textColor="#9E9E9E" />
+
+        </LinearLayout>
+
+        <!-- Monto y abono -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monto Total"
+                    android:textSize="12sp"
+                    android:textColor="#6E6E6E" />
+
+                <TextView
+                    android:id="@+id/tvMonto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$1,000.00"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#0D47A1"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Abonado"
+                    android:textSize="12sp"
+                    android:textColor="#6E6E6E" />
+
+                <TextView
+                    android:id="@+id/tvAbono"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$500.00"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#43A047"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Descripción -->
+        <TextView
+            android:id="@+id/tvDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pago de servicio mensual"
+            android:textSize="14sp"
+            android:textColor="#424242"
+            android:layout_marginTop="12dp"
+            android:maxLines="2"
+            android:ellipsize="end" />
+
+        <!-- Botones de acción -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="end">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEditar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Editar"
+                android:textSize="12sp"
+                app:cornerRadius="8dp"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_marginEnd="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEliminar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Eliminar"
+                android:textSize="12sp"
+                app:cornerRadius="8dp"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:textColor="#D32F2F" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -2,6 +2,7 @@ package com.example.fiberdesk_app.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
@@ -26,36 +27,53 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var txtOlvidaste: TextView
     private lateinit var checkRecordarme: CheckBox
     private lateinit var progressBar: ProgressBar
+    private lateinit var btnServerConfig: android.widget.ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // Verificar si el usuario ya está logueado
-        val sharedPref = getSharedPreferences("AuthPrefs", MODE_PRIVATE)
-        val token = sharedPref.getString("token", null)
-        if (!token.isNullOrEmpty()) {
-            // Ya tiene sesión, ir directamente a Home
-            navegarAHome()
-            return
+        // Forzar tema claro
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
         
-        setContentView(R.layout.activity_login)
+        try {
+            Log.d("LoginActivity", "onCreate iniciado")
+            
+            // Verificar si el usuario ya está logueado
+            val sharedPref = getSharedPreferences("AuthPrefs", MODE_PRIVATE)
+            val token = sharedPref.getString("token", null)
+            Log.d("LoginActivity", "Token encontrado: ${token?.take(10)}")
+            
+            if (!token.isNullOrEmpty()) {
+                // Ya tiene sesión, ir directamente a Home
+                Log.d("LoginActivity", "Navegando a Home")
+                navegarAHome()
+                return
+            }
+            
+            Log.d("LoginActivity", "Cargando layout de login")
+            setContentView(R.layout.activity_login)
 
-        // Inicializar ViewModel
-        viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+            // Inicializar ViewModel
+            viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
-        // Inicializar vistas
-        initViews()
+            // Inicializar vistas
+            initViews()
 
-        // Configurar observadores
-        setupObservers()
+            // Configurar observadores
+            setupObservers()
 
-        // Configurar listeners
-        setupListeners()
+            // Configurar listeners
+            setupListeners()
 
-        // Manejar el botón de atrás - en LoginActivity, cerrar la app
-        onBackPressedDispatcher.addCallback(this) {
-            finish()
+            // Manejar el botón de atrás - en LoginActivity, cerrar la app
+            onBackPressedDispatcher.addCallback(this) {
+                finish()
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error al iniciar: ${e.message}", Toast.LENGTH_LONG).show()
+            e.printStackTrace()
         }
     }
 
@@ -68,6 +86,7 @@ class LoginActivity : AppCompatActivity() {
             txtOlvidaste = findViewById(R.id.txtOlvidaste)
             checkRecordarme = findViewById(R.id.checkRecordarme)
             progressBar = findViewById(R.id.progressBar)
+            btnServerConfig = findViewById(R.id.btnServerConfig)
         } catch (e: Exception) {
             Toast.makeText(this, "Error al inicializar vistas: ${e.message}", Toast.LENGTH_LONG).show()
             e.printStackTrace()
@@ -97,7 +116,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Bienvenido ${it.nombre ?: it.correo}", Toast.LENGTH_SHORT).show()
                 
                 // Guardar token y datos de usuario en SharedPreferences
-                guardarDatosUsuario(it.token, it.nombre ?: it.correo)
+                guardarDatosUsuario(it)
                 
                 // Navegar a la pantalla principal
                 navegarAHome()
@@ -153,6 +172,12 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RecoverPasswordActivity::class.java)
             startActivity(intent)
         }
+        
+        // Configuración del servidor
+        btnServerConfig.setOnClickListener {
+            val intent = Intent(this, com.example.fiberdesk_app.ui.settings.ServerConfigActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun validarCampos(correo: String, contrasena: String): Boolean {
@@ -179,11 +204,13 @@ class LoginActivity : AppCompatActivity() {
         return true
     }
 
-    private fun guardarDatosUsuario(token: String, nombre: String) {
+    private fun guardarDatosUsuario(usuario: com.example.fiberdesk_app.models.UsuarioData) {
         val sharedPref = getSharedPreferences("AuthPrefs", MODE_PRIVATE)
         with(sharedPref.edit()) {
-            putString("token", token)
-            putString("userName", nombre)
+            putString("token", usuario.token)
+            putString("userName", usuario.nombre)
+            putString("userEmail", usuario.correo)
+            putString("userId", usuario._id)
             apply()
         }
     }

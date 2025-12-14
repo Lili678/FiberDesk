@@ -28,14 +28,14 @@ android {
         debug {
             buildConfigField("boolean", "DEBUG_MODE", "true")
             buildConfigField("String", "BASE_URL", "\"AUTO\"")
-            buildConfigField("String", "LOCAL_IP", "\"192.168.12.172\"")
+            buildConfigField("String", "LOCAL_IP", "\"192.168.1.64\"")
             buildConfigField("String", "API_PORT", "\"3000\"")
         }
         release {
             isMinifyEnabled = false
             buildConfigField("boolean", "DEBUG_MODE", "false")
             buildConfigField("String", "BASE_URL", "\"AUTO\"")
-            buildConfigField("String", "LOCAL_IP", "\"192.168.12.172\"")
+            buildConfigField("String", "LOCAL_IP", "\"192.168.1.64\"")
             buildConfigField("String", "API_PORT", "\"3000\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

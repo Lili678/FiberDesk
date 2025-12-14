@@ -20,10 +20,21 @@ mongoose.connect(MONGO_URI)
     process.exit(1);
   });
 
+// Ruta de health check (sin autenticación)
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'ok', 
+    message: 'FiberDesk API funcionando correctamente',
+    timestamp: new Date().toISOString()
+  });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/inventario', inventarioRoutes);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor backend corriendo en puerto ${PORT}`);
+const HOST = '0.0.0.0'; // Escuchar en todas las interfaces de red
+app.listen(PORT, HOST, () => {
+  console.log(`Servidor backend corriendo en ${HOST}:${PORT}`);
+  console.log(`Accesible desde dispositivos en la red local en: http://192.168.1.64:${PORT}`);
 });

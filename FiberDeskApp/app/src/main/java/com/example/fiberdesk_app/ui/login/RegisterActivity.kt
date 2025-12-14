@@ -86,7 +86,7 @@ class RegisterActivity : AppCompatActivity() {
         viewModel.usuario.observe(this) { usuario ->
             usuario?.let {
                 Toast.makeText(this, "¡Cuenta creada exitosamente!", Toast.LENGTH_SHORT).show()
-                guardarDatosUsuario(it.token, it.nombre ?: it.correo)
+                guardarDatosUsuario(it)
                 navegarAHome()
             }
         }
@@ -217,11 +217,13 @@ class RegisterActivity : AppCompatActivity() {
         return true
     }
 
-    private fun guardarDatosUsuario(token: String, nombre: String) {
+    private fun guardarDatosUsuario(usuario: com.example.fiberdesk_app.models.UsuarioData) {
         val sharedPref = getSharedPreferences("AuthPrefs", MODE_PRIVATE)
         with(sharedPref.edit()) {
-            putString("token", token)
-            putString("userName", nombre)
+            putString("token", usuario.token)
+            putString("userName", usuario.nombre)
+            putString("userEmail", usuario.correo)
+            putString("userId", usuario._id)
             apply()
         }
     }

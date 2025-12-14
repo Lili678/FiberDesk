@@ -7,8 +7,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
-    // Valor por defecto (emulador Android Studio)
-    private var BASE_URL = "http://10.0.2.2:3000/api/"
+    // Detección automática de URL según entorno
+    private fun getBaseUrl(): String {
+        return NetworkConfig.getBaseUrl()
+    }
+    
+    private var BASE_URL = getBaseUrl()
+    
     // Token JWT que se inyecta en headers si existe
     private var token: String? = null
 
@@ -18,6 +23,11 @@ object ApiClient {
         } else {
             BASE_URL = url
         }
+        rebuildRetrofit()
+    }
+    
+    fun refreshBaseUrl() {
+        BASE_URL = getBaseUrl()
         rebuildRetrofit()
     }
     fun setToken(newToken: String?) {

@@ -37,7 +37,8 @@ class HomeActivity : AppCompatActivity() {
         // Botón Perfil
         val profileButton: ImageView = findViewById(R.id.profileButton)
         profileButton.setOnClickListener {
-            // TODO: Ir a pantalla de perfil
+            val intent = Intent(this, com.example.fiberdesk_app.ui.profile.ProfileActivity::class.java)
+            startActivity(intent)
         }
 
         // Módulos
@@ -59,7 +60,8 @@ class HomeActivity : AppCompatActivity() {
         }
 
         inventoryButton.setOnClickListener {
-            // TODO: Ir a pantalla de inventario
+            val intent = Intent(this, com.example.fiberdesk_app.ui.inventario.InventarioActivity::class.java)
+            startActivity(intent)
         }
 
         // Manejar el botón de atrás - no permitir volver atrás desde home

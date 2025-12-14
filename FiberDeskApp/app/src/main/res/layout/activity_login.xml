@@ -11,6 +11,20 @@
         android:layout_height="wrap_content"
         android:padding="32dp">
 
+        <!-- Settings Button -->
+        <ImageButton
+            android:id="@+id/btnServerConfig"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@android:drawable/ic_menu_manage"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Configuración del Servidor"
+            android:tint="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="0dp" />
+
         <!-- FiberDesk Logo -->
         <ImageView
             android:id="@+id/logoImage"

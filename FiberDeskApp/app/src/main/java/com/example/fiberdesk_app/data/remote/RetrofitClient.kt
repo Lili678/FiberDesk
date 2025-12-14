@@ -1,18 +1,15 @@
 package com.example.fiberdesk_app.data.remote
 
 import android.util.Log
+import com.example.fiberdesk_app.network.NetworkConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
 object RetrofitClient {
-    // Note: backend mounts inventario routes under /api/inventario
-    //192.168.1.104 wifimex
-    //192.168.1.68 mia
-    //192.168.12.172 ccai
-
-    private const val BASE_URL = "http://192.168.12.172:3000/api/"
+    // Detección automática de URL según entorno (emulador o dispositivo físico)
+    private val BASE_URL = NetworkConfig.getBaseUrl()
 
     private val logging = HttpLoggingInterceptor { message ->
         Log.d("Retrofit", message)

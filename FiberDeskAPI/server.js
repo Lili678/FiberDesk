@@ -18,5 +18,6 @@ app.use('/api', require('./routes'));
 // Iniciar servidor
 app.listen(3000, () => {
   console.log("Servidor backend corriendo en puerto 3000");
+  
 });
  

@@ -10,7 +10,7 @@ const TicketSchema = new mongoose.Schema({
     estado: { type: String, default: "Abierto" },
     fecha: String,
     descripcion: String,
-    archivado: { type: Boolean, default: false }
+    archivado: { type: Boolean, default: false } 
 });
 
 module.exports = mongoose.model("Ticket", TicketSchema);

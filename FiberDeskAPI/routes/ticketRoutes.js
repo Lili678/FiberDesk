@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
 // PUT - Archivar ticket
 router.put("/archive/:folio", async (req, res) => {
     try {
-        const folio = req.params.folio;
+        const { folio } = req.params;
 
         await Ticket.findOneAndUpdate(
             { folio },
@@ -48,5 +48,33 @@ router.put("/archive/:folio", async (req, res) => {
         res.status(400).json({ error: "Error al archivar ticket" });
     }
 });
+
+// PUT - Desarchivar ticket
+router.put("/unarchive/:folio", async (req, res) => {
+    try {
+        const { folio } = req.params;
+
+        await Ticket.findOneAndUpdate(
+            { folio },
+            { archivado: false }
+        );
+
+        res.json({ message: "Ticket desarchivado" });
+    } catch (error) {
+        res.status(400).json({ error: "Error al desarchivar ticket" });
+    }
+});
+
+
+// GET - Tickets archivados
+router.get("/archived", async (req, res) => {
+    try {
+        const tickets = await Ticket.find({ archivado: true });
+        res.json(tickets);
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener archivados" });
+    }
+});
+
 
 module.exports = router;

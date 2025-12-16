@@ -56,7 +56,8 @@ class HomeActivity : AppCompatActivity() {
         }
 
         paymentsButton.setOnClickListener {
-            // TODO: Ir a pantalla de pagos
+            val intent = Intent(this, com.example.fiberdesk_app.ui.pagos.PagosActivity::class.java)
+            startActivity(intent)
         }
 
         inventoryButton.setOnClickListener {

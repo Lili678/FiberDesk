@@ -131,7 +131,7 @@ exports.loginUsuario = async (req, res) => {
 // @access  Private
 exports.obtenerUsuario = async (req, res) => {
   try {
-    const usuario = await Usuario.findById(req.usuario.id).select('-contraseña');
+    const usuario = await Usuario.findById(req.usuario._id).select('-contraseña');
     
     res.status(200).json({
       success: true,

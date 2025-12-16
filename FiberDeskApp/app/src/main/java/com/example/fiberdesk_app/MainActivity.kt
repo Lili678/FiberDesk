@@ -1,53 +1,29 @@
 package com.example.fiberdesk_app
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.fiberdesk_app.databinding.ActivityMainBinding
+import com.example.fiberdesk_app.ui.login.LoginActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         
-        // Cargar el fragment de pagos al iniciar
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, PagosFragment())
-                .commit()
-        }
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        // Verificar si el usuario está logueado
+        val sharedPref = getSharedPreferences("AuthPrefs", MODE_PRIVATE)
+        val token = sharedPref.getString("token", null)
         
-        // Configurar navigation con ActionBar
-        val navController = findNavController(R.id.nav_host_fragment)
-        setupActionBarWithNavController(navController)
-        
-        // Configurar título
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            title = "Inventario"
-        }
-    }
-    
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
-        return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-    
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+        if (token != null) {
+            // Usuario logueado, ir a HomeActivity
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        } else {
+            // Usuario no logueado, ir a LoginActivity
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }

@@ -1,5 +1,38 @@
 # FiberDesk API - Documentación de Autenticación
 
+## 🌐 Acceso Remoto (Sin Necesidad de Estar en la Misma Red)
+
+### ⚡ Opción 1: ngrok (Temporal - Para Testing)
+
+```bash
+# 1. Instala ngrok
+npm install -g ngrok
+
+# 2. Ejecuta el script automático
+npm run remote
+
+# 3. Obtendrás una URL como: https://abc123.ngrok.io
+# 4. Úsala en tu app Android
+```
+
+### 🚀 Opción 2: Railway (Permanente - Recomendado)
+
+```bash
+# 1. Prepara el proyecto
+prepare-railway.bat
+
+# 2. Sigue la guía rápida
+```
+
+**⏱️ 10 minutos** | **💰 Gratis** | **🔄 URL Permanente**
+
+📖 **Guías:**
+- [RAILWAY-QUICKSTART.md](RAILWAY-QUICKSTART.md) - Guía rápida (10 min)
+- [DEPLOY-RAILWAY.md](DEPLOY-RAILWAY.md) - Guía detallada
+- [README-REMOTE.md](README-REMOTE.md) - Todas las opciones
+
+---
+
 ## Configuración del Backend
 
 El backend está configurado con Node.js, Express, MongoDB y JWT para autenticación.

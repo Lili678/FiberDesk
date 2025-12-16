@@ -34,6 +34,7 @@ object NetworkConfig {
     /**
      * Obtiene la URL base configurada
      * Prioridad: 1) IP guardada por usuario, 2) IP por defecto según entorno
+     * Soporta URLs remotas (ngrok, dominios, etc.)
      */
     fun getBaseUrl(): String {
         // Si ya tenemos una URL en caché, usarla
@@ -55,25 +56,40 @@ object NetworkConfig {
             BuildConfig.API_PORT
         }
         
-        val ip = when {
-            // Si hay una IP guardada por el usuario, usarla
+        // Detectar si es una URL completa (http/https) o solo IP
+        val url = when {
+            // Si hay una URL guardada por el usuario
             !savedIP.isNullOrEmpty() -> {
-                Log.d("NetworkConfig", "Usando IP configurada por el usuario: $savedIP")
-                savedIP
+                if (savedIP.startsWith("http://") || savedIP.startsWith("https://")) {
+                    // Es una URL completa (ej: https://abc123.ngrok.io)
+                    Log.d("NetworkConfig", "Usando URL remota: $savedIP")
+                    if (savedIP.endsWith("/api/")) {
+                        savedIP
+                    } else if (savedIP.endsWith("/")) {
+                        "${savedIP}api/"
+                    } else {
+                        "$savedIP/api/"
+                    }
+                } else {
+                    // Es solo IP/dominio (ej: abc123.ngrok.io o 192.168.1.64)
+                    Log.d("NetworkConfig", "Usando servidor: $savedIP")
+                    val protocol = if (port == 443) "https" else "http"
+                    val portSuffix = if (port == 80 || port == 443) "" else ":$port"
+                    "$protocol://$savedIP$portSuffix/api/"
+                }
             }
             // Si es emulador, usar IP especial
             isEmulatorDevice -> {
                 Log.d("NetworkConfig", "Emulador detectado, usando 10.0.2.2")
-                "10.0.2.2"
+                "http://10.0.2.2:$port/api/"
             }
             // Para dispositivos físicos, usar IP por defecto del BuildConfig
             else -> {
                 Log.d("NetworkConfig", "Dispositivo físico, usando IP por defecto: ${BuildConfig.LOCAL_IP}")
-                BuildConfig.LOCAL_IP
+                "http://${BuildConfig.LOCAL_IP}:$port/api/"
             }
         }
         
-        val url = "http://$ip:$port/api/"
         Log.d("NetworkConfig", "Entorno: ${if (isEmulatorDevice) "EMULADOR" else "DISPOSITIVO FÍSICO"}")
         Log.d("NetworkConfig", "URL base configurada: $url")
         

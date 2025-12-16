@@ -76,6 +76,13 @@
             android:exported="false"
             android:theme="@style/Theme.FiberDeskApp"
             android:label="Inventario" />
+        
+        <!-- PagosActivity -->
+        <activity
+            android:name=".ui.pagos.PagosActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FiberDeskApp"
+            android:label="Pagos" />
             
     </application>
 

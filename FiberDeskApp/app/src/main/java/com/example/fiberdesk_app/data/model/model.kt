@@ -82,3 +82,12 @@ enum class Prioridad(val valor: String, val displayName: String, val color: Stri
         }
     }
 }
+
+// Data class para Material del inventario
+data class Material(
+    val _id: String? = null,
+    val nombre: String,
+    val cantidad: Int,
+    val descripcion: String = "",
+    val fechaRegistro: String? = null
+)

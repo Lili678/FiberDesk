@@ -10,7 +10,14 @@ app.use(express.json());
 // Conexión Mongo
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Mongo conectado correctamente"))
-  .catch(err => console.error("Error al conectar Mongo:", err));
+  .catch(err => {
+    console.error("Error al conectar Mongo:", err);
+    process.exit(1); // Detener el proceso si no hay base de datos
+  });
+
+mongoose.connection.on('error', err => {
+  console.error("Error en tiempo de ejecución de Mongo:", err);
+});
 
 // Rutas
 app.use('/api', require('./routes'));

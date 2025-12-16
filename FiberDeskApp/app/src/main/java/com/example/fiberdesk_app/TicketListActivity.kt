@@ -21,6 +21,9 @@ class TicketListActivity : AppCompatActivity() {
     private lateinit var edtBuscar: EditText
     private lateinit var btnCrearTicket: Button
 
+    private lateinit var btnVerArchivados: Button
+
+
     private var listaOriginal = listOf<Ticket>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,9 +35,19 @@ class TicketListActivity : AppCompatActivity() {
         btnCrearTicket = findViewById(R.id.btnCrearTicket)
 
         // **Adapter CORRECTO con callback**
-        adapter = TicketAdapter(listOf()) { ticketSeleccionado ->
-            archivarTicket(ticketSeleccionado)
-        }
+        adapter = TicketAdapter(
+            listOf(),
+            onArchivarClick = { ticket ->
+                archivarTicket(ticket)
+            },
+            onItemClick = { ticket ->
+                val intent = Intent(this, TicketDetailActivity::class.java)
+                intent.putExtra("ticket", ticket)
+                startActivity(intent)
+            }
+        )
+        rvTickets.adapter = adapter
+
         rvTickets.adapter = adapter
         rvTickets.layoutManager = LinearLayoutManager(this)
 
@@ -43,6 +56,13 @@ class TicketListActivity : AppCompatActivity() {
         btnCrearTicket.setOnClickListener {
             startActivity(Intent(this, TicketNewActivity::class.java))
         }
+
+        btnVerArchivados = findViewById(R.id.btnVerArchivados)
+
+        btnVerArchivados.setOnClickListener {
+            startActivity(Intent(this, TicketArchivedActivity::class.java))
+        }
+
 
         edtBuscar.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}

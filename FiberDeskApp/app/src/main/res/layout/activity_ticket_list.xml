@@ -27,6 +27,14 @@
         android:textColor="@android:color/white"
         android:layout_marginBottom="10dp"/>
 
+    <Button
+        android:id="@+id/btnVerArchivados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ver tickets archivados"
+        android:layout_marginTop="8dp"/>
+
+
     <!-- Buscador -->
     <EditText
         android:id="@+id/edtBuscar"

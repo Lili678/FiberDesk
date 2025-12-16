@@ -1,6 +1,9 @@
 package com.example.fiberdesk_app
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Ticket(
     val folio: String,
     val cliente: String,
@@ -12,4 +15,4 @@ data class Ticket(
     val fecha: String,
     val descripcion: String,
     val archivado: Boolean = false
-)
+) : Parcelable

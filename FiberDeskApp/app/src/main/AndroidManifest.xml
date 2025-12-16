@@ -22,6 +22,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".TicketNewActivity" />
+        <activity android:name=".TicketDetailActivity" />
+        <activity android:name=".TicketArchivedActivity"/>
+
 
     </application>
 

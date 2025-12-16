@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 class TicketAdapter(
     private var tickets: List<Ticket>,
-    private val onArchivarClick: (Ticket) -> Unit     // <-- callback
+    private val onArchivarClick: (Ticket) -> Unit,
+    private val onItemClick: (Ticket) -> Unit
 ) : RecyclerView.Adapter<TicketAdapter.TicketViewHolder>() {
 
     inner class TicketViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -32,11 +33,16 @@ class TicketAdapter(
         holder.txtAsunto.text = t.asunto
         holder.txtArchivar.text = if (t.archivado) "Archivado" else "Archivar"
 
-        // --- Evento Archivar ---
+        // 🔴 Archivar
         holder.txtArchivar.setOnClickListener {
             if (!t.archivado) {
-                onArchivarClick(t)     // <--- Enviar el ticket a la Activity
+                onArchivarClick(t)
             }
+        }
+
+        // 🔵 Ver detalles (clic en el item)
+        holder.itemView.setOnClickListener {
+            onItemClick(t)
         }
     }
 

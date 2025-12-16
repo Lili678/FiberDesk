@@ -31,4 +31,16 @@ interface TicketService {
     fun archivarTicket(
         @Path("folio") folio: String
     ): Call<Map<String, Any>>
+
+    @PUT("api/tickets/unarchive/{folio}")
+    fun desarchivarTicket(
+        @Path("folio") folio: String
+    ): Call<Map<String, Any>>
+
+
+    // Tickets archivados
+    @GET("api/tickets/archived")
+    fun getArchivedTickets(): Call<List<Ticket>>
+
+
 }

@@ -178,6 +178,8 @@ class AgregarClienteActivity : AppCompatActivity() {
                 append(", México")
             }
             
+            android.util.Log.d("AgregarCliente", "Geocodificando dirección: $direccion")
+            
             // Geocodificar en un thread separado
             Thread {
                 try {
@@ -187,16 +189,24 @@ class AgregarClienteActivity : AppCompatActivity() {
                         runOnUiThread {
                             etLatitud.setText(location.latitude.toString())
                             etLongitud.setText(location.longitude.toString())
-                            Toast.makeText(this, "📍 Ubicación encontrada automáticamente", Toast.LENGTH_SHORT).show()
+                            android.util.Log.d("AgregarCliente", "Coordenadas encontradas: ${location.latitude}, ${location.longitude}")
+                            Toast.makeText(this, "✅ Ubicación encontrada: ${location.latitude}, ${location.longitude}", Toast.LENGTH_LONG).show()
+                        }
+                    } else {
+                        runOnUiThread {
+                            Toast.makeText(this, "⚠️ No se pudo encontrar la ubicación. Usa el mapa o GPS", Toast.LENGTH_SHORT).show()
                         }
                     }
                 } catch (e: Exception) {
-                    // Silenciosamente fallar, el usuario puede usar GPS o mapa manual
+                    android.util.Log.e("AgregarCliente", "Error geocodificando", e)
+                    runOnUiThread {
+                        Toast.makeText(this, "⚠️ Error al buscar ubicación. Usa el mapa o GPS", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }.start()
             
         } catch (e: Exception) {
-            // No mostrar error, es una funcionalidad opcional
+            android.util.Log.e("AgregarCliente", "Error en geocodificación", e)
         }
     }
     

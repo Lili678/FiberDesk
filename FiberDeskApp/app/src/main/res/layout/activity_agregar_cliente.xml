@@ -236,6 +236,14 @@
                 android:text="--- Ubicación Exacta ---"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Las coordenadas se obtienen automáticamente al completar la dirección"
+                android:textSize="12sp"
+                android:textColor="#666666"
                 android:layout_marginBottom="16dp"/>
 
             <Button
@@ -252,35 +260,27 @@
                 android:layout_height="wrap_content"
                 android:text="📡 Usar mi ubicación actual"
                 android:backgroundTint="#4CAF50"
-                android:layout_marginBottom="16dp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
-
-                <EditText
-                    android:id="@+id/etLatitud"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="Latitud"/>
-                <EditText
-                    android:id="@+id/etLongitud"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="Longitud"/>
-            </LinearLayout>
+                android:layout_marginBottom="8dp"/>
 
             <Button
                 android:id="@+id/btnVerMapa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="📍 Verificar en Google Maps"
+                android:text="📍 Verificar Ubicación en Google Maps"
                 android:backgroundTint="#2196F3"
                 android:layout_marginBottom="16dp"/>
+
+            <!-- Campos ocultos para coordenadas -->
+            <EditText
+                android:id="@+id/etLatitud"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"/>
+            <EditText
+                android:id="@+id/etLongitud"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btnGuardar"

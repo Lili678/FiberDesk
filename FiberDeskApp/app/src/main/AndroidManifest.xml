@@ -135,7 +135,13 @@
             android:theme="@style/Theme.FiberDeskApp"
             android:label="Tickets Archivados" />
         
-        <!-- Google Maps API Key -->
+        <!-- Google Maps API Key 
+             IMPORTANTE: Reemplaza "TU_CLAVE_API_AQUI" con tu API Key real de Google Cloud Console
+             Instrucciones en: CONFIGURAR_GOOGLE_MAPS.md
+             Sin una API Key válida, el mapa se verá en gris/blanco
+             Obtén tu key en: https://console.cloud.google.com/
+             Habilita: Maps SDK for Android + Geocoding API
+        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="TU_CLAVE_API_AQUI" />

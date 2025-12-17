@@ -1,6 +1,8 @@
 package com.example.fiberdesk_app.data.remote
 
+import android.util.Log
 import com.example.fiberdesk_app.data.model.*
+import com.example.fiberdesk_app.network.NetworkConfig
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -10,14 +12,21 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 object ClientesApiClient {
-    private const val BASE_URL = "http://10.0.2.2:3000/"
+    
+    private fun getBaseUrl(): String {
+        val baseUrl = NetworkConfig.getBaseUrl()
+        // NetworkConfig ya devuelve la URL con /api/, necesitamos quitarla
+        return baseUrl.removeSuffix("api/")
+    }
     
     private fun makeRequest(
         endpoint: String,
         method: String,
         body: String? = null
     ): String {
-        val url = URL(BASE_URL + endpoint)
+        val fullUrl = getBaseUrl() + endpoint
+        Log.d("ClientesApiClient", "Request: $method $fullUrl")
+        val url = URL(fullUrl)
         val connection = url.openConnection() as HttpURLConnection
         
         connection.requestMethod = method
@@ -50,9 +59,12 @@ object ClientesApiClient {
         connection.disconnect()
         
         if (responseCode !in 200..299) {
-            throw Exception("Error HTTP: $responseCode - ${response.toString()}")
+            val errorMsg = "Error HTTP: $responseCode - ${response.toString()}"
+            Log.e("ClientesApiClient", errorMsg)
+            throw Exception(errorMsg)
         }
         
+        Log.d("ClientesApiClient", "Response: ${response.toString().take(200)}...")
         return response.toString()
     }
     

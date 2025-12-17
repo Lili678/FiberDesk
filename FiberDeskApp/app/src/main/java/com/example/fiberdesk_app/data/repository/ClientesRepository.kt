@@ -9,9 +9,12 @@ class ClientesRepository {
     
     suspend fun obtenerClientes(incluirArchivados: Boolean = false): Result<List<ClienteModel>> = withContext(Dispatchers.IO) {
         try {
+            android.util.Log.d("ClientesRepository", "Obteniendo clientes...")
             val clientes = ClientesApiClient.obtenerClientes(incluirArchivados)
+            android.util.Log.d("ClientesRepository", "Clientes obtenidos: ${clientes.size}")
             Result.Success(clientes)
         } catch (e: Exception) {
+            android.util.Log.e("ClientesRepository", "Error al obtener clientes", e)
             Result.Error(e.message ?: "Error al obtener clientes")
         }
     }

@@ -35,6 +35,7 @@ class ListaClientesActivity : AppCompatActivity() {
         // Inicializar vistas
         val rvClientes = findViewById<RecyclerView>(R.id.rvClientes)
         val etBuscar = findViewById<EditText>(R.id.etBuscarCliente)
+        val fabAgregar = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.fabAgregarCliente)
         progressBar = findViewById(R.id.progressBar)
 
         // Configurar RecyclerView
@@ -45,6 +46,12 @@ class ListaClientesActivity : AppCompatActivity() {
             startActivity(intent)
         }
         rvClientes.adapter = adapter
+
+        // Botón agregar cliente
+        fabAgregar.setOnClickListener {
+            val intent = Intent(this, AgregarClienteActivity::class.java)
+            startActivity(intent)
+        }
 
         // Configurar Buscador
         etBuscar.addTextChangedListener(object : TextWatcher {

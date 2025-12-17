@@ -40,10 +40,19 @@ class MapaPickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
         mMap.uiSettings.isZoomControlsEnabled = true
-        // Ubicación inicial (CDMX por ejemplo)
-        val inicio = LatLng(19.4326, -99.1332)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(inicio, 10f))
-        Toast.makeText(this, "Mueve el mapa y da click en Confirmar", Toast.LENGTH_LONG).show()
+        mMap.uiSettings.isMyLocationButtonEnabled = true
+        mMap.uiSettings.isCompassEnabled = true
+        
+        try {
+            // Ubicación inicial (CDMX por ejemplo)
+            val inicio = LatLng(19.4326, -99.1332)
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(inicio, 13f))
+            Toast.makeText(this, "Mueve el mapa para seleccionar la ubicación y confirma", Toast.LENGTH_LONG).show()
+        } catch (e: Exception) {
+            android.util.Log.e("MapaPicker", "Error cargando mapa", e)
+            Toast.makeText(this, "Error: Verifica la API Key de Google Maps", Toast.LENGTH_LONG).show()
+        }
     }
 }

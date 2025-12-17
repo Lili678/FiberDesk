@@ -10,7 +10,7 @@ object RetrofitClient {
     // Note: backend mounts inventario routes under /api/inventario
     // Dispositivo físico: 192.168.1.68
 
-    private const val BASE_URL = "http://192.168.1.68:3000/api/"
+    private const val BASE_URL = "http://192.168.12.172:3000/api/"
 
     private val logging = HttpLoggingInterceptor { message ->
         Log.d("Retrofit", message)

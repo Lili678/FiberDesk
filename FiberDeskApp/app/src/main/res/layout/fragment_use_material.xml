@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Usar Material en Instalación"
+            style="@style/SectionTitle"
+            android:paddingBottom="16dp" />
+
+        <!-- Información de la instalación -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            android:background="#E8F5E9">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Instalación:"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#2C3E50" />
+
+                <TextView
+                    android:id="@+id/txtInstalacionInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cliente - Dirección"
+                    android:textSize="14sp"
+                    android:textColor="#1B5E20"
+                    android:paddingTop="4dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Selector de material -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seleccionar Material"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#2C3E50"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp" />
+
+        <Spinner
+            android:id="@+id/spinnerMaterial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_margin="8dp"
+            android:background="#F1F8E9" />
+
+        <!-- Cantidad -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:paddingTop="8dp"
+            app:boxBackgroundColor="#FFF3E0"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:hintTextColor="#FF9800">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCantidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cantidad a usar"
+                android:inputType="number"
+                android:padding="12dp"
+                android:textColor="#2C3E50" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Stock disponible -->
+        <TextView
+            android:id="@+id/txtStockDisponible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stock disponible: -"
+            android:textSize="12sp"
+            android:textColor="#7F8C8D"
+            android:paddingTop="8dp"
+            android:paddingStart="12dp" />
+
+        <!-- Botones -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:spacing="8dp"
+            android:paddingTop="20dp">
+
+            <Button
+                android:id="@+id/btnUsar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Usar Material"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:padding="12dp"
+                android:backgroundTint="#81C784"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnCancelar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cancelar"
+                android:textSize="14sp"
+                android:padding="12dp"
+                android:backgroundTint="#BDBDBD"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

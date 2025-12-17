@@ -53,7 +53,18 @@ object NetworkPreferences {
     }
     
     fun isUseRemoteOnMobileEnabled(context: Context): Boolean {
-        return getPrefs(context).getBoolean(KEY_USE_REMOTE_ON_MOBILE, true) // Por defecto habilitado
+        // SIEMPRE habilitado por defecto para que funcione con datos móviles automáticamente
+        return getPrefs(context).getBoolean(KEY_USE_REMOTE_ON_MOBILE, true)
+    }
+    
+    /**
+     * Inicializa valores por defecto si es la primera vez
+     */
+    fun initializeDefaults(context: Context) {
+        val prefs = getPrefs(context)
+        if (!prefs.contains(KEY_USE_REMOTE_ON_MOBILE)) {
+            prefs.edit().putBoolean(KEY_USE_REMOTE_ON_MOBILE, true).apply()
+        }
     }
     
     fun clearConfig(context: Context) {

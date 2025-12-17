@@ -137,14 +137,14 @@ class ServerConfigActivity : AppCompatActivity() {
         val remoteUrl = binding.editTextRemoteUrl.text.toString().trim()
         val useRemoteOnMobile = binding.switchUseRemoteOnMobile.isChecked
         
-        if (!autoDetect && ip.isEmpty()) {
-            Toast.makeText(this, "Debes ingresar una IP o activar la detección automática", Toast.LENGTH_SHORT).show()
+        // Validación más flexible: permite guardar solo con URL remota
+        if (!autoDetect && ip.isEmpty() && !useRemoteOnMobile) {
+            Toast.makeText(this, "Debes configurar al menos una opción: IP local, detección automática o URL remota", Toast.LENGTH_LONG).show()
             return
         }
         
         if (port.isEmpty()) {
-            Toast.makeText(this, "Debes ingresar un puerto", Toast.LENGTH_SHORT).show()
-            return
+            binding.editTextServerPort.setText("3000")
         }
         
         // Validar URL remota si está habilitada
@@ -155,10 +155,15 @@ class ServerConfigActivity : AppCompatActivity() {
             }
         }
         
+        // Si usa remota pero no hay URL, advertir
+        if (useRemoteOnMobile && remoteUrl.isEmpty()) {
+            Toast.makeText(this, "⚠️ Guardado sin URL remota. La app usará la URL predeterminada del código.", Toast.LENGTH_LONG).show()
+        }
+        
         // Guardar configuración
         NetworkPreferences.setAutoDetect(this, autoDetect)
         NetworkPreferences.saveServerIP(this, ip)
-        NetworkPreferences.saveServerPort(this, port)
+        NetworkPreferences.saveServerPort(this, if (port.isEmpty()) "3000" else port)
         NetworkPreferences.saveRemoteUrl(this, remoteUrl)
         NetworkPreferences.setUseRemoteOnMobile(this, useRemoteOnMobile)
         
@@ -172,10 +177,30 @@ class ServerConfigActivity : AppCompatActivity() {
     private fun testConnection() {
         val ip = binding.editTextServerIP.text.toString().trim()
         val port = binding.editTextServerPort.text.toString().trim()
+        val remoteUrl = binding.editTextRemoteUrl.text.toString().trim()
+        val useRemoteOnMobile = binding.switchUseRemoteOnMobile.isChecked
         
-        if (ip.isEmpty()) {
-            Toast.makeText(this, "Debes ingresar una IP", Toast.LENGTH_SHORT).show()
-            return
+        // Determinar qué URL probar basado en el tipo de conexión
+        val isMobileData = !ServerDetector.isConnectedToWiFi(this)
+        
+        val testUrl = when {
+            // Si hay datos móviles y URL remota, probar esa
+            isMobileData && useRemoteOnMobile && remoteUrl.isNotEmpty() -> {
+                if (remoteUrl.endsWith("/api/health")) remoteUrl
+                else if (remoteUrl.endsWith("/")) "${remoteUrl}api/health"
+                else "$remoteUrl/api/health"
+            }
+            // Si no hay URL remota pero está en BuildConfig, usar esa
+            isMobileData && useRemoteOnMobile && com.example.fiberdesk_app.BuildConfig.REMOTE_URL.isNotEmpty() -> {
+                val configUrl = com.example.fiberdesk_app.BuildConfig.REMOTE_URL
+                if (configUrl.endsWith("/api/health")) configUrl
+                else if (configUrl.endsWith("/")) "${configUrl}api/health"
+                else "$configUrl/api/health"
+            }
+            // Si hay IP local, probar esa
+            ip.isNotEmpty() -> "http://$ip:${port.ifEmpty { "3000" }}/api/health"
+            // Sino, usar IP por defecto del BuildConfig
+            else -> "http://${com.example.fiberdesk_app.BuildConfig.LOCAL_IP}:${port.ifEmpty { "3000" }}/api/health"
         }
         
         binding.buttonTestConnection.isEnabled = false
@@ -184,10 +209,11 @@ class ServerConfigActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 withContext(kotlinx.coroutines.Dispatchers.IO) {
-                    val url = java.net.URL("http://$ip:$port/api/health")
+                    android.util.Log.d("ServerConfig", "Probando conexión a: $testUrl")
+                    val url = java.net.URL(testUrl)
                     val connection = url.openConnection() as java.net.HttpURLConnection
-                    connection.connectTimeout = 3000
-                    connection.readTimeout = 3000
+                    connection.connectTimeout = 5000
+                    connection.readTimeout = 5000
                     connection.requestMethod = "GET"
                     
                     val responseCode = connection.responseCode
@@ -202,7 +228,7 @@ class ServerConfigActivity : AppCompatActivity() {
                         if (responseCode == 200) {
                             Toast.makeText(
                                 this@ServerConfigActivity,
-                                "✅ ¡Conexión exitosa! El servidor FiberDesk está disponible.",
+                                "✅ ¡Conexión exitosa!\nServidor: ${if (isMobileData) "Remoto 📱" else "Local 📶"}\nURL: $testUrl",
                                 Toast.LENGTH_LONG
                             ).show()
                         } else {
@@ -215,9 +241,10 @@ class ServerConfigActivity : AppCompatActivity() {
                     }
                 }
             } catch (e: java.net.ConnectException) {
+                val connectionType = if (!ServerDetector.isConnectedToWiFi(this@ServerConfigActivity)) "datos móviles 📱" else "WiFi 📶"
                 Toast.makeText(
                     this@ServerConfigActivity,
-                    "❌ No se pudo conectar. Verifica que el servidor esté ejecutándose en $ip:$port",
+                    "❌ No se pudo conectar con $connectionType\nVerifica que el servidor esté ejecutándose",
                     Toast.LENGTH_LONG
                 ).show()
             } catch (e: java.net.SocketTimeoutException) {
@@ -227,6 +254,7 @@ class ServerConfigActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             } catch (e: Exception) {
+                android.util.Log.e("ServerConfig", "Error al probar conexión", e)
                 Toast.makeText(
                     this@ServerConfigActivity,
                     "❌ Error: ${e.message ?: "Desconocido"}",

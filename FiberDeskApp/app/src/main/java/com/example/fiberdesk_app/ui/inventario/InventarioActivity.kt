@@ -23,7 +23,7 @@ class InventarioActivity : AppCompatActivity() {
             title = "Inventario"
         }
 
-        // Inicializar vistas del dashboard
+        // Inicializar vistas del dashboardxx
         val txtInstEnProgreso = findViewById<TextView>(R.id.txtInstEnProgreso)
         val txtLowStock = findViewById<TextView>(R.id.txtLowStock)
         val txtInstPendientes = findViewById<TextView>(R.id.txtInstPendientes)

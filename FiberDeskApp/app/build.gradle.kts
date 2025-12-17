@@ -31,6 +31,8 @@ android {
             buildConfigField("String", "BASE_URL", "\"AUTO\"")
             buildConfigField("String", "LOCAL_IP", "\"192.168.12.208\"")
             buildConfigField("String", "API_PORT", "\"3000\"")
+            // URL remota para datos móviles (cambia esto cuando uses ngrok/localtunnel/railway)
+            buildConfigField("String", "REMOTE_URL", "\"https://busy-drinks-kiss.loca.lt\"")
         }
         release {
             isMinifyEnabled = false
@@ -38,6 +40,8 @@ android {
             buildConfigField("String", "BASE_URL", "\"AUTO\"")
             buildConfigField("String", "LOCAL_IP", "\"192.168.12.208\"")
             buildConfigField("String", "API_PORT", "\"3000\"")
+            // URL remota para producción (usa Railway o similar)
+            buildConfigField("String", "REMOTE_URL", "\"https://busy-drinks-kiss.loca.lt\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

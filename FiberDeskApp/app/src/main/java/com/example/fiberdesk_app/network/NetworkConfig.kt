@@ -83,16 +83,28 @@ object NetworkConfig {
         // Obtener configuraciones guardadas
         val savedIP = ctx?.let { NetworkPreferences.getServerIP(it) }
         val remoteUrl = ctx?.let { NetworkPreferences.getRemoteUrl(it) }
-        val useRemoteOnMobile = ctx?.let { NetworkPreferences.isUseRemoteOnMobileEnabled(it) } ?: true
         val port = ctx?.let { NetworkPreferences.getServerPort(it) } ?: BuildConfig.API_PORT
         val portInt = port.toIntOrNull() ?: 3000
         
+        // URL remota: SIEMPRE usa la del BuildConfig si está disponible, sino la guardada por usuario
+        val finalRemoteUrl = when {
+            BuildConfig.REMOTE_URL.isNotEmpty() && BuildConfig.REMOTE_URL != "AUTO" -> {
+                Log.d("NetworkConfig", "Usando URL remota del BuildConfig: ${BuildConfig.REMOTE_URL}")
+                BuildConfig.REMOTE_URL
+            }
+            !remoteUrl.isNullOrEmpty() -> {
+                Log.d("NetworkConfig", "Usando URL remota guardada: $remoteUrl")
+                remoteUrl
+            }
+            else -> null
+        }
+        
         // ====== LÓGICA DE SELECCIÓN INTELIGENTE ======
         val url = when {
-            // 1. DATOS MÓVILES + URL REMOTA CONFIGURADA
-            isMobileData && useRemoteOnMobile && !remoteUrl.isNullOrEmpty() -> {
+            // 1. DATOS MÓVILES + URL REMOTA DISPONIBLE (sin importar configuración de usuario)
+            isMobileData && !finalRemoteUrl.isNullOrEmpty() -> {
                 Log.d("NetworkConfig", "📱 DATOS MÓVILES detectados → Usando servidor remoto")
-                formatRemoteUrl(remoteUrl)
+                formatRemoteUrl(finalRemoteUrl)
             }
             
             // 2. IP/URL MANUAL CONFIGURADA POR USUARIO (tiene prioridad)

@@ -25,6 +25,8 @@ class MaterialsListFragment : Fragment(), MaterialAdapter.OnItemActionListener {
     private lateinit var adapter: MaterialAdapter
     private lateinit var localDataSource: LocalDataSource
     private var allMaterials: List<Material> = emptyList()
+    private var baseList: List<Material> = emptyList()
+    private var lowStockArg: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,13 +41,17 @@ class MaterialsListFragment : Fragment(), MaterialAdapter.OnItemActionListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // read argument to show only low stock materials
+        lowStockArg = arguments?.getBoolean("low_stock") ?: false
+
         adapter = MaterialAdapter(emptyList(), this)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
 
         viewModel.materiales.observe(viewLifecycleOwner) { lista ->
             allMaterials = lista ?: emptyList()
-            adapter.updateData(allMaterials)
+            baseList = if (lowStockArg) allMaterials.filter { it.cantidad < 5 } else allMaterials
+            adapter.updateData(baseList)
             // stop refreshing when data arrives
             binding.swipeRefresh.isRefreshing = false
         }
@@ -63,10 +69,11 @@ class MaterialsListFragment : Fragment(), MaterialAdapter.OnItemActionListener {
         // Search functionality
         binding.etSearch.addTextChangedListener { searchText ->
             val query = searchText.toString().lowercase()
+            val source = if (lowStockArg) baseList else allMaterials
             val filtered = if (query.isEmpty()) {
-                allMaterials
+                source
             } else {
-                allMaterials.filter { it.nombre.lowercase().contains(query) }
+                source.filter { it.nombre.lowercase().contains(query) }
             }
             adapter.updateData(filtered)
         }

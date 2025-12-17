@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agregar Nuevo Material"
+            style="@style/SectionTitle"
+            android:paddingBottom="16dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="#F5F5F5"
+            android:hint="Nombre del material">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMaterialName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textColorHint="#999999"
+                android:padding="12dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="#F5F5F5"
+            android:hint="Cantidad">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMaterialQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="#000000"
+                android:textColorHint="#999999"
+                android:padding="12dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="#F5F5F5"
+            android:hint="Descripción (opcional)">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMaterialDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textColorHint="#999999"
+                android:padding="12dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Guardar"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/pastel_purple"
+            android:textColor="@android:color/white"
+            android:stateListAnimator="@null" />
+
+    </LinearLayout>
+
+</ScrollView>

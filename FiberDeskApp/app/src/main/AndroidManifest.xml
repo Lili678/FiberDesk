@@ -2,11 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+<<<<<<< HEAD
+    <!-- Permisos -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+=======
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+>>>>>>> 840621e91d9e3e1855dd5f4de26903e23515a06b
 
     <application
+        android:name=".FiberDeskApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,18 +22,86 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+<<<<<<< HEAD
         android:theme="@style/Theme.FiberDeskApp"
         android:usesCleartextTraffic="true">
+=======
+<<<<<<< HEAD
+        android:theme="@style/Theme.FiberDeskApp"
+        android:usesCleartextTraffic="true">
+        
+        <!-- LoginActivity como pantalla inicial -->
+=======
+        android:theme="@style/Theme.FiberDeskApp">
+>>>>>>> 7b9fc1e44c725c2df985340b3f31291463e6f3df
 
+>>>>>>> 840621e91d9e3e1855dd5f4de26903e23515a06b
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".ui.login.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.FiberDeskApp"
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+<<<<<<< HEAD
+        <!-- RegisterActivity -->
+        <activity
+            android:name=".ui.login.RegisterActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FiberDeskApp"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <!-- RecoverPasswordActivity -->
+        <activity
+            android:name=".ui.login.RecoverPasswordActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FiberDeskApp"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <!-- HomeActivity -->
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FiberDeskApp" />
+
+        <!-- MainActivity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        
+        <!-- ServerConfigActivity -->
+        <activity
+            android:name=".ui.settings.ServerConfigActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FiberDeskApp"
+            android:label="Configuración del Servidor" />
+        
+        <!-- ProfileActivity -->
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FiberDeskApp"
+            android:label="Mi Perfil" />
+        
+        <!-- InventarioActivity -->
+        <activity
+            android:name=".ui.inventario.InventarioActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FiberDeskApp"
+            android:label="Inventario" />
+        
+        <!-- PagosActivity -->
+        <activity
+            android:name=".ui.pagos.PagosActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FiberDeskApp"
+            android:label="Pagos" />
+            
+=======
         <activity android:name=".ListaClientesActivity" />
         <activity android:name=".MapaPickerActivity" />
 
@@ -34,6 +110,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="TU_CLAVE_API_AQUI" />
+>>>>>>> 840621e91d9e3e1855dd5f4de26903e23515a06b
     </application>
 
 </manifest>

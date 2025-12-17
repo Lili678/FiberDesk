@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="32dp">
+
+        <!-- Settings Button -->
+        <ImageButton
+            android:id="@+id/btnServerConfig"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@android:drawable/ic_menu_manage"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Configuración del Servidor"
+            android:tint="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="0dp" />
+
+        <!-- FiberDesk Logo -->
+        <ImageView
+            android:id="@+id/logoImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_fiberdesk_logo"
+            android:contentDescription="FiberDesk Logo"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circular_background"
+            android:clipToOutline="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="40dp" />
+
+        <!-- App Name -->
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FiberDesk"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:letterSpacing="0.05"
+            app:layout_constraintTop_toBottomOf="@id/logoImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/titleLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/iniciar_sesion"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/appName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="40dp" />
+
+        <!-- Email Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/titleLogin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="32dp"
+            app:boxBackgroundMode="none"
+            app:startIconDrawable="@drawable/ic_email"
+            app:startIconTint="@color/text_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtCorreo"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:hint="@string/correo_electronico"
+                android:inputType="textEmailAddress"
+                android:imeOptions="actionNext"
+                android:textColor="@color/black"
+                android:textColorHint="@color/text_hint"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:background="@drawable/input_background_rounded" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Password Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            app:boxBackgroundMode="none"
+            app:startIconDrawable="@drawable/ic_lock"
+            app:startIconTint="@color/text_hint"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/text_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtContrasena"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:hint="@string/contrasena"
+                android:inputType="textPassword"
+                android:imeOptions="actionDone"
+                android:textColor="@color/black"
+                android:textColorHint="@color/text_hint"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:background="@drawable/input_background_rounded" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Remember Me & Forgot Password Layout -->
+        <LinearLayout
+            android:id="@+id/rememberLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp">
+
+            <CheckBox
+                android:id="@+id/checkRecordarme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recordarme"
+                android:textColor="@color/white"
+                android:buttonTint="@color/white"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/txtOlvidaste"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/olvidaste_contrasena"
+                android:textColor="@color/white"
+                android:layout_gravity="center_vertical"
+                android:padding="8dp" />
+        </LinearLayout>
+
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:text="@string/entrar"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@drawable/button_gradient"
+            app:layout_constraintTop_toBottomOf="@id/rememberLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp"
+            android:elevation="4dp" />
+
+        <!-- Social Login Text -->
+        <TextView
+            android:id="@+id/socialLoginText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/o_iniciar_sesion_con"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/btnLogin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp" />
+
+        <!-- Social Login Icons -->
+        <LinearLayout
+            android:id="@+id/socialIconsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/socialLoginText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp"
+            android:gravity="center">
+
+            <!-- Google Icon -->
+            <ImageView
+                android:id="@+id/btnGoogle"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_search"
+                android:padding="8dp"
+                android:background="@drawable/circle_white_background"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="Google" />
+
+            <!-- Apple Icon -->
+            <ImageView
+                android:id="@+id/btnApple"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_info_details"
+                android:padding="8dp"
+                android:background="@drawable/circle_white_background"
+                android:contentDescription="Apple" />
+        </LinearLayout>
+
+        <!-- Register Link -->
+        <TextView
+            android:id="@+id/txtIrRegistro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registrate"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/socialIconsLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp"
+            android:padding="8dp" />
+
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:visibility="gone"
+            android:indeterminateTint="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

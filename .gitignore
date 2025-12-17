@@ -20,6 +20,9 @@ yarn-error.log
 dist/
 logs/
 
+# Remote config
+remote-config.json
+
 # ---- GENERAL ----
 *.log
 *.tmp

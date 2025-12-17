@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header gradient -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="@drawable/header_gradient">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/txtWelcome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Inventario de Materiales"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:id="@+id/txtSummary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gestiona tus materiales"
+                    android:textSize="13sp"
+                    android:textColor="@android:color/white"
+                    android:paddingTop="6dp" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- Contenido -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- RecyclerView para lista de materiales -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/materialsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="300dp"
+                android:paddingBottom="80dp"
+                android:clipToPadding="false" />
+
+            <!-- Mensaje cuando no hay materiales -->
+            <TextView
+                android:id="@+id/emptyMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No hay materiales en el inventario\n\nToca el botón + para agregar"
+                android:textSize="16sp"
+                android:textColor="@android:color/darker_gray"
+                android:gravity="center"
+                android:padding="32dp"
+                android:visibility="gone" />
+
+            <!-- Loading indicator -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="32dp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
+
+<!-- Botón Flotante para Agregar Material -->
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/fab_add_material"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+    android:layout_margin="16dp"
+    android:src="@drawable/ic_add"
+    app:backgroundTint="#1976D2"
+    app:tint="@android:color/white"
+    android:contentDescription="Agregar Material" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

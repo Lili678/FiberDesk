@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/txtMaterialName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Material"
+            android:textColor="@color/accent_text"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtMaterialQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stock: 0"
+            android:textSize="14sp"
+            android:textColor="@color/accent_text" />
+
+        <TextView
+            android:id="@+id/txtMaterialDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descripción breve del material"
+            android:textSize="13sp"
+            android:textColor="@color/muted_text"
+            android:paddingTop="4dp" />
+
+        <TextView
+            android:id="@+id/txtMaterialDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrado: 2025-12-10"
+            android:textSize="12sp"
+            android:textColor="@color/secondary_text"
+            android:paddingTop="4dp" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

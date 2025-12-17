@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">FiberDesk-App</string>
+    <string name="app_name">FiberDesk</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="correo_electronico">Correo Electrónico</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="recordarme">Recordarme</string>
+    <string name="olvidaste_contrasena">¿Olvidaste tu contraseña?</string>
+    <string name="entrar">ENTRAR</string>
+    <string name="o_iniciar_sesion_con">O iniciar sesión con</string>
+    <string name="no_tienes_cuenta">¿No tienes cuenta?</string>
+    <string name="registrate">Regístrate aquí</string>
+    
+    <!-- Register -->
+    <string name="crear_cuenta">Crear Cuenta</string>
+    <string name="nombre_completo">Nombre completo</string>
+    <string name="confirmar_contrasena">Confirmar Contraseña</string>
+    <string name="registrarse">REGISTRARSE</string>
+    <string name="ya_tienes_cuenta">¿Ya tienes cuenta? Inicia sesión aquí</string>
 </resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/pagosFragment">
+
+    <!-- Módulo de Pagos -->
+    <fragment
+        android:id="@+id/pagosFragment"
+        android:name="com.example.fiberdesk_app.ui.pagos.PagosFragment"
+        android:label="Pagos" />
+
+    <!-- Módulo de Login -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.fiberdesk_app.ui.login.LoginFragment"
+        android:label="Login" />
+
+</navigation>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppCard" parent="Theme.Material3.Light.NoActionBar">
+
+    <item name="android:background">@drawable/card_elevated</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="HeaderTitle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="SectionTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/accent_text</item>
+    </style>
+</resources>

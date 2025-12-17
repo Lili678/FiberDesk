@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.fiberdesk_app.data.model.Material
 import com.example.fiberdesk_app.databinding.FragmentUseMaterialBinding
 
@@ -93,11 +92,11 @@ class UseMaterialFragment : Fragment() {
 
             viewModel.usarMaterial(instalacionId ?: return@setOnClickListener, material._id ?: return@setOnClickListener, cantidad)
             Toast.makeText(requireContext(), "Material usado correctamente", Toast.LENGTH_SHORT).show()
-            findNavController().navigateUp()
+            parentFragmentManager.popBackStack()
         }
 
         binding.btnCancelar.setOnClickListener {
-            findNavController().navigateUp()
+            parentFragmentManager.popBackStack()
         }
 
         viewModel.error.observe(viewLifecycleOwner) { mensaje ->

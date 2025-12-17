@@ -79,30 +79,46 @@ class PagosRepository {
 // Repositorio para Inventario e Instalaciones
 class InventarioRepository(private val context: android.content.Context) {
     
+    private val apiService = com.example.fiberdesk_app.network.ApiClient.apiService
+    
+    // Obtener materiales
+    suspend fun getMateriales(): List<Material> = withContext(Dispatchers.IO) {
+        apiService.getMateriales()
+    }
+    
     // Obtener instalaciones
     suspend fun getInstalaciones(): List<Instalacion> = withContext(Dispatchers.IO) {
-        // TODO: Implementar llamada al API cuando esté disponible
-        // Por ahora retornar lista vacía
-        emptyList()
+        apiService.getInstalaciones()
     }
     
     // Crear instalación
-    suspend fun createInstalacion(instalacion: Instalacion) = withContext(Dispatchers.IO) {
-        // TODO: Implementar llamada al API cuando esté disponible
+    suspend fun createInstalacion(instalacion: Instalacion): Instalacion = withContext(Dispatchers.IO) {
+        apiService.createInstalacion(instalacion)
     }
     
     // Usar material en instalación
     suspend fun usarMaterial(instalacionId: String, materialId: String, cantidad: Int) = withContext(Dispatchers.IO) {
-        // TODO: Implementar llamada al API cuando esté disponible
+        val materiales = mapOf(materialId to cantidad)
+        apiService.usarMateriales(instalacionId, materiales)
+    }
+    
+    // Usar múltiples materiales en instalación
+    suspend fun usarMateriales(instalacionId: String, materiales: Map<String, Int>): Instalacion = withContext(Dispatchers.IO) {
+        apiService.usarMateriales(instalacionId, materiales)
+    }
+    
+    // Remover material de instalación
+    suspend fun removerMaterial(instalacionId: String, materialId: String): Instalacion = withContext(Dispatchers.IO) {
+        apiService.removerMaterial(instalacionId, materialId)
     }
     
     // Actualizar estado de instalación
-    suspend fun updateEstado(instalacionId: String, estado: String) = withContext(Dispatchers.IO) {
-        // TODO: Implementar llamada al API cuando esté disponible
+    suspend fun updateEstado(instalacionId: String, estado: String): Instalacion = withContext(Dispatchers.IO) {
+        apiService.updateEstadoInstalacion(instalacionId, mapOf("estado" to estado))
     }
     
     // Eliminar instalación
     suspend fun deleteInstalacion(instalacionId: String) = withContext(Dispatchers.IO) {
-        // TODO: Implementar llamada al API cuando esté disponible
+        apiService.deleteInstalacion(instalacionId)
     }
 }

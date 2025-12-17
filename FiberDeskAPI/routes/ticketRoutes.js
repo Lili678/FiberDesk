@@ -28,7 +28,6 @@ router.post("/", async (req, res) => {
         const newTicket = await Ticket.create(req.body);
         res.json({ message: "Ticket creado", ticket: newTicket });
     } catch (error) {
-        console.log(error);
         res.status(400).json({ error: "Error al crear ticket" });
     }
 });
@@ -82,31 +81,20 @@ router.put("/:folio/estado", async (req, res) => {
         const { folio } = req.params;
         const { estado } = req.body;
 
-        console.log("=== ACTUALIZAR ESTADO ===");
-        console.log("Folio recibido:", folio);
-        console.log("Estado recibido:", estado);
-        console.log("Body completo:", req.body);
-
         // Validar que el estado sea válido
         const estadosValidos = ["Pendiente", "En Espera", "En Progreso", "Realizado"];
         if (!estadosValidos.includes(estado)) {
-            console.log("Estado no válido:", estado);
             return res.status(400).json({ error: "Estado no válido", estadoRecibido: estado });
         }
 
         const ticket = await Ticket.findOne({ folio });
-        console.log("Ticket encontrado:", ticket ? "Sí" : "No");
         
         if (!ticket) {
-            console.log("Ticket no encontrado con folio:", folio);
             return res.status(404).json({ error: "Ticket no encontrado", folio });
         }
 
-        console.log("Estado actual del ticket:", ticket.estado);
-
         // Si el ticket ya está en estado "Realizado", no permitir cambios
         if (ticket.estado === "Realizado") {
-            console.log("Ticket ya finalizado:", folio);
             return res.status(400).json({ error: "No se puede cambiar el estado de un ticket finalizado" });
         }
 
@@ -117,11 +105,8 @@ router.put("/:folio/estado", async (req, res) => {
             { new: true }
         );
 
-        console.log("Estado actualizado exitosamente a:", updated.estado);
-        console.log("=== FIN ACTUALIZAR ESTADO ===");
         res.json({ success: true, message: "Estado actualizado", estado: updated.estado });
     } catch (error) {
-        console.error("ERROR al actualizar estado:", error);
         res.status(500).json({ error: "Error al actualizar estado", detalle: error.message });
     }
 });

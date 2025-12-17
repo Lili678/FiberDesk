@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fiberdesk_app.R
 import com.example.fiberdesk_app.adapters.AvailableMaterialAdapter
@@ -44,7 +43,7 @@ class InstalacionDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val instalacionId = arguments?.getString("instalacionId") ?: run {
-            findNavController().popBackStack()
+            parentFragmentManager.popBackStack()
             return
         }
 
@@ -149,7 +148,7 @@ class InstalacionDetailFragment : Fragment() {
         }
 
         binding.btnVolver.setOnClickListener {
-            findNavController().popBackStack()
+            parentFragmentManager.popBackStack()
         }
     }
 

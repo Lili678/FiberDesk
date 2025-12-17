@@ -27,45 +27,60 @@ class TicketListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ticket_list)
+        try {
+            android.util.Log.d("TicketList", "=== INICIANDO TICKETLISTACTIVITY ===")
+            android.util.Log.d("TicketList", "Base URL: ${com.example.fiberdesk_app.network.NetworkConfig.getBaseUrl()}")
+            
+            setContentView(R.layout.activity_ticket_list)
+            android.util.Log.d("TicketList", "Layout cargado exitosamente")
 
-        rvTickets = findViewById(R.id.rvTickets)
-        edtBuscar = findViewById(R.id.edtBuscar)
-        btnCrearTicket = findViewById(R.id.btnCrearTicket)
-        btnBack = findViewById(R.id.btnBack)
+            rvTickets = findViewById(R.id.rvTickets)
+            edtBuscar = findViewById(R.id.edtBuscar)
+            btnCrearTicket = findViewById(R.id.btnCrearTicket)
+            btnBack = findViewById(R.id.btnBack)
+            btnVerArchivados = findViewById(R.id.btnVerArchivados)
+            android.util.Log.d("TicketList", "Vistas encontradas exitosamente")
 
-        // **Adapter CORRECTO con callback**
-        adapter = TicketAdapter(
-            listOf(),
-            onArchivarClick = { ticket ->
-                archivarTicket(ticket)
-            },
-            onItemClick = { ticket ->
-                val intent = Intent(this, TicketDetailActivity::class.java)
-                intent.putExtra("ticket", ticket)
-                startActivity(intent)
+            // **Adapter CORRECTO con callback**
+            adapter = TicketAdapter(
+                listOf(),
+                onArchivarClick = { ticket ->
+                    archivarTicket(ticket)
+                },
+                onItemClick = { ticket ->
+                    val intent = Intent(this, TicketDetailActivity::class.java)
+                    intent.putExtra("ticket", ticket)
+                    startActivity(intent)
+                }
+            )
+            android.util.Log.d("TicketList", "Adapter creado exitosamente")
+
+            rvTickets.layoutManager = LinearLayoutManager(this)
+            rvTickets.adapter = adapter
+            android.util.Log.d("TicketList", "RecyclerView configurado exitosamente")
+
+            // Botón regresar
+            btnBack.setOnClickListener {
+                finish()
             }
-        )
-        rvTickets.adapter = adapter
 
-        rvTickets.adapter = adapter
-        rvTickets.layoutManager = LinearLayoutManager(this)
+            // FAB crear ticket
+            btnCrearTicket.setOnClickListener {
+                startActivity(Intent(this, TicketNewActivity::class.java))
+            }
 
-        cargarTickets()
+            btnVerArchivados.setOnClickListener {
+                startActivity(Intent(this, TicketArchivedActivity::class.java))
+            }
+            android.util.Log.d("TicketList", "Listeners configurados exitosamente")
 
-        // Botón regresar
-        btnBack.setOnClickListener {
+            cargarTickets()
+            
+        } catch (e: Exception) {
+            android.util.Log.e("TicketList", "ERROR EN ONCREATE: ${e.message}", e)
+            e.printStackTrace()
+            Toast.makeText(this, "Error al inicializar la pantalla: ${e.message}", Toast.LENGTH_LONG).show()
             finish()
-        }
-
-        // FAB crear ticket
-        btnCrearTicket.setOnClickListener {
-            startActivity(Intent(this, TicketNewActivity::class.java))
-        }
-
-        btnVerArchivados = findViewById(R.id.btnVerArchivados)
-        btnVerArchivados.setOnClickListener {
-            startActivity(Intent(this, TicketArchivedActivity::class.java))
         }
 
         edtBuscar.addTextChangedListener(object : TextWatcher {
@@ -87,15 +102,28 @@ class TicketListActivity : AppCompatActivity() {
     private fun cargarTickets() {
         lifecycleScope.launch {
             try {
+                android.util.Log.d("TicketList", "Iniciando carga de tickets...")
                 val response = ApiClient.apiService.getTickets()
+                android.util.Log.d("TicketList", "Respuesta recibida: ${response.code()}")
+                
                 if (response.isSuccessful && response.body() != null) {
                     listaOriginal = response.body()!!
+                    android.util.Log.d("TicketList", "Tickets cargados: ${listaOriginal.size}")
                     adapter.actualizarLista(listaOriginal)
+                    
+                    if (listaOriginal.isEmpty()) {
+                        Toast.makeText(this@TicketListActivity, "No hay tickets registrados", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
-                    Toast.makeText(this@TicketListActivity, "Error al obtener tickets", Toast.LENGTH_SHORT).show()
+                    val errorMsg = "Error ${response.code()}: ${response.message()}"
+                    android.util.Log.e("TicketList", errorMsg)
+                    Toast.makeText(this@TicketListActivity, errorMsg, Toast.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@TicketListActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                val errorMsg = "Error de conexión: ${e.message}"
+                android.util.Log.e("TicketList", errorMsg, e)
+                Toast.makeText(this@TicketListActivity, errorMsg, Toast.LENGTH_LONG).show()
+                e.printStackTrace()
             }
         }
     }

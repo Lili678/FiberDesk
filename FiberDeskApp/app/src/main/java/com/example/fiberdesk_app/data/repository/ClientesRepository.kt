@@ -5,11 +5,6 @@ import com.example.fiberdesk_app.data.remote.ClientesApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-sealed class Result<out T> {
-    data class Success<T>(val data: T) : Result<T>()
-    data class Error(val message: String) : Result<Nothing>()
-}
-
 class ClientesRepository {
     
     suspend fun obtenerClientes(incluirArchivados: Boolean = false): Result<List<ClienteModel>> = withContext(Dispatchers.IO) {

@@ -1,4 +1,9 @@
+// Suprimir mensajes de dotenv capturando console.log temporalmente
+const originalLog = console.log;
+console.log = () => {};
 require('dotenv').config();
+console.log = originalLog;
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -9,29 +14,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-<<<<<<< HEAD
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/fiberdesk';
-=======
-// Conexión Mongo
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("Mongo conectado correctamente"))
-  .catch(err => {
-    console.error("Error al conectar Mongo:", err);
-    process.exit(1); // Detener el proceso si no hay base de datos
-  });
-
-mongoose.connection.on('error', err => {
-  console.error("Error en tiempo de ejecución de Mongo:", err);
-});
->>>>>>> 840621e91d9e3e1855dd5f4de26903e23515a06b
 
 mongoose.connect(MONGO_URI)
-  .then(() => console.log("Mongo conectado correctamente ->", MONGO_URI))
+  .then(() => console.log("Mongo conectado correctamente"))
   .catch(err => {
     console.error("Error al conectar Mongo:", err);
     console.error("Asegúrese de tener MongoDB en ejecución y/o definir MONGO_URI en un archivo .env");
     process.exit(1);
   });
+
+mongoose.connection.on('error', err => {
+  console.error("Error en tiempo de ejecución de Mongo:", err);
+});
 
 // Ruta de health check (sin autenticación)
 app.get('/api/health', (req, res) => {
@@ -50,5 +45,4 @@ const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0'; // Escuchar en todas las interfaces de red
 app.listen(PORT, HOST, () => {
   console.log(`Servidor backend corriendo en ${HOST}:${PORT}`);
-  console.log(`Accesible desde dispositivos en la red local en: http://192.168.1.66:${PORT}`);
 });

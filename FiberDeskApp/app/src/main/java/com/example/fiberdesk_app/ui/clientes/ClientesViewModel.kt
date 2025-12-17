@@ -50,6 +50,7 @@ class ClientesViewModel : ViewModel() {
                     _error.value = result.message
                     _isLoading.value = false
                 }
+                is Result.Loading -> {}
             }
         }
     }
@@ -72,6 +73,7 @@ class ClientesViewModel : ViewModel() {
                     _error.value = result.message
                     _isLoading.value = false
                 }
+                is Result.Loading -> {}
             }
         }
     }
@@ -89,6 +91,7 @@ class ClientesViewModel : ViewModel() {
                     _error.value = result.message
                     _isLoading.value = false
                 }
+                is Result.Loading -> {}
             }
         }
     }
@@ -106,6 +109,7 @@ class ClientesViewModel : ViewModel() {
                     _error.value = result.message
                     _isLoading.value = false
                 }
+                is Result.Loading -> {}
             }
         }
     }
@@ -124,6 +128,7 @@ class ClientesViewModel : ViewModel() {
                     _error.value = result.message
                     _isLoading.value = false
                 }
+                is Result.Loading -> {}
             }
         }
     }
@@ -142,6 +147,7 @@ class ClientesViewModel : ViewModel() {
                     _error.value = result.message
                     _isLoading.value = false
                 }
+                is Result.Loading -> {}
             }
         }
     }
@@ -160,6 +166,7 @@ class ClientesViewModel : ViewModel() {
                     _error.value = result.message
                     _isLoading.value = false
                 }
+                is Result.Loading -> {}
             }
         }
     }
@@ -177,6 +184,7 @@ class ClientesViewModel : ViewModel() {
                     _error.value = result.message
                     _isLoading.value = false
                 }
+                is Result.Loading -> {}
             }
         }
     }

@@ -31,6 +31,10 @@ const InstalacionSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    fechaActualizacion: {
+        type: Date,
+        default: Date.now
+    },
     fechaCompletado: {
         type: Date,
         default: null

@@ -62,7 +62,8 @@ class InstalacionesListFragment : Fragment(), InstalacionAdapter.OnItemActionLis
         }
 
         binding.fabAddInstalacion.setOnClickListener {
-            findNavController().navigate(R.id.createInstalacionFragment)
+            // TODO: Implementar creación de instalaciones
+            Toast.makeText(requireContext(), "Funcionalidad en desarrollo", Toast.LENGTH_SHORT).show()
         }
 
         binding.recyclerViewInstalaciones.post { viewModel.obtenerInstalaciones() }
@@ -93,8 +94,6 @@ class InstalacionesListFragment : Fragment(), InstalacionAdapter.OnItemActionLis
     }
 
     override fun onItemClick(instalacion: Instalacion) {
-        val bundle = Bundle().apply {
-            putString("instalacionId", instalacion._id)
-        }
-        findNavController().navigate(R.id.instalacionDetailFragment, bundle)
+        // TODO: Implementar detalle de instalaciones
+        Toast.makeText(requireContext(), "Ver detalle de: ${instalacion.cliente}", Toast.LENGTH_SHORT).show()
     }}

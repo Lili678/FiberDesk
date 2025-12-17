@@ -84,7 +84,7 @@ class InstalacionViewModel(application: Application) : AndroidViewModel(applicat
             try {
                 android.util.Log.d("InstalacionVM", "Iniciando usarMaterials: $instalacionId, ${selections.size} items")
                 val result = repository.usarMateriales(instalacionId, selections)
-                android.util.Log.d("InstalacionVM", "Respuesta recibida: ${result.materialesUsados.size} materiales usados")
+                android.util.Log.d("InstalacionVM", "Respuesta recibida: ${result.materialesUsados?.size ?: 0} materiales usados")
                 obtenerInstalaciones()
                 _success.postValue("Materiales guardados correctamente")
             } catch (e: retrofit2.HttpException) {

@@ -48,7 +48,8 @@ class HomeActivity : AppCompatActivity() {
         val inventoryButton: ConstraintLayout = findViewById(R.id.inventoryButton)
 
         clientsButton.setOnClickListener {
-            // TODO: Ir a pantalla de clientes
+            val intent = Intent(this, ListaClientesActivity::class.java)
+            startActivity(intent)
         }
 
         ticketsButton.setOnClickListener {

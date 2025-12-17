@@ -20,16 +20,16 @@ interface ApiService {
     suspend fun getPerfil(): Response<Usuario>
 
     // Inventario endpoints
-    @GET("inventario")
+    @GET("inventario/materiales")
     suspend fun getMateriales(): List<Material>
 
-    @POST("inventario")
+    @POST("inventario/materiales")
     suspend fun addMaterial(@Body material: Material): Material
 
-    @PUT("inventario/{id}")
+    @PUT("inventario/materiales/{id}")
     suspend fun updateMaterial(@Path("id") id: String, @Body material: Material): Material
 
-    @DELETE("inventario/{id}")
+    @DELETE("inventario/materiales/{id}")
     suspend fun deleteMaterial(@Path("id") id: String): Response<Unit>
 
     // Pagos endpoints
@@ -75,4 +75,23 @@ interface ApiService {
         @Path("folio") folio: String,
         @Body estado: Map<String, String>
     ): Response<Map<String, Any>>
+
+    // Instalaciones endpoints
+    @GET("inventario/instalaciones")
+    suspend fun getInstalaciones(): List<Instalacion>
+
+    @POST("inventario/instalaciones")
+    suspend fun createInstalacion(@Body instalacion: Instalacion): Instalacion
+
+    @PUT("inventario/instalaciones/{id}/estado")
+    suspend fun updateEstadoInstalacion(@Path("id") id: String, @Body estado: Map<String, String>): Instalacion
+
+    @POST("inventario/instalaciones/{id}/materiales")
+    suspend fun usarMateriales(@Path("id") id: String, @Body materiales: Map<String, Int>): Instalacion
+
+    @DELETE("inventario/instalaciones/{id}/materiales/{materialId}")
+    suspend fun removerMaterial(@Path("id") id: String, @Path("materialId") materialId: String): Instalacion
+
+    @DELETE("inventario/instalaciones/{id}")
+    suspend fun deleteInstalacion(@Path("id") id: String): Response<Unit>
 }

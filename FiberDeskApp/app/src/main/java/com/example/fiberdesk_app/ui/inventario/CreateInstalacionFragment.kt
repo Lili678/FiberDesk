@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.fiberdesk_app.data.model.Instalacion
 import com.example.fiberdesk_app.databinding.FragmentCreateInstalacionBinding
 
@@ -45,7 +44,7 @@ class CreateInstalacionFragment : Fragment() {
 
             viewModel.createInstalacion(cliente, direccion)
             Toast.makeText(requireContext(), "Instalación creada", Toast.LENGTH_SHORT).show()
-            findNavController().navigateUp()
+            parentFragmentManager.popBackStack()
         }
 
         viewModel.error.observe(viewLifecycleOwner) { mensaje ->

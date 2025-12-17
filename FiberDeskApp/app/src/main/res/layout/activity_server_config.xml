@@ -160,6 +160,73 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Configuración para Datos Móviles -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="#FFF3E0">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="📱 Servidor para Datos Móviles"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorPrimary"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cuando uses datos móviles, la app usará esta URL remota (ej: Railway, ngrok, etc.)"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_marginBottom="12dp"/>
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchUseRemoteOnMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Usar servidor remoto con datos móviles"
+                    android:checked="true"
+                    android:layout_marginBottom="12dp"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="URL del Servidor Remoto"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextRemoteUrl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textUri"
+                        android:hint="https://tu-servidor.railway.app"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="💡 Ejemplos:\n• https://fiberdesk.railway.app\n• https://abc123.ngrok.io\n• http://98.123.45.67:3000"
+                    android:textSize="11sp"
+                    android:textColor="@android:color/darker_gray"
+                    android:lineSpacingMultiplier="1.3"/>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- Botones de acción -->
         <Button
             android:id="@+id/buttonTestConnection"
@@ -201,7 +268,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="• Asegúrate de que tu dispositivo y la computadora con el servidor estén conectados a la misma red WiFi\n\n• Activa la detección automática para que la app encuentre el servidor automáticamente\n\n• O ingresa manualmente la IP de la computadora donde corre el servidor\n\n• Usa 'Probar Conexión' para verificar que todo funcione correctamente"
+                    android:text="📶 CON WiFi:\n• Asegúrate de que tu dispositivo y la computadora con el servidor estén en la misma red WiFi\n• Activa la detección automática o ingresa la IP manualmente\n\n📱 CON Datos Móviles:\n• Configura la URL de tu servidor remoto (Railway, ngrok, etc.)\n• La app cambiará automáticamente cuando uses datos móviles\n\n✅ Usa 'Probar Conexión' para verificar que todo funcione"
                     android:textSize="12sp"
                     android:lineSpacingMultiplier="1.2"/>
 

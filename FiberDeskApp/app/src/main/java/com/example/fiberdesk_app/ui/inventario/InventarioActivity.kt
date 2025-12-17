@@ -73,7 +73,7 @@ class InventarioActivity : AppCompatActivity() {
                 
                 // Cargar materiales
                 val materialesResponse = ApiClient.apiService.getMateriales()
-                val bajoStock = materialesResponse.count { (it.cantidadDisponible ?: 0) < 10 }
+                val bajoStock = materialesResponse.count { it.cantidad < 10 }
                 txtLowStock.text = bajoStock.toString()
                 
             } catch (e: Exception) {
@@ -88,12 +88,8 @@ class InventarioActivity : AppCompatActivity() {
     }
 
     private fun showMaterialesScreen() {
-        // Navegar a MaterialesListFragment
-        val fragment = MaterialesListFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(android.R.id.content, fragment)
-            .addToBackStack(null)
-            .commit()
+        // TODO: Implementar navegación a lista de materiales
+        Toast.makeText(this, "Función de materiales en desarrollo", Toast.LENGTH_SHORT).show()
     }
 
     private fun showInstalacionesScreen() {

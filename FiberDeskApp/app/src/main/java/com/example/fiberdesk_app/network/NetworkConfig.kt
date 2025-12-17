@@ -1,6 +1,8 @@
 package com.example.fiberdesk_app.network
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
 import com.example.fiberdesk_app.BuildConfig
@@ -32,72 +34,120 @@ object NetworkConfig {
     }
     
     /**
-     * Obtiene la URL base configurada
-     * Prioridad: 1) IP guardada por usuario, 2) IP por defecto según entorno
-     * Soporta URLs remotas (ngrok, dominios, etc.)
+     * Detecta si el dispositivo está conectado por datos móviles
+     */
+    private fun isConnectedToMobileData(): Boolean {
+        val ctx = context ?: return false
+        try {
+            val connectivityManager = ctx.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val network = connectivityManager.activeNetwork ?: return false
+            val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+            return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+        } catch (e: Exception) {
+            Log.e("NetworkConfig", "Error detectando datos móviles", e)
+            return false
+        }
+    }
+    
+    /**
+     * Detecta si el dispositivo está conectado por WiFi
+     */
+    private fun isConnectedToWiFi(): Boolean {
+        val ctx = context ?: return false
+        try {
+            val connectivityManager = ctx.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val network = connectivityManager.activeNetwork ?: return false
+            val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+            return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+        } catch (e: Exception) {
+            Log.e("NetworkConfig", "Error detectando WiFi", e)
+            return false
+        }
+    }
+    
+    /**
+     * Obtiene la URL base configurada con detección inteligente
+     * 
+     * LÓGICA:
+     * 1. Datos móviles → Servidor remoto (si está configurado)
+     * 2. WiFi → Servidor local
+     * 3. Emulador → 10.0.2.2
+     * 4. Manual → Lo que el usuario configure
      */
     fun getBaseUrl(): String {
-        // Si ya tenemos una URL en caché, usarla
-        cachedBaseUrl?.let { return it }
-        
         val ctx = context
         val isEmulatorDevice = isEmulator()
+        val isMobileData = isConnectedToMobileData()
+        val isWiFi = isConnectedToWiFi()
         
-        // Obtener configuración del usuario si está disponible
-        val savedIP = if (ctx != null) {
-            NetworkPreferences.getServerIP(ctx)
-        } else {
-            null
-        }
-        
-        val port = if (ctx != null) {
-            NetworkPreferences.getServerPort(ctx)
-        } else {
-            BuildConfig.API_PORT
-        }
-        
-        // Convertir port a entero para comparaciones
+        // Obtener configuraciones guardadas
+        val savedIP = ctx?.let { NetworkPreferences.getServerIP(it) }
+        val remoteUrl = ctx?.let { NetworkPreferences.getRemoteUrl(it) }
+        val useRemoteOnMobile = ctx?.let { NetworkPreferences.isUseRemoteOnMobileEnabled(it) } ?: true
+        val port = ctx?.let { NetworkPreferences.getServerPort(it) } ?: BuildConfig.API_PORT
         val portInt = port.toIntOrNull() ?: 3000
         
-        // Detectar si es una URL completa (http/https) o solo IP
+        // ====== LÓGICA DE SELECCIÓN INTELIGENTE ======
         val url = when {
-            // Si hay una URL guardada por el usuario
+            // 1. DATOS MÓVILES + URL REMOTA CONFIGURADA
+            isMobileData && useRemoteOnMobile && !remoteUrl.isNullOrEmpty() -> {
+                Log.d("NetworkConfig", "📱 DATOS MÓVILES detectados → Usando servidor remoto")
+                formatRemoteUrl(remoteUrl)
+            }
+            
+            // 2. IP/URL MANUAL CONFIGURADA POR USUARIO (tiene prioridad)
             !savedIP.isNullOrEmpty() -> {
                 if (savedIP.startsWith("http://") || savedIP.startsWith("https://")) {
-                    // Es una URL completa (ej: https://abc123.ngrok.io)
-                    Log.d("NetworkConfig", "Usando URL remota: $savedIP")
-                    if (savedIP.endsWith("/api/")) {
-                        savedIP
-                    } else if (savedIP.endsWith("/")) {
-                        "${savedIP}api/"
-                    } else {
-                        "$savedIP/api/"
-                    }
+                    Log.d("NetworkConfig", "🌐 Usando URL configurada manualmente: $savedIP")
+                    formatRemoteUrl(savedIP)
                 } else {
-                    // Es solo IP/dominio (ej: abc123.ngrok.io o 192.168.1.64)
-                    Log.d("NetworkConfig", "Usando servidor: $savedIP")
+                    Log.d("NetworkConfig", "🏠 Usando IP local configurada: $savedIP")
                     val protocol = if (portInt == 443) "https" else "http"
                     val portSuffix = if (portInt == 80 || portInt == 443) "" else ":$port"
                     "$protocol://$savedIP$portSuffix/api/"
                 }
             }
-            // Si es emulador, usar IP especial
+            
+            // 3. EMULADOR
             isEmulatorDevice -> {
-                Log.d("NetworkConfig", "Emulador detectado, usando 10.0.2.2")
+                Log.d("NetworkConfig", "🖥️ Emulador detectado → usando 10.0.2.2")
                 "http://10.0.2.2:$port/api/"
             }
-            // Para dispositivos físicos, usar IP por defecto del BuildConfig
+            
+            // 4. WIFI (por defecto, usar IP local del BuildConfig)
             else -> {
-                Log.d("NetworkConfig", "Dispositivo físico, usando IP por defecto: ${BuildConfig.LOCAL_IP}")
+                Log.d("NetworkConfig", "📶 WiFi → Usando IP local por defecto: ${BuildConfig.LOCAL_IP}")
                 "http://${BuildConfig.LOCAL_IP}:$port/api/"
             }
         }
         
-        Log.d("NetworkConfig", "Entorno: ${if (isEmulatorDevice) "EMULADOR" else "DISPOSITIVO FÍSICO"}")
-        Log.d("NetworkConfig", "URL base configurada: $url")
+        // Log informativo
+        val connectionType = when {
+            isMobileData -> "DATOS MÓVILES 📱"
+            isWiFi -> "WiFi 📶"
+            else -> "DESCONOCIDA ❓"
+        }
+        
+        Log.d("NetworkConfig", "=========================================")
+        Log.d("NetworkConfig", "📡 Tipo de conexión: $connectionType")
+        Log.d("NetworkConfig", "🖥️  Entorno: ${if (isEmulatorDevice) "EMULADOR" else "DISPOSITIVO FÍSICO"}")
+        Log.d("NetworkConfig", "🔗 URL seleccionada: $url")
+        Log.d("NetworkConfig", "=========================================")
         
         cachedBaseUrl = url
         return url
+    }
+    
+    /**
+     * Formatea una URL remota para asegurar que termine correctamente en /api/
+     */
+    private fun formatRemoteUrl(url: String): String {
+        return when {
+            url.endsWith("/api/") -> url
+            url.endsWith("/api") -> "$url/"
+            url.endsWith("/") -> "${url}api/"
+            else -> "$url/api/"
+        }
     }
     
     /**

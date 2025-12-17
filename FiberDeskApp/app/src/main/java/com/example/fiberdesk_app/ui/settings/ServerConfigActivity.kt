@@ -35,10 +35,14 @@ class ServerConfigActivity : AppCompatActivity() {
         val savedIP = NetworkPreferences.getServerIP(this)
         val savedPort = NetworkPreferences.getServerPort(this)
         val autoDetect = NetworkPreferences.isAutoDetectEnabled(this)
+        val remoteUrl = NetworkPreferences.getRemoteUrl(this)
+        val useRemoteOnMobile = NetworkPreferences.isUseRemoteOnMobileEnabled(this)
         
         binding.editTextServerIP.setText(savedIP ?: "")
         binding.editTextServerPort.setText(savedPort)
         binding.switchAutoDetect.isChecked = autoDetect
+        binding.editTextRemoteUrl.setText(remoteUrl ?: "")
+        binding.switchUseRemoteOnMobile.isChecked = useRemoteOnMobile
         
         // Mostrar IP local del dispositivo
         val localIP = ServerDetector.getLocalIPAddress(this)
@@ -130,6 +134,8 @@ class ServerConfigActivity : AppCompatActivity() {
         val autoDetect = binding.switchAutoDetect.isChecked
         val ip = binding.editTextServerIP.text.toString().trim()
         val port = binding.editTextServerPort.text.toString().trim()
+        val remoteUrl = binding.editTextRemoteUrl.text.toString().trim()
+        val useRemoteOnMobile = binding.switchUseRemoteOnMobile.isChecked
         
         if (!autoDetect && ip.isEmpty()) {
             Toast.makeText(this, "Debes ingresar una IP o activar la detección automática", Toast.LENGTH_SHORT).show()
@@ -141,12 +147,25 @@ class ServerConfigActivity : AppCompatActivity() {
             return
         }
         
+        // Validar URL remota si está habilitada
+        if (useRemoteOnMobile && remoteUrl.isNotEmpty()) {
+            if (!remoteUrl.startsWith("http://") && !remoteUrl.startsWith("https://")) {
+                Toast.makeText(this, "La URL remota debe comenzar con http:// o https://", Toast.LENGTH_LONG).show()
+                return
+            }
+        }
+        
         // Guardar configuración
         NetworkPreferences.setAutoDetect(this, autoDetect)
         NetworkPreferences.saveServerIP(this, ip)
         NetworkPreferences.saveServerPort(this, port)
+        NetworkPreferences.saveRemoteUrl(this, remoteUrl)
+        NetworkPreferences.setUseRemoteOnMobile(this, useRemoteOnMobile)
         
-        Toast.makeText(this, "Configuración guardada correctamente", Toast.LENGTH_SHORT).show()
+        // Invalidar caché de NetworkConfig para que recargue la URL
+        com.example.fiberdesk_app.network.NetworkConfig.invalidateCache()
+        
+        Toast.makeText(this, "✅ Configuración guardada correctamente", Toast.LENGTH_SHORT).show()
         finish()
     }
     

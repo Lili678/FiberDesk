@@ -1,0 +1,100 @@
+package com.example.fiberdesk_app
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+import androidx.lifecycle.lifecycleScope
+import com.example.fiberdesk_app.network.ApiClient
+import kotlinx.coroutines.launch
+
+class TicketNewActivity : AppCompatActivity() {
+
+    private lateinit var edtCliente: EditText
+    private lateinit var edtAsunto: EditText
+    private lateinit var spnPrioridad: Spinner
+    private lateinit var edtDescripcion: EditText
+    private lateinit var edtTecnico: EditText
+    private lateinit var btnCrear: Button
+
+    private lateinit var btnRegresar: Button
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_ticket_new)
+
+        // --- Enlazar vistas ---
+        btnRegresar = findViewById(R.id.btnRegresar)
+        edtCliente = findViewById(R.id.edtCliente)
+        edtAsunto = findViewById(R.id.edtAsunto)
+        spnPrioridad = findViewById(R.id.spnPrioridad)
+        edtDescripcion = findViewById(R.id.edtDescripcion)
+        edtTecnico = findViewById(R.id.edtTecnico)
+        btnCrear = findViewById(R.id.btnCrear)
+
+        btnRegresar.setOnClickListener {
+            finish() // Cierra activity y regresa a la lista
+        }
+
+
+        // --- Cargar prioridades en el Spinner ---
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.prioridades,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spnPrioridad.adapter = adapter
+
+        // --- Evento de botón Crear ---
+        btnCrear.setOnClickListener {
+            crearTicket()
+        }
+    }
+
+    private fun generarFolio(): String {
+        val fecha = android.text.format.DateFormat.format("yyyyMMdd", java.util.Date())
+        val random = (10000..99999).random()
+        return "TCK-$fecha-$random"
+    }
+
+    private fun crearTicket() {
+        val cliente = edtCliente.text.toString().trim()
+        val asunto = edtAsunto.text.toString().trim()
+        val prioridad = spnPrioridad.selectedItem.toString()
+        val descripcion = edtDescripcion.text.toString().trim()
+        val tecnico = edtTecnico.text.toString().trim()
+
+        if (cliente.isEmpty() || asunto.isEmpty() || descripcion.isEmpty()) {
+            Toast.makeText(this, "Completa todos los campos obligatorios", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+
+        val nuevoTicket = Ticket(
+            folio = generarFolio(),
+            cliente = cliente,
+            prioridad = prioridad,
+            asunto = asunto,
+            tecnico = tecnico,
+            creadoPor = "AndroidApp",
+            estado = "Abierto",
+            fecha = System.currentTimeMillis().toString(),
+            descripcion = descripcion
+        )
+
+        lifecycleScope.launch {
+            try {
+                val response = ApiClient.apiService.crearTicket(nuevoTicket)
+                if (response.isSuccessful) {
+                    Toast.makeText(this@TicketNewActivity, "Ticket creado", Toast.LENGTH_SHORT).show()
+                    finish()
+                } else {
+                    Toast.makeText(this@TicketNewActivity, "Error al crear ticket", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@TicketNewActivity, "Fallo de conexión: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+}

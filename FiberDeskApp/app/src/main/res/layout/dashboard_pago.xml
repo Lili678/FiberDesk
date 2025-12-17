@@ -4,21 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F3F8"
+    android:background="@drawable/gradient_background"
     tools:context=".ui.pagos.PagosActivity">
-
-    <!-- Contenedor principal con el fondo degradado en la parte superior -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <!-- Fondo degradado que solo ocupa la parte de arriba -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/gradient_background_pagos" />
-    </LinearLayout>
 
     <!-- Contenido de la UI (se superpone al fondo) -->
     <LinearLayout
@@ -96,40 +83,13 @@
             <!-- Contenido de la tarjeta... (como en la respuesta anterior) -->
         </androidx.cardview.widget.CardView>
 
-        <!-- 4. Título de la lista -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:text="Actividad Reciente"
-            android:textColor="#333333"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <!-- 5. Lista para la actividad reciente -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerActividadReciente"
+        <!-- Contenedor para el Fragment de Pagos -->
+        <FrameLayout
+            android:id="@+id/fragmentContainerPagos"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="8dp"
-            android:clipToPadding="false"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            tools:listitem="@layout/item_pago" />
+            android:layout_marginTop="16dp" />
     </LinearLayout>
-
-    <!-- 6. Botón Flotante de Acción -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_pago"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="#007BFF"
-        app:tint="@android:color/white"
-        android:contentDescription="Agregar Pago" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

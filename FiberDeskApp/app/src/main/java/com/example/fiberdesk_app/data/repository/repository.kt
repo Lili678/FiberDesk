@@ -1,7 +1,7 @@
 package com.example.fiberdesk_app.data.repository
 
 import com.example.fiberdesk_app.data.model.*
-import com.example.fiberdesk_app.data.remote.PagosApiClient
+import com.example.fiberdesk_app.network.ApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -17,60 +17,108 @@ class PagosRepository {
     // Obtener todos los pagos
     suspend fun obtenerPagos(): Result<List<Pago>> = withContext(Dispatchers.IO) {
         try {
-            val pagos = PagosApiClient.obtenerPagos()
+            val pagos = ApiClient.apiService.obtenerPagos()
             Result.Success(pagos)
         } catch (e: Exception) {
-            Result.Error("Error: ${e.message}")
+            Result.Error("Error al obtener pagos: ${e.message}")
         }
     }
     
     // Obtener pago por ID
     suspend fun obtenerPagoPorId(id: String): Result<Pago> = withContext(Dispatchers.IO) {
         try {
-            val pago = PagosApiClient.obtenerPagoPorId(id)
+            val pago = ApiClient.apiService.obtenerPagoPorId(id)
             Result.Success(pago)
         } catch (e: Exception) {
-            Result.Error("Error: ${e.message}")
+            Result.Error("Error al obtener pago: ${e.message}")
         }
     }
     
     // Obtener pagos por usuario
     suspend fun obtenerPagosPorUsuario(usuarioId: String): Result<List<Pago>> = withContext(Dispatchers.IO) {
         try {
-            val pagos = PagosApiClient.obtenerPagosPorUsuario(usuarioId)
+            val pagos = ApiClient.apiService.obtenerPagosPorUsuario(usuarioId)
             Result.Success(pagos)
         } catch (e: Exception) {
-            Result.Error("Error: ${e.message}")
+            Result.Error("Error al obtener pagos: ${e.message}")
         }
     }
     
     // Crear nuevo pago
     suspend fun crearPago(pago: CrearPagoRequest): Result<PagoResponse> = withContext(Dispatchers.IO) {
         try {
-            val response = PagosApiClient.crearPago(pago)
+            val response = ApiClient.apiService.crearPago(pago)
             Result.Success(response)
         } catch (e: Exception) {
-            Result.Error("Error: ${e.message}")
+            Result.Error("Error al crear pago: ${e.message}")
         }
     }
     
     // Actualizar pago
     suspend fun actualizarPago(id: String, pago: ActualizarPagoRequest): Result<PagoResponse> = withContext(Dispatchers.IO) {
         try {
-            val response = PagosApiClient.actualizarPago(id, pago)
+            val response = ApiClient.apiService.actualizarPago(id, pago)
             Result.Success(response)
         } catch (e: Exception) {
-            Result.Error("Error: ${e.message}")
+            Result.Error("Error al actualizar pago: ${e.message}")
         }
     }
     
     // Eliminar pago
     suspend fun eliminarPago(id: String): Result<String> = withContext(Dispatchers.IO) {
         try {
-            val mensaje = PagosApiClient.eliminarPago(id)
+            val response = ApiClient.apiService.eliminarPago(id)
+            val mensaje = response.body()?.get("mensaje") ?: "Pago eliminado"
             Result.Success(mensaje)
         } catch (e: Exception) {
-            Result.Error("Error: ${e.message}")
+            Result.Error("Error al eliminar pago: ${e.message}")
         }
+    }
+}
+
+// Repositorio para Inventario e Instalaciones
+class InventarioRepository(private val context: android.content.Context) {
+    
+    private val apiService = com.example.fiberdesk_app.network.ApiClient.apiService
+    
+    // Obtener materiales
+    suspend fun getMateriales(): List<Material> = withContext(Dispatchers.IO) {
+        apiService.getMateriales()
+    }
+    
+    // Obtener instalaciones
+    suspend fun getInstalaciones(): List<Instalacion> = withContext(Dispatchers.IO) {
+        apiService.getInstalaciones()
+    }
+    
+    // Crear instalación
+    suspend fun createInstalacion(instalacion: Instalacion): Instalacion = withContext(Dispatchers.IO) {
+        apiService.createInstalacion(instalacion)
+    }
+    
+    // Usar material en instalación
+    suspend fun usarMaterial(instalacionId: String, materialId: String, cantidad: Int) = withContext(Dispatchers.IO) {
+        val materiales = mapOf(materialId to cantidad)
+        apiService.usarMateriales(instalacionId, materiales)
+    }
+    
+    // Usar múltiples materiales en instalación
+    suspend fun usarMateriales(instalacionId: String, materiales: Map<String, Int>): Instalacion = withContext(Dispatchers.IO) {
+        apiService.usarMateriales(instalacionId, materiales)
+    }
+    
+    // Remover material de instalación
+    suspend fun removerMaterial(instalacionId: String, materialId: String): Instalacion = withContext(Dispatchers.IO) {
+        apiService.removerMaterial(instalacionId, materialId)
+    }
+    
+    // Actualizar estado de instalación
+    suspend fun updateEstado(instalacionId: String, estado: String): Instalacion = withContext(Dispatchers.IO) {
+        apiService.updateEstadoInstalacion(instalacionId, mapOf("estado" to estado))
+    }
+    
+    // Eliminar instalación
+    suspend fun deleteInstalacion(instalacionId: String) = withContext(Dispatchers.IO) {
+        apiService.deleteInstalacion(instalacionId)
     }
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+    
+    <!-- Background Circle -->
+    <path
+        android:fillColor="#4A90E2"
+        android:pathData="M60,60m-55,0a55,55 0,1 1,110 0a55,55 0,1 1,-110 0" />
+    
+    <!-- Letter F -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M40,40 L70,40 L70,48 L50,48 L50,54 L65,54 L65,62 L50,62 L50,80 L40,80 Z" />
+    
+    <!-- Fiber Lines -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M75,50 L85,50 L85,52 L75,52 Z" />
+    
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M75,60 L90,60 L90,62 L75,62 Z" />
+    
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M75,70 L85,70 L85,72 L75,72 Z" />
+</vector>

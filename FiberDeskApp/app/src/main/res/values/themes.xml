@@ -1,9 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.FiberDeskApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base.Theme.FiberDeskApp" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/blue_gradient_start</item>
+        <item name="colorPrimaryVariant">@color/purple_gradient_end</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:statusBarColor">@color/blue_gradient_start</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="Theme.FiberDeskApp" parent="Base.Theme.FiberDeskApp" />
+    
+    <!-- Estilos personalizados -->
+    <style name="SectionTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/accent_text</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
 </resources>

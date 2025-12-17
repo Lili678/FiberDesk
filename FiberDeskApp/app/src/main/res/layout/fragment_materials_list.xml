@@ -12,15 +12,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp">
-
-        <!-- RecyclerView con espacio interno y animación -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="80dp"
-            android:scrollbars="vertical" />
+            android:orientation="vertical">
+
+            <!-- Search bar -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:boxBackgroundMode="filled"
+                app:boxBackgroundColor="#F5F5F5"
+                android:hint="Buscar materiales...">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#999999"
+                    android:backgroundTint="@color/pastel_blue"
+                    android:padding="12dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- RecyclerView con espacio interno y animación -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:paddingBottom="80dp"
+                android:scrollbars="vertical" />
+
+        </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <!-- FAB para agregar material -->
@@ -31,9 +58,9 @@
         android:layout_margin="16dp"
         app:layout_anchor="@id/recyclerView"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/ic_launcher_background"
+        app:srcCompat="@drawable/ic_add_white"
         app:tint="@android:color/white"
-        app:backgroundTint="@color/black"
+        app:backgroundTint="@color/pastel_purple"
         android:contentDescription="Agregar material"
         android:elevation="6dp" />
 

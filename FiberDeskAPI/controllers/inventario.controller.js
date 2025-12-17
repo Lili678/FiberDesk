@@ -12,10 +12,15 @@ exports.getMateriales = async (req, res) => {
 
 exports.addMaterial = async (req, res) => {
     try {
+        console.log('=== ADD MATERIAL REQUEST ===');
+        console.log('Body recibido:', JSON.stringify(req.body, null, 2));
         const nuevo = new Material(req.body);
         await nuevo.save();
+        console.log('Material guardado con éxito:', nuevo._id);
         res.json(nuevo);
     } catch (error) {
+        console.error('Error al guardar material:', error.message);
+        console.error('Stack:', error.stack);
         res.status(500).json({ error: error.message });
     }
 };

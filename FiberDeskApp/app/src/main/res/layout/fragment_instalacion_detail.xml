@@ -12,6 +12,16 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Título -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Detalle de Instalación"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="16dp" />
+
         <!-- Información de la instalación -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -27,45 +37,40 @@
                 android:padding="16dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Información de la Instalación"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="12dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cliente:"
-                    android:textStyle="bold"
-                    android:textSize="14sp" />
-
-                <TextView
                     android:id="@+id/txtCliente"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nombre del cliente"
+                    android:text="Cliente: N/A"
                     android:textSize="16sp"
-                    android:layout_marginBottom="8dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dirección:"
                     android:textStyle="bold"
-                    android:textSize="14sp" />
+                    android:layout_marginBottom="8dp" />
 
                 <TextView
                     android:id="@+id/txtDireccion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Dirección de la instalación"
-                    android:textSize="16sp" />
+                    android:text="Dirección: N/A"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/txtEstado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Estado: N/A"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/txtFecha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha: N/A"
+                    android:textSize="14sp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Materiales ya guardados en la instalación -->
+        <!-- Materiales seleccionados (para edición) -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,7 +87,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Materiales Utilizados"
+                    android:text="Materiales Seleccionados"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="12dp" />
@@ -91,7 +96,7 @@
                     android:id="@+id/txtMaterialesUsados"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No hay materiales utilizados aún"
+                    android:text="No hay materiales usados"
                     android:textSize="14sp"
                     android:textColor="@android:color/darker_gray"
                     android:visibility="visible" />
@@ -104,7 +109,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Materiales disponibles para agregar -->
+        <!-- Materiales disponibles -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -143,13 +148,48 @@
             android:layout_marginTop="8dp">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnUsarMateriales"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:text="Usar Materiales"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                app:cornerRadius="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnChangeStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="Cambiar Estado"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                app:cornerRadius="8dp" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnGuardar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                android:text="Guardar Materiales"
+                android:layout_marginEnd="4dp"
+                android:text="Guardar"
                 android:textAllCaps="false"
+                app:cornerRadius="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBack"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:text="Volver"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 app:cornerRadius="8dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -157,7 +197,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:text="Volver"
                 android:textAllCaps="false"
                 style="@style/Widget.Material3.Button.OutlinedButton"

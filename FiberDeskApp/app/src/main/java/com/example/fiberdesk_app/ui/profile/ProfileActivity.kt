@@ -6,8 +6,10 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.fiberdesk_app.databinding.ActivityProfileBinding
 import com.example.fiberdesk_app.ui.login.LoginActivity
+import kotlinx.coroutines.launch
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -55,9 +57,133 @@ class ProfileActivity : AppCompatActivity() {
             mostrarDialogoCerrarSesion()
         }
 
-        // Botón de editar perfil (opcional, para futuro)
+        // Botón de editar perfil
         binding.buttonEditProfile.setOnClickListener {
-            Toast.makeText(this, "Función de editar perfil próximamente", Toast.LENGTH_SHORT).show()
+            mostrarDialogoEditarPerfil()
+        }
+
+        // Botón de cambiar contraseña
+        binding.buttonChangePassword.setOnClickListener {
+            mostrarDialogoCambiarContrasena()
+        }
+    }
+
+    private fun mostrarDialogoEditarPerfil() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        val dialogView = inflater.inflate(com.example.fiberdesk_app.R.layout.dialog_edit_profile, null)
+        
+        val editTextName = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(com.example.fiberdesk_app.R.id.editTextName)
+        val editTextEmail = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(com.example.fiberdesk_app.R.id.editTextEmail)
+        
+        val sharedPref = getSharedPreferences("AuthPrefs", MODE_PRIVATE)
+        val currentName = sharedPref.getString("userName", "") ?: ""
+        val currentEmail = sharedPref.getString("userEmail", "") ?: ""
+        
+        editTextName.setText(currentName)
+        editTextEmail.setText(currentEmail)
+        
+        builder.setView(dialogView)
+            .setTitle("Editar Perfil")
+            .setPositiveButton("Guardar") { _, _ ->
+                val nuevoNombre = editTextName.text.toString().trim()
+                val nuevoEmail = editTextEmail.text.toString().trim()
+                
+                if (nuevoNombre.isNotEmpty() && nuevoEmail.isNotEmpty()) {
+                    actualizarPerfil(nuevoNombre, nuevoEmail)
+                } else {
+                    Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun mostrarDialogoCambiarContrasena() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        val dialogView = inflater.inflate(com.example.fiberdesk_app.R.layout.dialog_change_password, null)
+        
+        val editTextCurrentPassword = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(com.example.fiberdesk_app.R.id.editTextCurrentPassword)
+        val editTextNewPassword = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(com.example.fiberdesk_app.R.id.editTextNewPassword)
+        val editTextConfirmPassword = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(com.example.fiberdesk_app.R.id.editTextConfirmPassword)
+        
+        builder.setView(dialogView)
+            .setTitle("Cambiar Contraseña")
+            .setPositiveButton("Cambiar") { _, _ ->
+                val passwordActual = editTextCurrentPassword.text.toString()
+                val passwordNueva = editTextNewPassword.text.toString()
+                val passwordConfirm = editTextConfirmPassword.text.toString()
+                
+                when {
+                    passwordActual.isEmpty() || passwordNueva.isEmpty() || passwordConfirm.isEmpty() -> {
+                        Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
+                    }
+                    passwordNueva != passwordConfirm -> {
+                        Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
+                    }
+                    passwordNueva.length < 6 -> {
+                        Toast.makeText(this, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {
+                        cambiarContrasena(passwordActual, passwordNueva)
+                    }
+                }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun actualizarPerfil(nombre: String, email: String) {
+        lifecycleScope.launch {
+            try {
+                val sharedPref = getSharedPreferences("AuthPrefs", MODE_PRIVATE)
+                val userId = sharedPref.getString("userId", "") ?: ""
+                
+                val response = com.example.fiberdesk_app.network.ApiClient.apiService.actualizarUsuario(
+                    userId,
+                    mapOf("nombre" to nombre, "email" to email)
+                )
+                
+                if (response.isSuccessful) {
+                    sharedPref.edit().apply {
+                        putString("userName", nombre)
+                        putString("userEmail", email)
+                        apply()
+                    }
+                    cargarDatosUsuario()
+                    Toast.makeText(this@ProfileActivity, "Perfil actualizado correctamente", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@ProfileActivity, "Error al actualizar perfil", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@ProfileActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun cambiarContrasena(passwordActual: String, passwordNueva: String) {
+        lifecycleScope.launch {
+            try {
+                val sharedPref = getSharedPreferences("AuthPrefs", MODE_PRIVATE)
+                val userId = sharedPref.getString("userId", "") ?: ""
+                
+                val response = com.example.fiberdesk_app.network.ApiClient.apiService.cambiarContrasena(
+                    userId,
+                    mapOf(
+                        "passwordActual" to passwordActual,
+                        "passwordNueva" to passwordNueva
+                    )
+                )
+                
+                if (response.isSuccessful) {
+                    Toast.makeText(this@ProfileActivity, "Contraseña actualizada correctamente", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@ProfileActivity, "Error: Contraseña actual incorrecta", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@ProfileActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

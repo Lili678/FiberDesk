@@ -42,19 +42,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="12dp" />
 
-        <!-- Botón Notificaciones -->
-        <ImageView
-            android:id="@+id/notificationButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_notification"
-            android:contentDescription="Notificaciones"
-            android:scaleType="centerInside"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="16dp" />
-
         <!-- Botón Perfil -->
         <ImageView
             android:id="@+id/profileButton"
@@ -64,9 +51,9 @@
             android:contentDescription="Perfil"
             android:scaleType="centerInside"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/notificationButton"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp" />
+            android:layout_marginEnd="16dp" />
 
         <!-- Bienvenida -->
         <TextView
@@ -126,7 +113,7 @@
         app:layout_constraintTop_toBottomOf="@id/headerLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigation">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -314,174 +301,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="24dp" />
 
-            <!-- Elemento de actividad reciente 1 -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/activityItem1"
+            <!-- RecyclerView para tickets e instalaciones pendientes -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerRecentActivity"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:background="@drawable/activity_item_background"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/recentActivityTitle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="12dp"
-                android:padding="12dp">
+                android:nestedScrollingEnabled="false" />
 
-                <TextView
-                    android:id="@+id/activityTitle1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Nuevo cliente agregado"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <TextView
-                    android:id="@+id/activitySubtitle1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Nombre cliente: Juan P."
-                    android:textSize="12sp"
-                    android:textColor="@color/gray_text"
-                    app:layout_constraintTop_toBottomOf="@id/activityTitle1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="4dp" />
-
-                <TextView
-                    android:id="@+id/activityTime1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="19 d/1m"
-                    android:textSize="11sp"
-                    android:textColor="@color/gray_text"
-                    app:layout_constraintTop_toBottomOf="@id/activitySubtitle1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="4dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Eliminar"
-                    android:textSize="11sp"
-                    android:textColor="@color/gray_text"
-                    app:layout_constraintTop_toBottomOf="@id/activitySubtitle1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="4dp" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Elemento de actividad reciente 2 -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/activityItem2"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:background="@drawable/activity_item_background"
-                app:layout_constraintTop_toBottomOf="@id/activityItem1"
+            <!-- Mensaje cuando no hay actividad -->
+            <TextView
+                android:id="@+id/txtEmptyActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No hay actividad reciente"
+                android:textSize="14sp"
+                android:textColor="@color/gray_text"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/recentActivityTitle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="8dp"
-                android:padding="12dp">
-
-                <TextView
-                    android:id="@+id/activityTitle2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Pago recibido de Empresa X"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <TextView
-                    android:id="@+id/activitySubtitle2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Monto: 200 / 20 mil pesos"
-                    android:textSize="12sp"
-                    android:textColor="@color/gray_text"
-                    app:layout_constraintTop_toBottomOf="@id/activityTitle2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="4dp" />
-
-                <TextView
-                    android:id="@+id/activityTime2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="20 / 20 mil"
-                    android:textSize="11sp"
-                    android:textColor="@color/gray_text"
-                    app:layout_constraintTop_toBottomOf="@id/activitySubtitle2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="4dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Eliminar"
-                    android:textSize="11sp"
-                    android:textColor="@color/gray_text"
-                    app:layout_constraintTop_toBottomOf="@id/activitySubtitle2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="4dp" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginTop="24dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <!-- Bottom Navigation -->
-    <FrameLayout
-        android:id="@+id/bottomNavigation"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/white"
-        android:elevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="4">
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ic_home_nav"
-                android:contentDescription="Inicio"
-                android:scaleType="centerInside" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ic_calendar_nav"
-                android:contentDescription="Calendario"
-                android:scaleType="centerInside" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ic_chat_nav"
-                android:contentDescription="Chat"
-                android:scaleType="centerInside" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ic_settings_nav"
-                android:contentDescription="Configuración"
-                android:scaleType="centerInside" />
-        </LinearLayout>
-    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

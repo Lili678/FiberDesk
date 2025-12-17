@@ -26,6 +26,12 @@ const usuarioSchema = new mongoose.Schema({
   activo: {
     type: Boolean,
     default: true
+  },
+  codigoRecuperacion: {
+    type: String
+  },
+  codigoRecuperacionExpira: {
+    type: Date
   }
 }, {
   timestamps: true

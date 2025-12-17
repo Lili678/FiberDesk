@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.fiberdesk_app.R
 import com.example.fiberdesk_app.network.ApiClient
+import com.example.fiberdesk_app.ui.inventario.MaterialesListFragment
+import com.example.fiberdesk_app.ui.inventario.InstalacionesListFragment
 import kotlinx.coroutines.launch
 
 class InventarioActivity : AppCompatActivity() {
@@ -30,6 +32,13 @@ class InventarioActivity : AppCompatActivity() {
         val txtInstCompletadas = findViewById<TextView>(R.id.txtInstCompletadas)
         val txtWelcome = findViewById<TextView>(R.id.txtWelcome)
         
+        // Tarjetas de estadísticas
+        val cardInstEnProgreso = findViewById<View>(R.id.cardInstEnProgreso)
+        val cardLowStock = findViewById<View>(R.id.cardLowStock)
+        val cardInstPendientes = findViewById<View>(R.id.cardInstPendientes)
+        val cardInstCompletadas = findViewById<View>(R.id.cardInstCompletadas)
+        
+        // Tarjetas de accesos rápidos
         val cardGestionarInventario = findViewById<View>(R.id.cardGestionarInventario)
         val cardMisInstalaciones = findViewById<View>(R.id.cardMisInstalaciones)
 
@@ -41,6 +50,23 @@ class InventarioActivity : AppCompatActivity() {
         // Cargar estadísticas
         loadStatistics(txtInstEnProgreso, txtLowStock, txtInstPendientes, txtInstCompletadas)
 
+        // Click listeners para las 4 tarjetas de estadísticas
+        cardInstEnProgreso.setOnClickListener {
+            showInstalacionesByEstado("en_progreso")
+        }
+
+        cardLowStock.setOnClickListener {
+            showMaterialesBajoStock()
+        }
+
+        cardInstPendientes.setOnClickListener {
+            showInstalacionesByEstado("pendiente")
+        }
+
+        cardInstCompletadas.setOnClickListener {
+            showInstalacionesByEstado("completada")
+        }
+
         // Click listeners para accesos rápidos
         cardGestionarInventario.setOnClickListener {
             // Abrir pantalla de gestión de materiales
@@ -48,7 +74,7 @@ class InventarioActivity : AppCompatActivity() {
         }
 
         cardMisInstalaciones.setOnClickListener {
-            // Abrir pantalla de instalaciones
+            // Abrir pantalla de instalaciones (todas)
             showInstalacionesScreen()
         }
     }
@@ -93,8 +119,34 @@ class InventarioActivity : AppCompatActivity() {
     }
 
     private fun showInstalacionesScreen() {
-        // Navegar a InstalacionesListFragment
+        // Navegar a InstalacionesListFragment (todas las instalaciones)
         val fragment = InstalacionesListFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(android.R.id.content, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun showInstalacionesByEstado(estado: String) {
+        // Navegar a InstalacionesListFragment filtrado por estado
+        val fragment = InstalacionesListFragment().apply {
+            arguments = Bundle().apply {
+                putString("filtro_estado", estado)
+            }
+        }
+        supportFragmentManager.beginTransaction()
+            .replace(android.R.id.content, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun showMaterialesBajoStock() {
+        // Navegar a MaterialesListFragment filtrado por bajo stock
+        val fragment = MaterialesListFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean("filtro_bajo_stock", true)
+            }
+        }
         supportFragmentManager.beginTransaction()
             .replace(android.R.id.content, fragment)
             .addToBackStack(null)

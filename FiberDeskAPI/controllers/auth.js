@@ -148,3 +148,185 @@ exports.obtenerUsuario = async (req, res) => {
     });
   }
 };
+
+// @desc    Actualizar usuario
+// @route   PUT /api/auth/usuario/:id
+// @access  Private
+exports.actualizarUsuario = async (req, res) => {
+  try {
+    const { nombre, email } = req.body;
+    const usuario = await Usuario.findById(req.params.id);
+
+    if (!usuario) {
+      return res.status(404).json({
+        success: false,
+        message: 'Usuario no encontrado'
+      });
+    }
+
+    // Actualizar solo los campos permitidos
+    if (nombre) usuario.nombre = nombre;
+    if (email) usuario.correo = email;
+
+    await usuario.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Usuario actualizado correctamente',
+      data: {
+        _id: usuario._id,
+        nombre: usuario.nombre,
+        correo: usuario.correo
+      }
+    });
+  } catch (error) {
+    console.error('Error al actualizar usuario:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error al actualizar usuario',
+      error: error.message
+    });
+  }
+};
+
+// @desc    Cambiar contraseña
+// @route   PUT /api/auth/usuario/:id/password
+// @access  Private
+exports.cambiarContrasena = async (req, res) => {
+  try {
+    const { passwordActual, passwordNueva } = req.body;
+    const usuario = await Usuario.findById(req.params.id);
+
+    if (!usuario) {
+      return res.status(404).json({
+        success: false,
+        message: 'Usuario no encontrado'
+      });
+    }
+
+    // Verificar contraseña actual
+    const contraseñaCorrecta = await usuario.compararContraseña(passwordActual);
+    if (!contraseñaCorrecta) {
+      return res.status(401).json({
+        success: false,
+        message: 'Contraseña actual incorrecta'
+      });
+    }
+
+    // Actualizar contraseña
+    usuario.contraseña = passwordNueva;
+    await usuario.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Contraseña actualizada correctamente'
+    });
+  } catch (error) {
+    console.error('Error al cambiar contraseña:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error al cambiar contraseña',
+      error: error.message
+    });
+  }
+};
+
+// @desc    Solicitar recuperación de contraseña
+// @route   POST /api/auth/recuperar-password
+// @access  Public
+exports.solicitarRecuperacion = async (req, res) => {
+  try {
+    const { correo } = req.body;
+
+    // Validar correo
+    if (!correo) {
+      return res.status(400).json({
+        success: false,
+        message: 'El correo es requerido'
+      });
+    }
+
+    // Buscar usuario
+    const usuario = await Usuario.findOne({ correo });
+    if (!usuario) {
+      return res.status(404).json({
+        success: false,
+        message: 'No existe un usuario con ese correo'
+      });
+    }
+
+    // Generar código de 6 dígitos
+    const codigo = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    // Guardar código y fecha de expiración (15 minutos)
+    usuario.codigoRecuperacion = codigo;
+    usuario.codigoRecuperacionExpira = Date.now() + 15 * 60 * 1000; // 15 minutos
+    await usuario.save();
+
+    // En producción, aquí enviarías un email
+    // Por ahora, devolvemos el código en la respuesta (solo para desarrollo)
+    console.log(`Código de recuperación para ${correo}: ${codigo}`);
+
+    res.status(200).json({
+      success: true,
+      mensaje: 'Código de recuperación generado',
+      codigo: codigo // Solo para desarrollo, remover en producción
+    });
+  } catch (error) {
+    console.error('Error al solicitar recuperación:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error al solicitar recuperación',
+      error: error.message
+    });
+  }
+};
+
+// @desc    Restablecer contraseña con código
+// @route   POST /api/auth/restablecer-password
+// @access  Public
+exports.restablecerContrasena = async (req, res) => {
+  try {
+    const { correo, codigo, nuevaContrasena } = req.body;
+
+    // Validar campos
+    if (!correo || !codigo || !nuevaContrasena) {
+      return res.status(400).json({
+        success: false,
+        message: 'Todos los campos son requeridos'
+      });
+    }
+
+    // Buscar usuario
+    const usuario = await Usuario.findOne({ 
+      correo,
+      codigoRecuperacion: codigo,
+      codigoRecuperacionExpira: { $gt: Date.now() }
+    });
+
+    if (!usuario) {
+      return res.status(400).json({
+        success: false,
+        message: 'Código inválido o expirado'
+      });
+    }
+
+    // Actualizar contraseña
+    usuario.contraseña = nuevaContrasena;
+    usuario.codigoRecuperacion = undefined;
+    usuario.codigoRecuperacionExpira = undefined;
+    await usuario.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Contraseña restablecida exitosamente'
+    });
+  } catch (error) {
+    console.error('Error al restablecer contraseña:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error al restablecer contraseña',
+      error: error.message
+    });
+  }
+};

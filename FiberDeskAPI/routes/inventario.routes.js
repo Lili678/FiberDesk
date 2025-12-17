@@ -28,12 +28,7 @@ router.delete('/materiales/:id', deleteMaterial);
 router.get('/instalaciones', getInstalaciones);
 router.post('/instalaciones', createInstalacion);
 router.put('/instalaciones/:instalacionId/estado', updateEstadoInstalacion);
-
-// Usar materiales en instalación (individual o múltiple)
-router.post('/instalaciones/:instalacionId/materiales/usar', usarMaterial);
-router.post('/instalaciones/:instalacionId/materiales/batch', usarMateriales);
-router.delete('/instalaciones/:instalacionId/materiales/:materialId', removerMaterial);
-
+router.post('/instalaciones/:instalacionId/materiales', addMaterialToInstalacion);
 router.delete('/instalaciones/:instalacionId', deleteInstalacion);
 
 module.exports = router;

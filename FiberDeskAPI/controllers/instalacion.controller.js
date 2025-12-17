@@ -205,6 +205,9 @@ exports.removerMaterial = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+// Alias para compatibilidad
+exports.addMaterialToInstalacion = exports.usarMateriales;
+
 // Eliminar instalación
 exports.deleteInstalacion = async (req, res) => {
     try {

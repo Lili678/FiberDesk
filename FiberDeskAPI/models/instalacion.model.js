@@ -16,7 +16,7 @@ const InstalacionSchema = new mongoose.Schema({
     },
     materialesUsados: [
         {
-            materialId: {
+            material: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Material',
                 required: true

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fiberdesk_app.R
 
@@ -16,7 +17,7 @@ data class SelectedItem(
 
 class SelectedMaterialAdapter(
     private var items: MutableList<SelectedItem>,
-    private var removable: Boolean,
+    var removable: Boolean,
     private val onRemove: (String) -> Unit
 ) : RecyclerView.Adapter<SelectedMaterialAdapter.ViewHolder>() {
 
@@ -46,8 +47,17 @@ class SelectedMaterialAdapter(
     override fun getItemCount(): Int = items.size
 
     fun update(newItems: List<SelectedItem>) {
+        val diffCallback = object : DiffUtil.Callback() {
+            override fun getOldListSize() = items.size
+            override fun getNewListSize() = newItems.size
+            override fun areItemsTheSame(oldPos: Int, newPos: Int) =
+                items[oldPos].materialId == newItems[newPos].materialId
+            override fun areContentsTheSame(oldPos: Int, newPos: Int) =
+                items[oldPos] == newItems[newPos]
+        }
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         items.clear()
         items.addAll(newItems)
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 }

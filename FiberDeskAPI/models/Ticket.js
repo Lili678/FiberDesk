@@ -7,7 +7,7 @@ const TicketSchema = new mongoose.Schema({
     asunto: String,
     tecnico: String,
     creadoPor: String,
-    estado: { type: String, default: "Abierto" },
+    estado: { type: String, default: "Pendiente" },
     fecha: String,
     descripcion: String,
     archivado: { type: Boolean, default: false } 

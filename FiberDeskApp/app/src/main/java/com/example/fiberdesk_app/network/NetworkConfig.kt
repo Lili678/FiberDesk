@@ -56,6 +56,9 @@ object NetworkConfig {
             BuildConfig.API_PORT
         }
         
+        // Convertir port a entero para comparaciones
+        val portInt = port.toIntOrNull() ?: 3000
+        
         // Detectar si es una URL completa (http/https) o solo IP
         val url = when {
             // Si hay una URL guardada por el usuario
@@ -73,8 +76,8 @@ object NetworkConfig {
                 } else {
                     // Es solo IP/dominio (ej: abc123.ngrok.io o 192.168.1.64)
                     Log.d("NetworkConfig", "Usando servidor: $savedIP")
-                    val protocol = if (port == 443) "https" else "http"
-                    val portSuffix = if (port == 80 || port == 443) "" else ":$port"
+                    val protocol = if (portInt == 443) "https" else "http"
+                    val portSuffix = if (portInt == 80 || portInt == 443) "" else ":$port"
                     "$protocol://$savedIP$portSuffix/api/"
                 }
             }

@@ -50,4 +50,29 @@ interface ApiService {
 
     @DELETE("pagos/{id}")
     suspend fun eliminarPago(@Path("id") id: String): Response<Map<String, String>>
+
+    // Tickets endpoints
+    @POST("tickets")
+    suspend fun crearTicket(@Body ticket: com.example.fiberdesk_app.Ticket): Response<Map<String, Any>>
+
+    @GET("tickets")
+    suspend fun getTickets(): Response<List<com.example.fiberdesk_app.Ticket>>
+
+    @GET("tickets/search")
+    suspend fun searchTickets(@Query("query") query: String): Response<List<com.example.fiberdesk_app.Ticket>>
+
+    @PUT("tickets/archive/{folio}")
+    suspend fun archivarTicket(@Path("folio") folio: String): Response<Map<String, Any>>
+
+    @PUT("tickets/unarchive/{folio}")
+    suspend fun desarchivarTicket(@Path("folio") folio: String): Response<Map<String, Any>>
+
+    @GET("tickets/archived")
+    suspend fun getArchivedTickets(): Response<List<com.example.fiberdesk_app.Ticket>>
+
+    @PUT("tickets/{folio}/estado")
+    suspend fun actualizarEstadoTicket(
+        @Path("folio") folio: String,
+        @Body estado: Map<String, String>
+    ): Response<Map<String, Any>>
 }

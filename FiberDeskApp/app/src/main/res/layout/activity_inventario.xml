@@ -9,24 +9,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/white">
+    android:background="@drawable/fondo">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Header gradient -->
-        <FrameLayout
+        <!-- Header -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:background="@drawable/header_gradient">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
                 <TextView
                     android:id="@+id/txtWelcome"
@@ -47,7 +42,6 @@
                     android:textColor="@android:color/white"
                     android:paddingTop="6dp" />
             </LinearLayout>
-        </FrameLayout>
 
         <!-- Contenido -->
         <LinearLayout

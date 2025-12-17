@@ -4,21 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F3F8"
+    android:background="@drawable/gradient_background"
     tools:context=".ui.pagos.PagosActivity">
-
-    <!-- Contenedor principal con el fondo degradado en la parte superior -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <!-- Fondo degradado que solo ocupa la parte de arriba -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/gradient_background_pagos" />
-    </LinearLayout>
 
     <!-- Contenido de la UI (se superpone al fondo) -->
     <LinearLayout

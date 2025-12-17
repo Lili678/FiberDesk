@@ -1,49 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="10dp"
-    android:background="#FFFFFF">
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="@android:color/white">
 
-        <TextView
-            android:id="@+id/txtFolio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Folio"
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+        <!-- Indicador de color según prioridad -->
+        <View
+            android:id="@+id/viewColorIndicator"
+            android:layout_width="6dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="12dp"
+            android:background="#4A90E2" />
 
-        <TextView
-            android:id="@+id/txtCliente"
-            android:layout_width="match_parent"
+        <!-- Contenido del ticket -->
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Cliente"/>
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtAsunto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Asunto"/>
+            <!-- Folio -->
+            <TextView
+                android:id="@+id/txtFolio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TICKET-2023-007"
+                android:textStyle="bold"
+                android:textSize="13sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Asunto -->
+            <TextView
+                android:id="@+id/txtAsunto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fallo de conexión en sucursal"
+                android:textSize="15sp"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Cliente -->
+            <TextView
+                android:id="@+id/txtCliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cliente: Empresa Z"
+                android:textSize="13sp"
+                android:textColor="#999999" />
+
+        </LinearLayout>
+
+        <!-- Flecha de navegación -->
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_arrow_forward"
+            android:layout_gravity="center_vertical"
+            app:tint="#CCCCCC" />
+
     </LinearLayout>
 
+    <!-- Botón archivar oculto, se muestra en menú contextual -->
     <TextView
         android:id="@+id/txtArchivar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Archivar"
-        android:textColor="#E74C3C"
-        android:textStyle="bold"
-        android:padding="6dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="@android:color/transparent" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
 
-
-</LinearLayout>
+</androidx.cardview.widget.CardView>

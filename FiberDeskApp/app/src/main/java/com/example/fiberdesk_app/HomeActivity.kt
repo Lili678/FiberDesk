@@ -52,7 +52,8 @@ class HomeActivity : AppCompatActivity() {
         }
 
         ticketsButton.setOnClickListener {
-            // TODO: Ir a pantalla de tickets
+            val intent = Intent(this, TicketListActivity::class.java)
+            startActivity(intent)
         }
 
         paymentsButton.setOnClickListener {

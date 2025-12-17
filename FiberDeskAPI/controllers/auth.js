@@ -13,10 +13,12 @@ const generarToken = (id) => {
 // @access  Public
 exports.registrarUsuario = async (req, res) => {
   try {
+    console.log('Datos recibidos en registro:', req.body);
     const { correo, contraseña, nombre } = req.body;
 
     // Validar que vengan los datos requeridos
     if (!correo || !contraseña) {
+      console.log('Validación fallida - correo:', correo, 'contraseña:', contraseña);
       return res.status(400).json({
         success: false,
         message: 'Por favor proporcione correo y contraseña'

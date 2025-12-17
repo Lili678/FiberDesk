@@ -4,11 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
-import com.example.fiberdesk_app.Ticket
-import com.example.fiberdesk_app.ApiClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import androidx.lifecycle.lifecycleScope
+import com.example.fiberdesk_app.network.ApiClient
+import kotlinx.coroutines.launch
 
 class TicketNewActivity : AppCompatActivity() {
 
@@ -85,19 +83,18 @@ class TicketNewActivity : AppCompatActivity() {
             descripcion = descripcion
         )
 
-        ApiClient.service.crearTicket(nuevoTicket)
-            .enqueue(object : Callback<Map<String, Any>> {
-                override fun onResponse(call: Call<Map<String, Any>>, response: Response<Map<String, Any>>) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(this@TicketNewActivity, "Ticket creado", Toast.LENGTH_SHORT).show()
-                        finish()
-                    } else {
-                        Toast.makeText(this@TicketNewActivity, "Error al crear ticket", Toast.LENGTH_SHORT).show()
-                    }
+        lifecycleScope.launch {
+            try {
+                val response = ApiClient.apiService.crearTicket(nuevoTicket)
+                if (response.isSuccessful) {
+                    Toast.makeText(this@TicketNewActivity, "Ticket creado", Toast.LENGTH_SHORT).show()
+                    finish()
+                } else {
+                    Toast.makeText(this@TicketNewActivity, "Error al crear ticket", Toast.LENGTH_SHORT).show()
                 }
-
-                override fun onFailure(call: Call<Map<String, Any>>, t: Throwable) {
-                    Toast.makeText(this@TicketNewActivity, "Fallo de conexión", Toast.LENGTH_SHORT).show()
-                }
-            })
-    }}
+            } catch (e: Exception) {
+                Toast.makeText(this@TicketNewActivity, "Fallo de conexión: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+}

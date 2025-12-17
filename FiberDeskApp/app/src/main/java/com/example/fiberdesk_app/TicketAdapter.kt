@@ -1,5 +1,6 @@
 package com.example.fiberdesk_app
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ class TicketAdapter(
         val txtCliente: TextView = itemView.findViewById(R.id.txtCliente)
         val txtAsunto: TextView = itemView.findViewById(R.id.txtAsunto)
         val txtArchivar: TextView = itemView.findViewById(R.id.txtArchivar)
+        val viewColorIndicator: View = itemView.findViewById(R.id.viewColorIndicator)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketViewHolder {
@@ -29,20 +31,29 @@ class TicketAdapter(
         val t = tickets[position]
 
         holder.txtFolio.text = t.folio
-        holder.txtCliente.text = t.cliente
+        holder.txtCliente.text = "Cliente: ${t.cliente}"
         holder.txtAsunto.text = t.asunto
-        holder.txtArchivar.text = if (t.archivado) "Archivado" else "Archivar"
 
-        // 🔴 Archivar
-        holder.txtArchivar.setOnClickListener {
-            if (!t.archivado) {
-                onArchivarClick(t)
-            }
+        // Asignar color según prioridad
+        val color = when (t.prioridad?.lowercase()) {
+            "alta", "high" -> "#EF4444" // Rojo
+            "media", "medium" -> "#F59E0B" // Naranja
+            "baja", "low" -> "#10B981" // Verde
+            else -> "#6366F1" // Azul por defecto
         }
+        holder.viewColorIndicator.setBackgroundColor(Color.parseColor(color))
 
         // 🔵 Ver detalles (clic en el item)
         holder.itemView.setOnClickListener {
             onItemClick(t)
+        }
+        
+        // Long click para archivar
+        holder.itemView.setOnLongClickListener {
+            if (!t.archivado) {
+                onArchivarClick(t)
+            }
+            true
         }
     }
 

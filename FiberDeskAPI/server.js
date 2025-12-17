@@ -36,5 +36,5 @@ const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0'; // Escuchar en todas las interfaces de red
 app.listen(PORT, HOST, () => {
   console.log(`Servidor backend corriendo en ${HOST}:${PORT}`);
-  console.log(`Accesible desde dispositivos en la red local en: http://192.168.1.64:${PORT}`);
+  console.log(`Accesible desde dispositivos en la red local en: http://192.168.1.66:${PORT}`);
 });

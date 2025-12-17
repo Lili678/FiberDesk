@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtFolio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Folio"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/txtCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cliente"/>
+
+        <TextView
+            android:id="@+id/txtAsunto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Asunto"/>
+
+        <TextView
+            android:id="@+id/txtDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descripción"/>
+
+        <TextView
+            android:id="@+id/txtPrioridad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prioridad"/>
+
+        <TextView
+            android:id="@+id/txtTecnico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Técnico"/>
+
+        <TextView
+            android:id="@+id/txtEstado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Estado"/>
+
+        <Button
+            android:id="@+id/btnRegresar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Regresar"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+</ScrollView>

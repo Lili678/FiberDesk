@@ -4,8 +4,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const inventarioRoutes = require('./routes/inventario.routes');
-const authRoutes = require('./middleware/auth');
-const pagosRoutes = require('./routes/rutas');
 
 const app = express();
 app.use(cors());
@@ -30,9 +28,9 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-app.use('/api/auth', authRoutes);
+// Rutas (combinando ambas versiones)
+app.use('/api', require('./routes'));
 app.use('/api/inventario', inventarioRoutes);
-app.use('/api/pagos', pagosRoutes);
 
 const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0'; // Escuchar en todas las interfaces de red

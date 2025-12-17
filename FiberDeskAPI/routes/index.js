@@ -3,5 +3,6 @@ const router = express.Router();
 
 router.use('/auth', require('../middleware/auth'));
 router.use('/pagos', require('./rutas'));
+router.use('/tickets', require('./ticketRoutes'));
 
 module.exports = router;

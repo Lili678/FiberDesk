@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
     <application
         android:name=".FiberDeskApplication"
         android:allowBackup="true"
@@ -83,7 +82,21 @@
             android:exported="false"
             android:theme="@style/Theme.FiberDeskApp"
             android:label="Pagos" />
-            
+        
+        <!-- Actividades de Roberto (Tickets) -->
+        <activity 
+            android:name=".TicketListActivity" 
+            android:exported="false" />
+        <activity 
+            android:name=".TicketNewActivity" 
+            android:exported="false" />
+        <activity 
+            android:name=".TicketDetailActivity" 
+            android:exported="false" />
+        <activity 
+            android:name=".TicketArchivedActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
+

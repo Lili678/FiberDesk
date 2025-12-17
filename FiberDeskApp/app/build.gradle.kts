@@ -67,8 +67,25 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
+<<<<<<< HEAD
+    
+    // Google Maps y ubicación
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    
+    // Lifecycle & LiveData & ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    
     // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+=======
+<<<<<<< HEAD
+
+
+// Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
@@ -83,4 +100,16 @@ dependencies {
     // UI Components
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("com.google.android.material:material:1.12.0")
+
+
+=======
+    dependencies {
+        // ... aquí habrá otras líneas que ya existen (core-ktx, appcompat, etc.) ...
+
+        // LIBRERÍAS DE GOOGLE MAPS Y UBICACIÓN (¡AGREGA ESTAS!)
+        implementation("com.google.android.gms:play-services-maps:18.2.0")
+        implementation("com.google.android.gms:play-services-location:21.0.1")
+    }
+>>>>>>> 840621e91d9e3e1855dd5f4de26903e23515a06b
+>>>>>>> 7b9fc1e44c725c2df985340b3f31291463e6f3df
 }

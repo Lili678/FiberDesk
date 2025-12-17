@@ -10,38 +10,36 @@ const pagosRoutes = require('./routes/rutas');
 const app = express();
 app.use(cors());
 app.use(express.json());
-
-<<<<<<< HEAD
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/fiberdesk';
-=======
+
 // Conexión Mongo
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("Mongo conectado correctamente"))
-  .catch(err => {
-    console.error("Error al conectar Mongo:", err);
-    process.exit(1); // Detener el proceso si no hay base de datos
-  });
+    .then(() => console.log("Mongo conectado correctamente"))
+    .catch(err => {
+        console.error("Error al conectar Mongo:", err);
+        process.exit(1); // Detener el proceso si no hay base de datos
+    });
 
 mongoose.connection.on('error', err => {
-  console.error("Error en tiempo de ejecución de Mongo:", err);
+    console.error("Error en tiempo de ejecución de Mongo:", err);
 });
->>>>>>> 840621e91d9e3e1855dd5f4de26903e23515a06b
+
 
 mongoose.connect(MONGO_URI)
-  .then(() => console.log("Mongo conectado correctamente ->", MONGO_URI))
-  .catch(err => {
-    console.error("Error al conectar Mongo:", err);
-    console.error("Asegúrese de tener MongoDB en ejecución y/o definir MONGO_URI en un archivo .env");
-    process.exit(1);
-  });
+    .then(() => console.log("Mongo conectado correctamente ->", MONGO_URI))
+    .catch(err => {
+        console.error("Error al conectar Mongo:", err);
+        console.error("Asegúrese de tener MongoDB en ejecución y/o definir MONGO_URI en un archivo .env");
+        process.exit(1);
+    });
 
 // Ruta de health check (sin autenticación)
 app.get('/api/health', (req, res) => {
-  res.status(200).json({ 
-    status: 'ok', 
-    message: 'FiberDesk API funcionando correctamente',
-    timestamp: new Date().toISOString()
-  });
+    res.status(200).json({
+        status: 'ok',
+        message: 'FiberDesk API funcionando correctamente',
+        timestamp: new Date().toISOString()
+    });
 });
 
 app.use('/api/auth', authRoutes);
@@ -51,6 +49,6 @@ app.use('/api/pagos', pagosRoutes);
 const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0'; // Escuchar en todas las interfaces de red
 app.listen(PORT, HOST, () => {
-  console.log(`Servidor backend corriendo en ${HOST}:${PORT}`);
-  console.log(`Accesible desde dispositivos en la red local en: http://192.168.1.64:${PORT}`);
+    console.log(`Servidor backend corriendo en ${HOST}:${PORT}`);
+    console.log(`Accesible desde dispositivos en la red local en: http://192.168.1.64:${PORT}`);
 });

@@ -37,10 +37,7 @@ class FragmentInventario : Fragment() {
 
         // Observar cambios en materiales
         inventoryViewModel.materiales.observe(viewLifecycleOwner) { materiales ->
-            val totalMateriales = materiales?.size ?: 0
             val bajoStock = materiales?.count { it.cantidad < 5 } ?: 0
-            
-            binding.txtTotalMateriales.text = totalMateriales.toString()
             binding.txtLowStock.text = bajoStock.toString()
         }
 
@@ -48,9 +45,12 @@ class FragmentInventario : Fragment() {
         instalacionViewModel.instalaciones.observe(viewLifecycleOwner) { instalaciones ->
             val pendientes = instalaciones?.count { it.estado == "pendiente" } ?: 0
             val completadas = instalaciones?.count { it.estado == "completada" } ?: 0
-            
+            val enProgreso = instalaciones?.count { it.estado == "en_progreso" } ?: 0
+
             binding.txtInstPendientes.text = pendientes.toString()
             binding.txtInstCompletadas.text = completadas.toString()
+            // nuevo recuadro: instalaciones en progreso
+            binding.txtInstEnProgreso.text = enProgreso.toString()
         }
 
         // Errores
@@ -70,6 +70,36 @@ class FragmentInventario : Fragment() {
         // Navegación: Mis Instalaciones (vaya directamente a la lista)
         binding.cardMisInstalaciones.setOnClickListener {
             findNavController().navigate(R.id.instalacionesListFragment)
+        }
+
+        // Click en Instalaciones en progreso (nuevo recuadro)
+        binding.txtInstEnProgreso.setOnClickListener {
+            val bundle = Bundle().apply { putString("filter_state", "en_progreso") }
+            findNavController().navigate(R.id.instalacionesListFragment, bundle)
+        }
+
+        // Click en card Instalaciones en progreso (misma funcionalidad)
+        binding.cardInstEnProgreso.setOnClickListener {
+            val bundle = Bundle().apply { putString("filter_state", "en_progreso") }
+            findNavController().navigate(R.id.instalacionesListFragment, bundle)
+        }
+
+        // Click en recuadro Bajo Stock
+        binding.cardLowStock.setOnClickListener {
+            val bundle = Bundle().apply { putBoolean("low_stock", true) }
+            findNavController().navigate(R.id.materialsListFragment, bundle)
+        }
+
+        // Click en Instalaciones Pendientes
+        binding.cardInstPendientes.setOnClickListener {
+            val bundle = Bundle().apply { putString("filter_state", "pendiente") }
+            findNavController().navigate(R.id.instalacionesListFragment, bundle)
+        }
+
+        // Click en Instalaciones Completadas
+        binding.cardInstCompletadas.setOnClickListener {
+            val bundle = Bundle().apply { putString("filter_state", "completada") }
+            findNavController().navigate(R.id.instalacionesListFragment, bundle)
         }
 
         // Click en instalaciones completadas para filtrar

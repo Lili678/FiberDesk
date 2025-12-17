@@ -109,38 +109,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <!-- Card: Agregar Material -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardViewAdd"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_marginBottom="12dp"
-                    app:cardCornerRadius="14dp"
-                    app:cardElevation="3dp"
-                    app:cardBackgroundColor="#E8F5E9">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Agregar Material"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="#1B5E20" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Añade nuevos materiales al inventario"
-                            android:textSize="14sp"
-                            android:textColor="#6E6E6E"
-                            android:paddingTop="6dp" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
 
 
 

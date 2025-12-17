@@ -13,11 +13,21 @@ import com.example.fiberdesk_app.R
 import com.example.fiberdesk_app.data.model.Material
 
 class MaterialAdapter(
-    private val items: MutableList<Material>
+    private val items: MutableList<Material>,
+    private val onClick: ((Material) -> Unit)? = null
 ) : RecyclerView.Adapter<MaterialAdapter.MaterialViewHolder>() {
 
     inner class MaterialViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtName: TextView = itemView.findViewById(R.id.txtMaterialName)
+
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onClick?.invoke(items[position])
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MaterialViewHolder {
@@ -32,6 +42,19 @@ class MaterialAdapter(
     }
 
     override fun getItemCount(): Int = items.size
+
+    fun add(material: Material) {
+        items.add(material)
+        notifyItemInserted(items.size - 1)
+    }
+
+    fun remove(material: Material) {
+        val index = items.indexOf(material)
+        if (index != -1) {
+            items.removeAt(index)
+            notifyItemRemoved(index)
+        }
+    }
 
     fun updateData(newItems: List<Material>) {
         items.clear()

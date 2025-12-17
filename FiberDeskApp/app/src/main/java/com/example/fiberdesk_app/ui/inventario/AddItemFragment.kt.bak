@@ -61,17 +61,22 @@ class AddItemFragment : Fragment() {
                     fechaRegistro = null
                 )
 
+                android.util.Log.d("AddItemFragment", "Guardando material: $name, cantidad: $cantidad")
+
                 if (existingId != null) {
                     // update
                     viewModel.actualizarMaterial(existingId, material)
-                    Toast.makeText(requireContext(), "Material actualizado", Toast.LENGTH_SHORT).show()
                 } else {
                     // add
                     viewModel.agregarMaterial(material)
-                    Toast.makeText(requireContext(), "Material agregado: $name", Toast.LENGTH_SHORT).show()
                 }
-                // navigate back to list
-                findNavController().navigateUp()
+                
+                Toast.makeText(requireContext(), "Guardando...", Toast.LENGTH_SHORT).show()
+                
+                // Esperar un momento para que la operación se complete antes de volver
+                binding.btnAdd.postDelayed({
+                    findNavController().navigateUp()
+                }, 500)
             } else {
                 Toast.makeText(requireContext(), "Ingresa un nombre", Toast.LENGTH_SHORT).show()
             }

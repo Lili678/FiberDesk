@@ -4,6 +4,8 @@ import android.content.Context
 import com.example.fiberdesk_app.data.local.LocalDataSource
 import com.example.fiberdesk_app.data.remote.RetrofitClient
 import com.example.fiberdesk_app.data.remote.UsarMaterialRequest
+import com.example.fiberdesk_app.data.remote.UsarMaterialesRequest
+import com.example.fiberdesk_app.data.remote.MaterialItem
 import com.example.fiberdesk_app.data.remote.UpdateEstadoRequest
 import com.example.fiberdesk_app.data.model.Material
 import com.example.fiberdesk_app.data.model.Instalacion
@@ -54,6 +56,22 @@ class InventarioRepository(context: Context) {
             instalacionId,
             UsarMaterialRequest(materialId, cantidad)
         )
+    }
+
+    suspend fun usarMateriales(instalacionId: String, selections: Map<String, Int>): Instalacion {
+        val items = selections
+            .filter { it.value > 0 }
+            .map { (materialId, cantidad) ->
+                MaterialItem(materialId, cantidad)
+            }
+        return RetrofitClient.instalacionApi.usarMateriales(
+            instalacionId,
+            UsarMaterialesRequest(items)
+        )
+    }
+
+    suspend fun removerMaterial(instalacionId: String, materialId: String): Instalacion {
+        return RetrofitClient.instalacionApi.removerMaterial(instalacionId, materialId)
     }
 
     suspend fun updateEstado(instalacionId: String, estado: String): Instalacion {

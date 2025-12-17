@@ -31,10 +31,7 @@ class InventoryMenuFragment : Fragment() {
             findNavController().navigate(R.id.action_menu_to_list)
         }
 
-        // Botón para agregar nuevo material
-        binding.cardViewAdd.setOnClickListener {
-            findNavController().navigate(R.id.action_menu_to_add)
-        }
+
 
         // Botón para ver instalaciones
         binding.cardViewInstalaciones.setOnClickListener {

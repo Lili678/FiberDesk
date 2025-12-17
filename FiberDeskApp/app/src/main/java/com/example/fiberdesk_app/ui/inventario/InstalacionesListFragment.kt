@@ -35,11 +35,19 @@ class InstalacionesListFragment : Fragment(), InstalacionAdapter.OnItemActionLis
         super.onViewCreated(view, savedInstanceState)
 
         // Get filter state from arguments
-        filterState = arguments?.getString("filter_state")
+        filterState = arguments?.getString("filtro_estado")
 
         adapter = InstalacionAdapter(emptyList(), this)
         binding.recyclerViewInstalaciones.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewInstalaciones.adapter = adapter
+
+        // Update activity title based on filter
+        when (filterState) {
+            "en_progreso" -> activity?.title = "Instalaciones En Progreso"
+            "pendiente" -> activity?.title = "Instalaciones Pendientes"
+            "completada" -> activity?.title = "Instalaciones Completadas"
+            else -> activity?.title = "Mis Instalaciones"
+        }
 
         viewModel.instalaciones.observe(viewLifecycleOwner) { lista ->
             // Apply filter if specified
@@ -62,8 +70,12 @@ class InstalacionesListFragment : Fragment(), InstalacionAdapter.OnItemActionLis
         }
 
         binding.fabAddInstalacion.setOnClickListener {
-            // TODO: Implementar creación de instalaciones
-            Toast.makeText(requireContext(), "Funcionalidad en desarrollo", Toast.LENGTH_SHORT).show()
+            // Abrir fragmento para crear instalación
+            val fragment = CreateInstalacionFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(android.R.id.content, fragment)
+                .addToBackStack(null)
+                .commit()
         }
 
         binding.recyclerViewInstalaciones.post { viewModel.obtenerInstalaciones() }
@@ -94,6 +106,10 @@ class InstalacionesListFragment : Fragment(), InstalacionAdapter.OnItemActionLis
     }
 
     override fun onItemClick(instalacion: Instalacion) {
-        // TODO: Implementar detalle de instalaciones
-        Toast.makeText(requireContext(), "Ver detalle de: ${instalacion.cliente}", Toast.LENGTH_SHORT).show()
+        // Abrir detalle de instalación
+        val fragment = InstalacionDetailFragment.newInstance(instalacion)
+        parentFragmentManager.beginTransaction()
+            .replace(android.R.id.content, fragment)
+            .addToBackStack(null)
+            .commit()
     }}

@@ -2,16 +2,18 @@ package com.example.fiberdesk_app.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.addCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.fiberdesk_app.R
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.launch
 
 class RecoverPasswordActivity : AppCompatActivity() {
 
@@ -29,13 +31,6 @@ class RecoverPasswordActivity : AppCompatActivity() {
 
         // Configurar listeners
         setupListeners()
-
-        // Manejar el botón de atrás - regresar a LoginActivity
-        onBackPressedDispatcher.addCallback(this) {
-            val intent = Intent(this@RecoverPasswordActivity, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
     }
 
     private fun initViews() {
@@ -46,47 +41,28 @@ class RecoverPasswordActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-        // Botón recuperar contraseña
+        // Botón enviar código
         btnRecuperar.setOnClickListener {
             val correo = txtCorreo.text.toString().trim()
 
             if (validarCorreo(correo)) {
-                // Mostrar progreso
-                progressBar.visibility = View.VISIBLE
-                btnRecuperar.isEnabled = false
-
-                // Simular envío de correo (en producción, llamar a la API)
-                android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                    progressBar.visibility = View.GONE
-                    btnRecuperar.isEnabled = true
-                    
-                    Toast.makeText(
-                        this,
-                        "Se ha enviado un correo de recuperación a $correo",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    
-                    // Volver al login después de 2 segundos
-                    android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                        volverAlLogin()
-                    }, 2000)
-                }, 1500)
-            }
-        }
-
-        // Acción de teclado en correo
-        txtCorreo.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                btnRecuperar.performClick()
-                true
-            } else {
-                false
+                solicitarCodigoRecuperacion(correo)
             }
         }
 
         // Volver al login
         txtVolver.setOnClickListener {
-            volverAlLogin()
+            finish()
+        }
+
+        // Enter en el campo de correo
+        txtCorreo.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
+                btnRecuperar.performClick()
+                true
+            } else {
+                false
+            }
         }
     }
 
@@ -104,9 +80,140 @@ class RecoverPasswordActivity : AppCompatActivity() {
         return true
     }
 
-    private fun volverAlLogin() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
+    private fun solicitarCodigoRecuperacion(correo: String) {
+        progressBar.visibility = View.VISIBLE
+        btnRecuperar.isEnabled = false
+
+        lifecycleScope.launch {
+            try {
+                val response = com.example.fiberdesk_app.network.ApiClient.apiService.solicitarRecuperacion(
+                    mapOf("correo" to correo)
+                )
+
+                progressBar.visibility = View.GONE
+                btnRecuperar.isEnabled = true
+
+                if (response.isSuccessful && response.body() != null) {
+                    val codigo = response.body()?.codigo ?: ""
+                    
+                    // Mostrar el código al usuario (para desarrollo)
+                    Toast.makeText(
+                        this@RecoverPasswordActivity, 
+                        "Código de verificación: $codigo\n(Guárdalo para el siguiente paso)", 
+                        Toast.LENGTH_LONG
+                    ).show()
+                    
+                    // Mostrar el diálogo para ingresar código y nueva contraseña
+                    mostrarDialogoVerificarCodigo(correo)
+                } else {
+                    Toast.makeText(
+                        this@RecoverPasswordActivity, 
+                        "Error: No se encontró un usuario con ese correo", 
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                progressBar.visibility = View.GONE
+                btnRecuperar.isEnabled = true
+                Toast.makeText(
+                    this@RecoverPasswordActivity, 
+                    "Error: ${e.message}", 
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private fun mostrarDialogoVerificarCodigo(correo: String) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_verificar_codigo, null)
+        val etCodigo = dialogView.findViewById<TextInputEditText>(R.id.etCodigo)
+        val etNuevaContrasena = dialogView.findViewById<TextInputEditText>(R.id.etNuevaContrasena)
+        val etConfirmarContrasena = dialogView.findViewById<TextInputEditText>(R.id.etConfirmarContrasena)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(true)
+            .create()
+
+        dialogView.findViewById<android.widget.Button>(R.id.btnCancelar).setOnClickListener {
+            dialog.dismiss()
+            finish()
+        }
+
+        dialogView.findViewById<android.widget.Button>(R.id.btnRestablecer).setOnClickListener {
+            val codigo = etCodigo.text.toString().trim()
+            val nuevaContrasena = etNuevaContrasena.text.toString().trim()
+            val confirmarContrasena = etConfirmarContrasena.text.toString().trim()
+
+            if (codigo.isEmpty()) {
+                etCodigo.error = "El código es requerido"
+                return@setOnClickListener
+            }
+
+            if (codigo.length != 6) {
+                etCodigo.error = "El código debe tener 6 dígitos"
+                return@setOnClickListener
+            }
+
+            if (nuevaContrasena.isEmpty()) {
+                etNuevaContrasena.error = "La contraseña es requerida"
+                return@setOnClickListener
+            }
+
+            if (nuevaContrasena.length < 6) {
+                etNuevaContrasena.error = "La contraseña debe tener al menos 6 caracteres"
+                return@setOnClickListener
+            }
+
+            if (nuevaContrasena != confirmarContrasena) {
+                etConfirmarContrasena.error = "Las contraseñas no coinciden"
+                return@setOnClickListener
+            }
+
+            // Restablecer contraseña
+            restablecerContrasena(correo, codigo, nuevaContrasena, dialog)
+        }
+
+        dialog.setOnDismissListener {
+            finish()
+        }
+
+        dialog.show()
+    }
+
+    private fun restablecerContrasena(correo: String, codigo: String, nuevaContrasena: String, dialog: AlertDialog) {
+        lifecycleScope.launch {
+            try {
+                val response = com.example.fiberdesk_app.network.ApiClient.apiService.restablecerContrasena(
+                    mapOf(
+                        "correo" to correo,
+                        "codigo" to codigo,
+                        "nuevaContrasena" to nuevaContrasena
+                    )
+                )
+
+                if (response.isSuccessful && response.body() != null) {
+                    dialog.dismiss()
+                    Toast.makeText(
+                        this@RecoverPasswordActivity, 
+                        "Contraseña restablecida exitosamente", 
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    finish()
+                } else {
+                    Toast.makeText(
+                        this@RecoverPasswordActivity, 
+                        "Error: ${response.message()}", 
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this@RecoverPasswordActivity, 
+                    "Error: ${e.message}", 
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 }

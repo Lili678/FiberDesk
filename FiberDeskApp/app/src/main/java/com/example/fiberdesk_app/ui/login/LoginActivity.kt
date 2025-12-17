@@ -167,10 +167,9 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        // Recuperar contraseña
+        // Recuperar contraseña - DESHABILITADO
         txtOlvidaste.setOnClickListener {
-            val intent = Intent(this, RecoverPasswordActivity::class.java)
-            startActivity(intent)
+            Toast.makeText(this, "Contacta al administrador para recuperar tu contraseña", Toast.LENGTH_SHORT).show()
         }
         
         // Configuración del servidor

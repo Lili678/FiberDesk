@@ -18,10 +18,13 @@ class MapaPickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        android.util.Log.d("MapaPicker", "🗺️ Iniciando MapaPickerActivity")
+        android.util.Log.d("MapaPicker", "Package: ${packageName}")
         setContentView(R.layout.activity_mapa_picker)
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
+        android.util.Log.d("MapaPicker", "SupportMapFragment encontrado, solicitando mapa...")
         mapFragment.getMapAsync(this)
 
         val btnConfirmar = findViewById<Button>(R.id.btnConfirmarUbicacion)
@@ -39,6 +42,7 @@ class MapaPickerActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
+        android.util.Log.d("MapaPicker", "✅ onMapReady llamado - El mapa está listo")
         mMap = googleMap
         mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
         mMap.uiSettings.isZoomControlsEnabled = true
@@ -49,10 +53,16 @@ class MapaPickerActivity : AppCompatActivity(), OnMapReadyCallback {
             // Ubicación inicial (CDMX por ejemplo)
             val inicio = LatLng(19.4326, -99.1332)
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(inicio, 13f))
-            Toast.makeText(this, "Mueve el mapa para seleccionar la ubicación y confirma", Toast.LENGTH_LONG).show()
+            android.util.Log.d("MapaPicker", "✅ Mapa centrado en CDMX")
+            Toast.makeText(this, "Mapa cargado ✓ Mueve el mapa para seleccionar ubicación", Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
-            android.util.Log.e("MapaPicker", "Error cargando mapa", e)
-            Toast.makeText(this, "Error: Verifica la API Key de Google Maps", Toast.LENGTH_LONG).show()
+            android.util.Log.e("MapaPicker", "❌ Error cargando mapa", e)
+            Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_LONG).show()
         }
+    }
+    
+    override fun onResume() {
+        super.onResume()
+        android.util.Log.d("MapaPicker", "Activity resumed - esperando mapa...")
     }
 }

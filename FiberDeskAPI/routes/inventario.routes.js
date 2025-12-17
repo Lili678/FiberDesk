@@ -25,8 +25,8 @@ router.delete('/materiales/:id', deleteMaterial);
 // Rutas de instalaciones
 router.get('/instalaciones', getInstalaciones);
 router.post('/instalaciones', createInstalacion);
-router.put('/instalaciones/:id/estado', updateEstadoInstalacion);
-router.post('/instalaciones/:id/materiales', addMaterialToInstalacion);
-router.delete('/instalaciones/:id', deleteInstalacion);
+router.put('/instalaciones/:instalacionId/estado', updateEstadoInstalacion);
+router.post('/instalaciones/:instalacionId/materiales', addMaterialToInstalacion);
+router.delete('/instalaciones/:instalacionId', deleteInstalacion);
 
 module.exports = router;

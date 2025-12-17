@@ -94,4 +94,23 @@ interface ApiService {
 
     @DELETE("inventario/instalaciones/{id}")
     suspend fun deleteInstalacion(@Path("id") id: String): Response<Unit>
+
+    // Perfil endpoints
+    @PUT("auth/usuario/{id}")
+    suspend fun actualizarUsuario(@Path("id") id: String, @Body datos: Map<String, String>): Response<Usuario>
+
+    @PUT("auth/usuario/{id}/password")
+    suspend fun cambiarContrasena(@Path("id") id: String, @Body passwords: Map<String, String>): Response<Map<String, String>>
+
+    // Recuperación de contraseña
+    @POST("auth/recuperar-password")
+    suspend fun solicitarRecuperacion(@Body datos: Map<String, String>): Response<RecuperacionResponse>
+
+    @POST("auth/restablecer-password")
+    suspend fun restablecerContrasena(@Body datos: Map<String, String>): Response<Map<String, String>>
 }
+
+data class RecuperacionResponse(
+    val mensaje: String,
+    val codigo: String
+)

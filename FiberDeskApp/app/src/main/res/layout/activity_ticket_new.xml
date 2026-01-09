@@ -39,15 +39,12 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:textStyle="bold"/>
-        <EditText
-            android:id="@+id/edtCliente"
+        <Spinner
+            android:id="@+id/spnCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre del cliente"
-            android:inputType="textPersonName"
             android:background="@android:color/white"
             android:padding="12dp"
-            android:textColor="@android:color/black"
             android:layout_marginTop="4dp"/>
 
         <!-- Asunto -->

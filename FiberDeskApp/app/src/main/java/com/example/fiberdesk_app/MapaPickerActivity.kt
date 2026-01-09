@@ -50,11 +50,30 @@ class MapaPickerActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isCompassEnabled = true
         
         try {
-            // Ubicación inicial (CDMX por ejemplo)
-            val inicio = LatLng(19.4326, -99.1332)
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(inicio, 13f))
-            android.util.Log.d("MapaPicker", "✅ Mapa centrado en CDMX")
-            Toast.makeText(this, "Mapa cargado ✓ Mueve el mapa para seleccionar ubicación", Toast.LENGTH_LONG).show()
+            // Verificar si se recibieron coordenadas iniciales
+            val latInicial = intent.getDoubleExtra("latitud_inicial", 0.0)
+            val lonInicial = intent.getDoubleExtra("longitud_inicial", 0.0)
+            
+            val ubicacionInicial: LatLng
+            val zoom: Float
+            var mensaje = ""
+            
+            if (latInicial != 0.0 && lonInicial != 0.0) {
+                // Usar ubicación proporcionada
+                ubicacionInicial = LatLng(latInicial, lonInicial)
+                zoom = 16f  // Más cerca porque es una ubicación específica
+                mensaje = "📍 Ubicación aproximada basada en la dirección. Ajusta si es necesario."
+                android.util.Log.d("MapaPicker", "✅ Mapa centrado en ubicación proporcionada: $latInicial, $lonInicial")
+            } else {
+                // Ubicación inicial por defecto (CDMX)
+                ubicacionInicial = LatLng(19.4326, -99.1332)
+                zoom = 13f
+                mensaje = "🗺️ Mueve el mapa para seleccionar la ubicación exacta"
+                android.util.Log.d("MapaPicker", "✅ Mapa centrado en CDMX (por defecto)")
+            }
+            
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ubicacionInicial, zoom))
+            Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
             android.util.Log.e("MapaPicker", "❌ Error cargando mapa", e)
             Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_LONG).show()

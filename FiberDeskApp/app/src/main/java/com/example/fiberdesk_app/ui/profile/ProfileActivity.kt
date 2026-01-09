@@ -152,7 +152,10 @@ class ProfileActivity : AppCompatActivity() {
                         apply()
                     }
                     cargarDatosUsuario()
-                    Toast.makeText(this@ProfileActivity, "Perfil actualizado correctamente", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ProfileActivity, "✅ Perfil actualizado correctamente", Toast.LENGTH_SHORT).show()
+                    
+                    // Notificar que el nombre cambió para que se actualice en HomeActivity
+                    setResult(RESULT_OK)
                 } else {
                     Toast.makeText(this@ProfileActivity, "Error al actualizar perfil", Toast.LENGTH_SHORT).show()
                 }

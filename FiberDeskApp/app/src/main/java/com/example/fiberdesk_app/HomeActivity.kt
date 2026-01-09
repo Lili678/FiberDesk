@@ -1,5 +1,8 @@
 package com.example.fiberdesk_app
 
+// ============================================
+// IMPORTS - Librerías necesarias para el Home
+// ============================================
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -17,104 +20,157 @@ import com.example.fiberdesk_app.network.ApiClient
 import com.example.fiberdesk_app.ui.login.LoginActivity
 import kotlinx.coroutines.launch
 
+/**
+ * ============================================
+ * HomeActivity - Pantalla Principal de FiberDesk
+ * ============================================
+ * Esta es la pantalla principal después del login
+ * Muestra:
+ * - Mensaje de bienvenida con el nombre del usuario
+ * - 4 módulos principales (Clientes, Tickets, Pagos, Inventario)
+ * - Actividad reciente (últimos tickets e instalaciones pendientes)
+ * - Botones de perfil y navegación
+ */
 class HomeActivity : AppCompatActivity() {
     
-    private lateinit var recyclerRecentActivity: RecyclerView
-    private lateinit var txtEmptyActivity: TextView
-    private lateinit var adapter: RecentActivityAdapter
+    // ============================================
+    // VARIABLES - Componentes de actividad reciente
+    // ============================================
+    private lateinit var recyclerRecentActivity: RecyclerView    // Lista de actividad reciente
+    private lateinit var txtEmptyActivity: TextView              // Texto cuando no hay actividad
+    private lateinit var adapter: RecentActivityAdapter          // Adaptador del RecyclerView
     
+    /**
+     * ============================================
+     * onCreate - Método principal al crear el Home
+     * ============================================
+     * Configura toda la pantalla principal:
+     * - Mensaje de bienvenida
+     * - Botones de módulos
+     * - Actividad reciente
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        // Obtener nombre del usuario desde SharedPreferences
+        // ============================================
+        // MENSAJE DE BIENVENIDA - Mostrar nombre del usuario
+        // ============================================
         val sharedPref = getSharedPreferences("AuthPrefs", MODE_PRIVATE)
         val userName = sharedPref.getString("userName", "Usuario") ?: "Usuario"
         
-        // Actualizar nombre en la pantalla
         val welcomeText: TextView = findViewById(R.id.welcomeText)
         welcomeText.text = "Bienvenido/a, $userName"
         
-        // Inicializar RecyclerView de actividad reciente
+        // ============================================
+        // ACTIVIDAD RECIENTE - Configurar RecyclerView
+        // ============================================
         recyclerRecentActivity = findViewById(R.id.recyclerRecentActivity)
         txtEmptyActivity = findViewById(R.id.txtEmptyActivity)
         
+        // Crear adaptador con listener para clicks en items
         adapter = RecentActivityAdapter(emptyList()) { item ->
-            // Click en item de actividad
+            // Determinar a qué pantalla ir según el tipo
             when {
                 item.type == "TICKET" -> {
+                    // Ir a lista de tickets
                     val intent = Intent(this, TicketListActivity::class.java)
                     startActivity(intent)
                 }
                 item.type == "INSTALACIÓN" -> {
+                    // Ir a inventario
                     val intent = Intent(this, com.example.fiberdesk_app.ui.inventario.InventarioActivity::class.java)
                     startActivity(intent)
                 }
             }
         }
         
+        // Configurar RecyclerView con layout vertical
         recyclerRecentActivity.layoutManager = LinearLayoutManager(this)
         recyclerRecentActivity.adapter = adapter
         
-        // Cargar actividad reciente
+        // Cargar datos de actividad reciente desde el servidor
         loadRecentActivity()
 
-        // Botón Perfil
+        // ============================================
+        // BOTÓN PERFIL - Abrir pantalla de perfil
+        // ============================================
         val profileButton: ImageView = findViewById(R.id.profileButton)
         profileButton.setOnClickListener {
             val intent = Intent(this, com.example.fiberdesk_app.ui.profile.ProfileActivity::class.java)
             startActivity(intent)
         }
 
-        // Botón Atrás
+        // ============================================
+        // BOTÓN ATRÁS - Cerrar la app
+        // ============================================
         val backButton: ImageView = findViewById(R.id.backButton)
         backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        // Módulos
+        // ============================================
+        // MÓDULOS PRINCIPALES - 4 tarjetas de navegación
+        // ============================================
         val clientsButton: ConstraintLayout = findViewById(R.id.clientsButton)
         val ticketsButton: ConstraintLayout = findViewById(R.id.ticketsButton)
         val paymentsButton: ConstraintLayout = findViewById(R.id.paymentsButton)
         val inventoryButton: ConstraintLayout = findViewById(R.id.inventoryButton)
 
+        // MÓDULO CLIENTES - Ver y gestionar clientes
         clientsButton.setOnClickListener {
             val intent = Intent(this, ListaClientesActivity::class.java)
             startActivity(intent)
         }
 
+        // MÓDULO TICKETS - Ver y gestionar tickets de soporte
         ticketsButton.setOnClickListener {
             val intent = Intent(this, TicketListActivity::class.java)
             startActivity(intent)
         }
 
+        // MÓDULO PAGOS - Ver y gestionar pagos
         paymentsButton.setOnClickListener {
             val intent = Intent(this, com.example.fiberdesk_app.ui.pagos.PagosActivity::class.java)
             startActivity(intent)
         }
 
+        // MÓDULO INVENTARIO - Ver materiales e instalaciones
         inventoryButton.setOnClickListener {
             val intent = Intent(this, com.example.fiberdesk_app.ui.inventario.InventarioActivity::class.java)
             startActivity(intent)
         }
 
-        // Manejar el botón de atrás - no permitir volver atrás desde home
+        // ============================================
+        // BOTÓN ATRÁS DEL SISTEMA - Cerrar app
+        // ============================================
         onBackPressedDispatcher.addCallback(this) {
-            finish()
+            finish()  // No permitir volver al login
         }
     }
     
+    /**
+     * ============================================
+     * loadRecentActivity - Cargar actividad reciente
+     * ============================================
+     * Obtiene del servidor:
+     * - Los últimos 3 tickets creados
+     * - Las últimas 3 instalaciones pendientes
+     * Y los muestra en el RecyclerView
+     */
     private fun loadRecentActivity() {
         lifecycleScope.launch {
             try {
                 val activities = mutableListOf<RecentActivityItem>()
                 
-                // Cargar tickets
+                // ============================================
+                // CARGAR TICKETS - Obtener últimos tickets
+                // ============================================
                 try {
                     val ticketsResponse = ApiClient.apiService.getTickets()
                     if (ticketsResponse.isSuccessful) {
                         val tickets = ticketsResponse.body() ?: emptyList()
-                        val recentTickets = tickets.take(3)
+                        val recentTickets = tickets.take(3)  // Tomar solo los 3 más recientes
                         recentTickets.forEach { ticket ->
                             activities.add(
                                 RecentActivityItem(
@@ -130,11 +186,13 @@ class HomeActivity : AppCompatActivity() {
                     android.util.Log.e("HomeActivity", "Error cargando tickets", e)
                 }
                 
-                // Cargar instalaciones pendientes
+                // ============================================
+                // CARGAR INSTALACIONES - Solo pendientes
+                // ============================================
                 try {
                     val instalaciones = ApiClient.apiService.getInstalaciones()
-                    val pendientes = instalaciones.filter { it.estado == "pendiente" }
-                    val recentPendientes = pendientes.take(3)
+                    val pendientes = instalaciones.filter { it.estado == "pendiente" }  // Filtrar pendientes
+                    val recentPendientes = pendientes.take(3)  // Tomar solo las 3 más recientes
                     recentPendientes.forEach { instalacion ->
                         activities.add(
                             RecentActivityItem(
@@ -149,12 +207,16 @@ class HomeActivity : AppCompatActivity() {
                     android.util.Log.e("HomeActivity", "Error cargando instalaciones", e)
                 }
                 
-                // Actualizar UI
+                // ============================================
+                // ACTUALIZAR UI - Mostrar resultados
+                // ============================================
                 runOnUiThread {
                     if (activities.isEmpty()) {
+                        // No hay actividad - mostrar mensaje vacío
                         recyclerRecentActivity.visibility = View.GONE
                         txtEmptyActivity.visibility = View.VISIBLE
                     } else {
+                        // Hay actividad - mostrar lista
                         recyclerRecentActivity.visibility = View.VISIBLE
                         txtEmptyActivity.visibility = View.GONE
                         adapter.updateData(activities)
@@ -167,10 +229,36 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * ============================================
+     * onResume - Actualizar datos al volver a la actividad
+     * ============================================
+     * Se ejecuta cada vez que la actividad vuelve a primer plano
+     * Actualiza el mensaje de bienvenida por si cambió el nombre
+     */
+    override fun onResume() {
+        super.onResume()
+        
+        // Actualizar mensaje de bienvenida
+        val sharedPref = getSharedPreferences("AuthPrefs", MODE_PRIVATE)
+        val userName = sharedPref.getString("userName", "Usuario") ?: "Usuario"
+        val welcomeText: TextView = findViewById(R.id.welcomeText)
+        welcomeText.text = "Bienvenido/a, $userName"
+    }
+
+    /**
+     * ============================================
+     * logout - Cerrar sesión del usuario
+     * ============================================
+     * Borra todos los datos guardados y vuelve al login
+     * (Esta función no se está usando actualmente)
+     */
     private fun logout() {
+        // Limpiar SharedPreferences (borrar token y datos del usuario)
         val sharedPref = getSharedPreferences("AuthPrefs", MODE_PRIVATE)
         sharedPref.edit().clear().apply()
         
+        // Volver al login
         val intent = Intent(this, LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)

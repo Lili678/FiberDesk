@@ -99,8 +99,7 @@ class AgregarClienteActivity : AppCompatActivity() {
 
         // Botón Mapa Manual
         btnMapaManual.setOnClickListener {
-            val intent = Intent(this, MapaPickerActivity::class.java)
-            mapaLauncher.launch(intent)
+            abrirMapaConDireccion()
         }
 
         // Botón GPS
@@ -151,6 +150,105 @@ class AgregarClienteActivity : AppCompatActivity() {
         etMunicipio.addTextChangedListener(direccionWatcher)
         etEstado.addTextChangedListener(direccionWatcher)
         etCP.addTextChangedListener(direccionWatcher)
+    }
+    
+    private fun abrirMapaConDireccion() {
+        // Si ya hay coordenadas, usar esas
+        val latActual = etLatitud.text.toString()
+        val lonActual = etLongitud.text.toString()
+        
+        if (latActual.isNotEmpty() && lonActual.isNotEmpty()) {
+            // Ya hay coordenadas, abrir mapa directamente
+            val intent = Intent(this, MapaPickerActivity::class.java)
+            intent.putExtra("latitud_inicial", latActual.toDouble())
+            intent.putExtra("longitud_inicial", lonActual.toDouble())
+            mapaLauncher.launch(intent)
+            return
+        }
+        
+        // No hay coordenadas, intentar geocodificar la dirección primero
+        val calle = etCalle.text.toString().trim()
+        val cp = etCP.text.toString().trim()
+        
+        if (calle.isEmpty() && cp.isEmpty()) {
+            // No hay dirección, abrir mapa en ubicación por defecto
+            Toast.makeText(this, "💡 Ingresa al menos la calle o código postal para centrar el mapa", Toast.LENGTH_LONG).show()
+            val intent = Intent(this, MapaPickerActivity::class.java)
+            mapaLauncher.launch(intent)
+            return
+        }
+        
+        // Mostrar progreso
+        Toast.makeText(this, "🔍 Buscando ubicación aproximada...", Toast.LENGTH_SHORT).show()
+        
+        try {
+            val geocoder = Geocoder(this)
+            
+            // Construir dirección completa
+            val direccion = buildString {
+                append(etCalle.text.toString())
+                if (etNumExterior.text.toString().isNotBlank()) {
+                    append(" ${etNumExterior.text}")
+                }
+                if (etColonia.text.toString().isNotBlank()) {
+                    append(", ${etColonia.text}")
+                }
+                if (etMunicipio.text.toString().isNotBlank()) {
+                    append(", ${etMunicipio.text}")
+                }
+                if (etEstado.text.toString().isNotBlank()) {
+                    append(", ${etEstado.text}")
+                }
+                if (etCP.text.toString().isNotBlank()) {
+                    append(", CP ${etCP.text}")
+                }
+                append(", México")
+            }
+            
+            android.util.Log.d("AgregarCliente", "Geocodificando para mapa: $direccion")
+            
+            // Geocodificar en un thread separado
+            Thread {
+                try {
+                    val addresses = geocoder.getFromLocationName(direccion, 1)
+                    if (addresses != null && addresses.isNotEmpty()) {
+                        val location = addresses[0]
+                        runOnUiThread {
+                            // Guardar coordenadas temporalmente
+                            etLatitud.setText(location.latitude.toString())
+                            etLongitud.setText(location.longitude.toString())
+                            
+                            // Abrir mapa con la ubicación encontrada
+                            val intent = Intent(this, MapaPickerActivity::class.java)
+                            intent.putExtra("latitud_inicial", location.latitude)
+                            intent.putExtra("longitud_inicial", location.longitude)
+                            mapaLauncher.launch(intent)
+                            
+                            Toast.makeText(this, "✅ Ubicación aproximada encontrada", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        runOnUiThread {
+                            Toast.makeText(this, "⚠️ No se encontró ubicación exacta. Abriendo mapa en ubicación por defecto", Toast.LENGTH_LONG).show()
+                            val intent = Intent(this, MapaPickerActivity::class.java)
+                            mapaLauncher.launch(intent)
+                        }
+                    }
+                } catch (e: Exception) {
+                    android.util.Log.e("AgregarCliente", "Error geocodificando para mapa", e)
+                    runOnUiThread {
+                        Toast.makeText(this, "⚠️ Error al buscar ubicación. Abriendo mapa", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, MapaPickerActivity::class.java)
+                        mapaLauncher.launch(intent)
+                    }
+                }
+            }.start()
+            
+        } catch (e: Exception) {
+            android.util.Log.e("AgregarCliente", "Error en geocodificación", e)
+            // Si falla, abrir mapa de todos modos
+            val intent = Intent(this, MapaPickerActivity::class.java)
+            mapaLauncher.launch(intent)
+        }
     }
     
     private fun geocodificarDireccion() {
